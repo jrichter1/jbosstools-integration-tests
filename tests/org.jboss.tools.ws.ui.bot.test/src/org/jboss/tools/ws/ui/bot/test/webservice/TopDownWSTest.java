@@ -34,7 +34,7 @@ import org.junit.Test;
  *
  */
 public class TopDownWSTest extends WebServiceTestBase {
-
+	
 	@Override
 	protected String getEarProjectName() {
 		return "TopDownWS-ear";
@@ -82,9 +82,6 @@ public class TopDownWSTest extends WebServiceTestBase {
 		prepareAssembleService();
 
 		topDownWS();
-
-		/* If there were WSDL file than it was also used in web.xml */
-		confirmWebServiceNameOverwrite();
 	}
 	
 	@Test
@@ -126,9 +123,6 @@ public class TopDownWSTest extends WebServiceTestBase {
 		prepareAssembleService();
 		
 		topDownWS(null);
-		
-		/* If there were WSDL file than it was also used in web.xml */
-		confirmWebServiceNameOverwrite();
 	}
 
 	private void confirmWebServiceNameOverwrite() {
@@ -171,6 +165,13 @@ public class TopDownWSTest extends WebServiceTestBase {
 		topDownWS(
 				TopDownWSTest.class.getResourceAsStream("/resources/jbossws/ClassB.wsdl"),
 				WebServiceRuntime.JBOSS_WS, pkg);
+		
+		/* If a service with the same name exists, overwrite it */
+		confirmWebServiceNameOverwrite();
+		
+		// If the server was stopped before the test, start it
+		ServersViewHelper.startServer(getConfiguredServerName());
+		
 		switch (getLevel()) {
 		case DEVELOP:
 		case ASSEMBLE:
@@ -178,11 +179,11 @@ public class TopDownWSTest extends WebServiceTestBase {
 		/*workaround for https://bugs.eclipse.org/bugs/show_bug.cgi?id=377624
 		 choosing 'Deploy' should normally deploy the project automatically*/
 		case DEPLOY:
-			ServersViewHelper.runProjectOnServer(getEarProjectName());
-			
+			ServersViewHelper.runProjectOnServer(getEarProjectName());			
 		default:
 			break;
 		}
+		ServersViewHelper.waitForDeployment(getConfiguredServerName());
 		DeploymentHelper.assertServiceDeployed(DeploymentHelper.getWSDLUrl(getWsProjectName(), getWsName()), 10000);
 	}
 

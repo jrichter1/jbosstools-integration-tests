@@ -25,6 +25,21 @@ public class CxfWsClientTest extends WSClientTestTemplate {
 	public CxfWsClientTest() {
 		super(WebServiceRuntime.APACHE_CXF2);
 	}
+	
+	@Override
+	protected String getWsProjectName() {
+		return "cxfclient";
+	}
+
+	@Override
+	protected String getWsPackage() {
+		return "cxfclient." + getLevel().toString().toLowerCase();
+	}
+
+	@Override
+	protected String getEarProjectName() {
+		return "cxfclientEAR";
+	}
 
 	@Override
 	protected String getSampleClientFileName() {

@@ -17,17 +17,16 @@ import java.util.List;
 
 import javax.jws.WebService;
 
+import org.jboss.reddeer.core.exception.CoreLayerException;
 import org.jboss.reddeer.eclipse.core.resources.Project;
 import org.jboss.reddeer.eclipse.core.resources.ProjectItem;
 import org.jboss.reddeer.eclipse.jdt.ui.packageexplorer.PackageExplorer;
 import org.jboss.reddeer.eclipse.ui.views.navigator.ResourceNavigator;
-import org.jboss.reddeer.swt.exception.SWTLayerException;
 import org.jboss.tools.ws.reddeer.ui.wizards.wst.WebServiceWizardPageBase.SliderLevel;
 import org.jboss.tools.ws.ui.bot.test.soap.SOAPTestBase;
 import org.jboss.tools.ws.ui.bot.test.utils.ServersViewHelper;
 import org.jboss.tools.ws.ui.bot.test.utils.WebServiceClientHelper;
 import org.jboss.tools.ws.ui.bot.test.webservice.WebServiceRuntime;
-import org.junit.After;
 import org.junit.Test;
 
 /**
@@ -105,14 +104,14 @@ public class WSClientTestTemplate extends SOAPTestBase {
 		clientTest(null);
 	}
 
-	@After
 	@Override
 	public void cleanup() {
-		deleteAllPackages();
 		super.cleanup();
+		deleteAllPackages();
 	}
 
 	protected void clientTest(String targetPkg) {
+		ServersViewHelper.startServer(getConfiguredServerName());
 		WebServiceClientHelper.createClient(
 				getConfiguredServerName(),
 				 "http://soaptest.parasoft.com/calculator.wsdl",
@@ -121,7 +120,7 @@ public class WSClientTestTemplate extends SOAPTestBase {
 				getEarProjectName(),
 				getLevel(),
 				targetPkg);
-		
+
 		assertThatExpectedFilesExists(targetPkg);
 		
 		assertThatEARProjectIsDeployed();
@@ -131,9 +130,7 @@ public class WSClientTestTemplate extends SOAPTestBase {
 		ResourceNavigator navigator = new ResourceNavigator();
 		navigator.open();
 		Project project = navigator.getProject(getWsProjectName());
-		
-		//workaround for https://bugs.eclipse.org/bugs/show_bug.cgi?id=468427
-		project.collapse();
+		project.refresh();
 		
 		String pkg = (targetPkg != null && !"".equals(targetPkg.trim())) ? getWsPackage() :
 			"com.parasoft.wsdl.calculator";
@@ -157,6 +154,9 @@ public class WSClientTestTemplate extends SOAPTestBase {
 	private void assertThatEARProjectIsDeployed() {
 		switch (getLevel()) {
 		
+		case ASSEMBLE:
+		case DEVELOP:
+
 		/*workaround for https://bugs.eclipse.org/bugs/show_bug.cgi?id=428982
 		 choosing 'Deploy' should normally deploy the project automatically*/
 		case DEPLOY:
@@ -165,6 +165,7 @@ public class WSClientTestTemplate extends SOAPTestBase {
 		case TEST:
 		case START:
 		case INSTALL:
+			ServersViewHelper.waitForDeployment(getConfiguredServerName());
 			if(!WebServiceClientHelper.projectIsDeployed(getConfiguredServerName(), getEarProjectName())) {
 				fail("Project was not found on the server.");
 			}
@@ -183,7 +184,7 @@ public class WSClientTestTemplate extends SOAPTestBase {
 				pkg.select();
 				pkg.delete();
 			}
-		} catch(SWTLayerException e) {
+		} catch(CoreLayerException e) {
 			pe.open();
 			src = p.getProjectItem("src");
 			List<ProjectItem> pkgs = src.getChildren();

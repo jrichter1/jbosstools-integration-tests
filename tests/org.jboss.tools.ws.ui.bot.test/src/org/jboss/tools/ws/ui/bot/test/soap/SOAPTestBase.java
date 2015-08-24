@@ -5,9 +5,8 @@ import java.util.logging.Logger;
 
 import org.jboss.ide.eclipse.as.reddeer.server.requirement.ServerRequirement;
 import org.jboss.ide.eclipse.as.reddeer.server.requirement.ServerRequirement.JBossServer;
-import org.jboss.reddeer.common.wait.TimePeriod;
-import org.jboss.reddeer.common.wait.WaitWhile;
-import org.jboss.reddeer.core.condition.JobIsRunning;
+import org.jboss.reddeer.core.handler.ShellHandler;
+import org.jboss.reddeer.eclipse.jdt.ui.ProjectExplorer;
 import org.jboss.reddeer.eclipse.ui.console.ConsoleView;
 import org.jboss.reddeer.eclipse.ui.perspectives.JavaEEPerspective;
 import org.jboss.reddeer.junit.requirement.inject.InjectRequirement;
@@ -60,6 +59,9 @@ public abstract class SOAPTestBase {
 	@BeforeClass
 	public static void initialize() {
 		EclipseCDIHelper.disableFolding();
+
+		// Every test class starts with the server stopped and clean to avoid deployment issues
+		ServersViewHelper.stopServer(getConfiguredServerName());
 	}
 	
 	@Before
@@ -79,19 +81,20 @@ public abstract class SOAPTestBase {
 	@After
 	public void cleanup() {
 		ServersViewHelper.removeAllProjectsFromServer(getConfiguredServerName());
-		new WaitWhile(new JobIsRunning(), TimePeriod.LONG);
-		ServersViewHelper.serverClean(getConfiguredServerName());
 		
 		ConsoleView console = new ConsoleView();
 		if (!console.isOpened()) {
 			console.open();
 		}
+		console.activate();
 		console.clearConsole();
+		
+		ShellHandler.getInstance().closeAllNonWorbenchShells();
 	}
 
 	@AfterClass
 	public static void deleteAll() {
-		ProjectHelper.deleteAllProjects();
+		new ProjectExplorer().deleteAllProjects();
 	}
 
 	protected static String getConfiguredRuntimeName() {
@@ -117,7 +120,7 @@ public abstract class SOAPTestBase {
 	protected void setWsProjectName(String wsProjectName) {
 		this.wsProjectName = wsProjectName;
 	}
-
+	
 	protected abstract String getEarProjectName();
 
 	public static String getSoapRequest(String body) {

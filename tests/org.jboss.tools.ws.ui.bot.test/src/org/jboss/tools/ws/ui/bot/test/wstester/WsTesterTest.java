@@ -25,6 +25,7 @@ import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.jboss.reddeer.common.exception.WaitTimeoutExpiredException;
 import org.jboss.reddeer.common.wait.AbstractWait;
@@ -32,12 +33,12 @@ import org.jboss.reddeer.common.wait.TimePeriod;
 import org.jboss.reddeer.common.wait.WaitUntil;
 import org.jboss.reddeer.common.wait.WaitWhile;
 import org.jboss.reddeer.core.condition.ShellWithTextIsActive;
+import org.jboss.reddeer.eclipse.jdt.ui.ProjectExplorer;
 import org.jboss.tools.ws.reddeer.swt.condition.WsTesterNotEmptyResponseText;
 import org.jboss.tools.ws.reddeer.ui.dialogs.InputDialog;
 import org.jboss.tools.ws.reddeer.ui.tester.views.SelectWSDLDialog;
 import org.jboss.tools.ws.reddeer.ui.tester.views.WsTesterView;
 import org.jboss.tools.ws.reddeer.ui.tester.views.WsTesterView.RequestType;
-import org.jboss.tools.ws.ui.bot.test.soap.SOAPTestBase;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Test;
@@ -47,25 +48,16 @@ import org.junit.Test;
  *
  * @author jlukas
  */
-public class WsTesterTest extends SOAPTestBase {
+public class WsTesterTest {
 
 	private static final String SERVICE_URL = "http://www.webservicex.net/BibleWebservice.asmx";
-
-	@Override
-	public void setup() {
-		// do nothing
-	}
-
-	@Override
-	public void cleanup() {
-		// do nothing
-	}
+	private static final Logger LOGGER = Logger.getLogger(WsTesterTest.class.getName());
 
 	@AfterClass
-	public static void cleanAll() {
-		// do nothing
+	public static void deleteProjects() {
+		new ProjectExplorer().deleteAllProjects();
 	}
-
+	
 	/**
 	 * Test behavior of UI
 	 */
@@ -443,10 +435,5 @@ public class WsTesterTest extends SOAPTestBase {
 			// WISE call was pretty quick - no progress information dialog
 			// appears
 		}
-	}
-
-	@Override
-	protected String getEarProjectName() {
-		return null;
 	}
 }

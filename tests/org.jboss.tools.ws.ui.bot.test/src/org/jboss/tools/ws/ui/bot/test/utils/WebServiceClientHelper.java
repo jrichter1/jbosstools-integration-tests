@@ -2,18 +2,23 @@ package org.jboss.tools.ws.ui.bot.test.utils;
 
 import static org.junit.Assert.fail;
 
+import java.util.logging.Logger;
+
 import org.eclipse.swt.SWTException;
 import org.jboss.reddeer.common.condition.WaitCondition;
 import org.jboss.reddeer.common.wait.TimePeriod;
 import org.jboss.reddeer.common.wait.WaitUntil;
 import org.jboss.reddeer.common.wait.WaitWhile;
+import org.jboss.reddeer.core.condition.JobIsRunning;
 import org.jboss.reddeer.core.condition.ShellWithTextIsActive;
+import org.jboss.reddeer.core.exception.CoreLayerException;
 import org.jboss.reddeer.eclipse.exception.EclipseLayerException;
 import org.jboss.reddeer.eclipse.ui.console.ConsoleView;
 import org.jboss.reddeer.eclipse.wst.server.ui.view.ServersView;
 import org.jboss.reddeer.jface.wizard.WizardDialog;
 import org.jboss.reddeer.swt.api.Label;
 import org.jboss.reddeer.swt.api.Shell;
+import org.jboss.reddeer.swt.condition.ButtonWithTextIsEnabled;
 import org.jboss.reddeer.swt.impl.button.PushButton;
 import org.jboss.reddeer.swt.impl.label.DefaultLabel;
 import org.jboss.reddeer.swt.impl.shell.DefaultShell;
@@ -25,53 +30,65 @@ import org.jboss.tools.ws.ui.bot.test.webservice.WebServiceRuntime;
 import org.junit.Assert;
 
 public class WebServiceClientHelper {
-
-	private WebServiceClientHelper() {};
 	
+	private static Logger LOGGER = Logger.getLogger(WebServiceClientHelper.class.getName());
+
+	private WebServiceClientHelper() {
+	};
+
 	/**
 	 * Method creates Web Service Client for entered wsdl file, web project,
 	 * level of creation and name of package for client
+	 * 
 	 * @param wsdl
 	 * @param targetProject
 	 * @param level
 	 * @param pkg
 	 */
-	public static void createClient(String serverName, String wsdl,
-			WebServiceRuntime runtime, String targetProject,
+	public static void createClient(String serverName, String wsdl, WebServiceRuntime runtime, String targetProject,
 			String earProject, SliderLevel level, String pkg) {
 		WebServiceClientWizard wizard = new WebServiceClientWizard();
 		wizard.open();
 
 		WebServiceClientWizardPage page = new WebServiceClientWizardPage();
-		
+		new WaitWhile(new JobIsRunning(), TimePeriod.NORMAL, false);
+
 		page.setSource(wsdl);
 		new WaitUntil(new WebServiceClientPageIsValidated(), TimePeriod.getCustom(2), true);
 
 		page.setClientSlider(level);
 		page.setServerRuntime(serverName);
+		new WaitWhile(new JobIsRunning(), TimePeriod.getCustom(5), false);
 		page.setWebServiceRuntime(runtime.getName());
-		page.setClientProject(targetProject);
-		page.setClientEARProject(earProject);
+		try {
+			page.setClientProject(targetProject);
+			page.setClientEARProject(earProject);
+		} catch (CoreLayerException ex) {
+			LOGGER.warning("Cannot find project settings, trying with default");
+		}
 
-		if (pkg != null && pkg.trim().length()>0) {
+		if (pkg != null && pkg.trim().length() > 0) {
+			new WaitWhile(new ButtonWithTextIsEnabled(new PushButton("Next >")), TimePeriod.getCustom(5), false);
 			wizard.next();
 			new WaitWhile(new ShellWithTextIsActive("Progress Information"));
 			page.setPackageName(pkg);
 		}
+
+		new WaitWhile(new JobIsRunning(), TimePeriod.getCustom(5), false);
 		wizard.finish();
 
 		checkErrorDialog(wizard);
 
-		//check if there is any error in console output
+		// check if there is any error in console output
 		checkErrorInConsoleOutput(serverName, earProject);
 	}
 
 	/**
-	 * let's fail if there's some error in the wizard,
-	 * and close error dialog and the wizard so other tests
-	 * can continue
+	 * let's fail if there's some error in the wizard, and close error dialog
+	 * and the wizard so other tests can continue
 	 * 
-	 * @param wsWizard if error dialog appeared the parent wizard will be closed
+	 * @param wsWizard
+	 *            if error dialog appeared the parent wizard will be closed
 	 */
 	private static void checkErrorDialog(WizardDialog wsWizard) {
 		Shell shell = new DefaultShell();
@@ -91,16 +108,14 @@ public class WebServiceClientHelper {
 		if (consoleText.contains("ERROR")) {
 			consoleView.clearConsole();
 			String deploymentInfoMessage = " [deployment status: ";
-			if(projectIsDeployed(serverName, projectName)) {
+			if (projectIsDeployed(serverName, projectName)) {
 				deploymentInfoMessage += "deployed";
 			} else {
 				deploymentInfoMessage += "NOT DEPLOYED";
 			}
 			deploymentInfoMessage += "]";
-			
-			fail("Console contains error"
-					+ deploymentInfoMessage
-					+ "\n" + consoleText);
+
+			fail("Console contains error" + deploymentInfoMessage + "\n" + consoleText);
 		}
 	}
 
@@ -116,7 +131,7 @@ public class WebServiceClientHelper {
 	}
 
 	/**
-	 *  
+	 * 
 	 * @param serverName
 	 * @param projectName
 	 * @return
@@ -127,7 +142,7 @@ public class WebServiceClientHelper {
 			ServersView sw = new ServersView();
 			sw.getServer(serverName).getModule(projectName);
 			return true;
-		} catch(EclipseLayerException e) {
+		} catch (EclipseLayerException e) {
 			return false;
 		}
 	}
@@ -138,7 +153,7 @@ public class WebServiceClientHelper {
 
 		private static final String REQUIRED_TEXT = "Select a service definition and move the slider to set the level of client generation.";
 		private String infoText;
-		
+
 		@Override
 		public boolean test() {
 			infoText = page.getInfoText();
@@ -149,6 +164,6 @@ public class WebServiceClientHelper {
 		public String description() {
 			return "Required text is '" + REQUIRED_TEXT + "' but there is '" + infoText + "'";
 		}
-		
+
 	}
 }

@@ -91,6 +91,10 @@ public class BottomUpWSTest extends WebServiceTestBase {
 	protected void bottomUpJbossWebService() {
 		bottomUpWS(BottomUpWSTest.class.getResourceAsStream("/resources/jbossws/ClassA.java.ws"),
 				WebServiceRuntime.JBOSS_WS);
+		
+		// If the server was stopped before the test, start it
+		ServersViewHelper.startServer(getConfiguredServerName());
+		
 		switch (getLevel()) {
 		case DEVELOP:
 		case ASSEMBLE:
@@ -102,10 +106,10 @@ public class BottomUpWSTest extends WebServiceTestBase {
 			 */
 		case DEPLOY:
 			ServersViewHelper.runProjectOnServer(getEarProjectName());
-
 		default:
 			break;
 		}
+		ServersViewHelper.waitForDeployment(getConfiguredServerName());
 		DeploymentHelper.assertServiceDeployed(DeploymentHelper.getWSDLUrl(getWsProjectName(), getWsName()), 10000);
 	}
 }
