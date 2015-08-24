@@ -8,8 +8,11 @@ import org.jboss.ide.eclipse.as.reddeer.server.requirement.ServerRequirement.JBo
 import org.jboss.reddeer.common.wait.TimePeriod;
 import org.jboss.reddeer.common.wait.WaitWhile;
 import org.jboss.reddeer.core.condition.JobIsRunning;
+import org.jboss.reddeer.eclipse.exception.EclipseLayerException;
 import org.jboss.reddeer.eclipse.ui.console.ConsoleView;
 import org.jboss.reddeer.eclipse.ui.perspectives.JavaEEPerspective;
+import org.jboss.reddeer.eclipse.wst.server.ui.view.ServersView;
+import org.jboss.reddeer.eclipse.wst.server.ui.view.ServersViewException;
 import org.jboss.reddeer.junit.requirement.inject.InjectRequirement;
 import org.jboss.reddeer.requirements.openperspective.OpenPerspectiveRequirement.OpenPerspective;
 import org.jboss.tools.ws.reddeer.ui.wizards.wst.WebServiceWizardPageBase.SliderLevel;
@@ -92,6 +95,17 @@ public abstract class SOAPTestBase {
 	@AfterClass
 	public static void deleteAll() {
 		ProjectHelper.deleteAllProjects();
+
+		ServersView view = new ServersView();
+		view.open();
+		try {
+			view.getServer(getConfiguredServerName()).stop();
+			new WaitWhile(new JobIsRunning());
+		} catch (ServersViewException ex) {
+			LOGGER.info("The server " + getConfiguredServerName() + " is not running");			
+		} catch (EclipseLayerException ex) {
+			LOGGER.warning("No server with name " + getConfiguredServerName() + " is avaliable");
+		} 
 	}
 
 	protected static String getConfiguredRuntimeName() {

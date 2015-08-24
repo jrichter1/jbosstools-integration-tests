@@ -24,6 +24,9 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.jboss.reddeer.common.wait.AbstractWait;
 import org.jboss.reddeer.common.wait.TimePeriod;
 import org.jboss.reddeer.common.wait.WaitUntil;
+import org.jboss.reddeer.common.wait.WaitWhile;
+import org.jboss.reddeer.core.condition.JobIsRunning;
+import org.jboss.reddeer.core.exception.CoreLayerException;
 import org.jboss.reddeer.jface.wizard.WizardDialog;
 import org.jboss.reddeer.swt.api.Button;
 import org.jboss.reddeer.swt.api.Shell;
@@ -119,14 +122,19 @@ public abstract class WebServiceTestBase extends SOAPTestBase {
 		// create a web service
 		WebServiceWizard wizard = new WebServiceWizard();
 		wizard.open();
+		new WaitWhile(new JobIsRunning());
 
 		WebServiceFirstWizardPage page = new WebServiceFirstWizardPage();
 		page.setServiceType(type);
 		page.setSource(source);
 		page.setServerRuntime(getConfiguredServerName());
 		page.setWebServiceRuntime(serviceRuntime.getName());
-		page.setServiceProject(getWsProjectName());
-		page.setServiceEARProject(getEarProjectName());
+		try {
+			page.setServiceProject(getWsProjectName());
+			page.setServiceEARProject(getEarProjectName());
+		} catch (CoreLayerException ex) {
+			LOGGER.warning("Service project selection failed, attempting to continue with default");
+		}
 		page.setServiceSlider(level);
 		if (page.isClientEnabled()) {
 			page.setClientSlider(SliderLevel.NO_CLIENT);
