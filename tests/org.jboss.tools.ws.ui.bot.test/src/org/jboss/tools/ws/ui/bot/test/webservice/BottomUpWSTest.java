@@ -10,6 +10,9 @@
  ******************************************************************************/
 package org.jboss.tools.ws.ui.bot.test.webservice;
 
+import org.jboss.reddeer.common.wait.TimePeriod;
+import org.jboss.reddeer.common.wait.WaitWhile;
+import org.jboss.reddeer.core.condition.JobIsRunning;
 import org.jboss.tools.ws.reddeer.ui.wizards.wst.WebServiceWizardPageBase.SliderLevel;
 import org.jboss.tools.ws.ui.bot.test.utils.DeploymentHelper;
 import org.jboss.tools.ws.ui.bot.test.utils.ServersViewHelper;
@@ -102,8 +105,10 @@ public class BottomUpWSTest extends WebServiceTestBase {
 			 */
 		case DEPLOY:
 			ServersViewHelper.runProjectOnServer(getEarProjectName());
+			break;
 
 		default:
+			new WaitWhile(new JobIsRunning(), TimePeriod.LONG);
 			break;
 		}
 		DeploymentHelper.assertServiceDeployed(DeploymentHelper.getWSDLUrl(getWsProjectName(), getWsName()), 10000);

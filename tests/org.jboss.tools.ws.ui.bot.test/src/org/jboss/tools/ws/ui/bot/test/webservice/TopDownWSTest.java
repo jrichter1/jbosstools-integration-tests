@@ -14,8 +14,10 @@ import java.util.logging.Level;
 
 import org.jboss.reddeer.common.exception.WaitTimeoutExpiredException;
 import org.jboss.reddeer.common.matcher.RegexMatcher;
+import org.jboss.reddeer.common.wait.TimePeriod;
 import org.jboss.reddeer.common.wait.WaitUntil;
 import org.jboss.reddeer.common.wait.WaitWhile;
+import org.jboss.reddeer.core.condition.JobIsRunning;
 import org.jboss.reddeer.core.condition.ShellWithTextIsActive;
 import org.jboss.reddeer.eclipse.core.resources.ProjectItem;
 import org.jboss.reddeer.eclipse.exception.EclipseLayerException;
@@ -179,8 +181,10 @@ public class TopDownWSTest extends WebServiceTestBase {
 		 choosing 'Deploy' should normally deploy the project automatically*/
 		case DEPLOY:
 			ServersViewHelper.runProjectOnServer(getEarProjectName());
+			break;
 			
 		default:
+			new WaitWhile(new JobIsRunning(), TimePeriod.LONG);
 			break;
 		}
 		DeploymentHelper.assertServiceDeployed(DeploymentHelper.getWSDLUrl(getWsProjectName(), getWsName()), 10000);

@@ -122,7 +122,7 @@ public abstract class WebServiceTestBase extends SOAPTestBase {
 		// create a web service
 		WebServiceWizard wizard = new WebServiceWizard();
 		wizard.open();
-		new WaitWhile(new JobIsRunning());
+		new WaitWhile(new JobIsRunning(), TimePeriod.LONG);
 
 		WebServiceFirstWizardPage page = new WebServiceFirstWizardPage();
 		page.setServiceType(type);

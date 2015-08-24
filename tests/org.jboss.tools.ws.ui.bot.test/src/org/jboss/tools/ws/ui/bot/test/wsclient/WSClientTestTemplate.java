@@ -17,6 +17,9 @@ import java.util.List;
 
 import javax.jws.WebService;
 
+import org.jboss.reddeer.common.wait.TimePeriod;
+import org.jboss.reddeer.common.wait.WaitWhile;
+import org.jboss.reddeer.core.condition.JobIsRunning;
 import org.jboss.reddeer.eclipse.core.resources.Project;
 import org.jboss.reddeer.eclipse.core.resources.ProjectItem;
 import org.jboss.reddeer.eclipse.jdt.ui.packageexplorer.PackageExplorer;
@@ -121,7 +124,8 @@ public class WSClientTestTemplate extends SOAPTestBase {
 				getEarProjectName(),
 				getLevel(),
 				targetPkg);
-		
+
+		new WaitWhile(new JobIsRunning(), TimePeriod.LONG);
 		assertThatExpectedFilesExists(targetPkg);
 		
 		assertThatEARProjectIsDeployed();
