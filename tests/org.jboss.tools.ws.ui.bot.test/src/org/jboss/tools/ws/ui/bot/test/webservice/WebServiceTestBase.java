@@ -61,12 +61,11 @@ public abstract class WebServiceTestBase extends SOAPTestBase {
 	protected abstract String getWsPackage();
 
 	protected abstract String getWsName();
-	
+
 	protected void bottomUpWS(InputStream input, WebServiceRuntime serviceRuntime) {
 		String source = ResourceHelper.readStream(input);
 		String src = MessageFormat.format(source, getWsPackage(), getWsName());
-		createService(ServiceType.BOTTOM_UP, getWsPackage() + "."
-				+ getWsName(), getLevel(), null, src, serviceRuntime);
+		createService(ServiceType.BOTTOM_UP, getWsPackage() + "." + getWsName(), getLevel(), null, src, serviceRuntime);
 	}
 
 	protected void topDownWS(InputStream input, WebServiceRuntime serviceRuntime, String pkg) {
@@ -79,42 +78,39 @@ public abstract class WebServiceTestBase extends SOAPTestBase {
 		}
 		sb.append(tns[0]);
 		String src = MessageFormat.format(s, sb.toString(), getWsName());
-		createService(ServiceType.TOP_DOWN, "/" + getWsProjectName() + "/src/"
-				+ getWsName() + ".wsdl", getLevel(), pkg, src, serviceRuntime);
+		createService(ServiceType.TOP_DOWN, "/" + getWsProjectName() + "/src/" + getWsName() + ".wsdl", getLevel(), pkg,
+				src, serviceRuntime);
 	}
 
-	private void createService(ServiceType type, String source,
-			SliderLevel level, String pkg, String code, WebServiceRuntime serviceRuntime) {
+	private void createService(ServiceType type, String source, SliderLevel level, String pkg, String code,
+			WebServiceRuntime serviceRuntime) {
 		// create ws source - java class or wsdl
 		switch (type) {
-			case BOTTOM_UP:
-				TextEditor editor = ProjectHelper.createClass(getWsProjectName(), getWsPackage(), getWsName());
-				assertNotNull(editor);
+		case BOTTOM_UP:
+			TextEditor editor = ProjectHelper.createClass(getWsProjectName(), getWsPackage(), getWsName());
+			assertNotNull(editor);
 
-				// replace default content of java class w/ code
-				editor.setText(code);
-				editor.save();
-				editor.close();
-				break;
-			case TOP_DOWN:
-				DefaultEditor ed = ProjectHelper.createWsdl(getWsProjectName(),getWsName());
-				assertNotNull(ed);
-				StyledText text = new DefaultStyledText();
-				assertNotNull(text);
-			
-				text.setText(code);
-				ed.save();
-				ed.close();
-				break;
+			// replace default content of java class w/ code
+			editor.setText(code);
+			editor.save();
+			editor.close();
+			break;
+		case TOP_DOWN:
+			DefaultEditor ed = ProjectHelper.createWsdl(getWsProjectName(), getWsName());
+			assertNotNull(ed);
+			StyledText text = new DefaultStyledText();
+			assertNotNull(text);
+
+			text.setText(code);
+			ed.save();
+			ed.close();
+			break;
 		}
 
 		// refresh workspace - workaround for JBIDE-6731
 		try {
-			ResourcesPlugin
-					.getWorkspace()
-					.getRoot()
-					.refreshLocal(IWorkspaceRoot.DEPTH_INFINITE,
-							new NullProgressMonitor());
+			ResourcesPlugin.getWorkspace().getRoot().refreshLocal(IWorkspaceRoot.DEPTH_INFINITE,
+					new NullProgressMonitor());
 		} catch (CoreException e) {
 			LOGGER.log(Level.WARNING, e.getMessage(), e);
 		}
@@ -122,7 +118,6 @@ public abstract class WebServiceTestBase extends SOAPTestBase {
 		// create a web service
 		WebServiceWizard wizard = new WebServiceWizard();
 		wizard.open();
-		new WaitWhile(new JobIsRunning(), TimePeriod.LONG);
 
 		WebServiceFirstWizardPage page = new WebServiceFirstWizardPage();
 		page.setServiceType(type);
@@ -162,9 +157,10 @@ public abstract class WebServiceTestBase extends SOAPTestBase {
 				String msg = new DefaultText().getText();
 				new PushButton(0).click();
 				wizard.cancel();
-				Assert.fail(msg);	
+				Assert.fail(msg);
 			}
 		}
+		new WaitWhile(new JobIsRunning(), TimePeriod.LONG);
 	}
 
 	private void checkErrorDialog(WizardDialog openedWizard) {
@@ -182,5 +178,4 @@ public abstract class WebServiceTestBase extends SOAPTestBase {
 			Assert.fail(text + msg);
 		}
 	}
-
 }

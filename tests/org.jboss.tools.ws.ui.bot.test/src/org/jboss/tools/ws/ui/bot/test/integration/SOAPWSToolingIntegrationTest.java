@@ -17,6 +17,7 @@ import org.jboss.reddeer.common.wait.TimePeriod;
 import org.jboss.reddeer.common.wait.WaitUntil;
 import org.jboss.reddeer.common.wait.WaitWhile;
 import org.jboss.reddeer.core.condition.JobIsRunning;
+import org.jboss.reddeer.eclipse.core.resources.Project;
 import org.jboss.reddeer.eclipse.jdt.ui.ProjectExplorer;
 import org.jboss.reddeer.eclipse.wst.server.ui.view.ServersView;
 import org.jboss.reddeer.swt.impl.menu.ContextMenu;
@@ -67,7 +68,9 @@ public class SOAPWSToolingIntegrationTest extends SOAPTestBase {
 	private WsTesterView openWSDLFileInWSTester() {
 		ProjectExplorer projectExplorer = new ProjectExplorer();
 		projectExplorer.open();
-		projectExplorer.getProject(getWsProjectName()).getProjectItem("wsdl", "HelloWorldService.wsdl").select();
+		Project project = projectExplorer.getProject(getWsProjectName());
+		project.refresh();
+		project.getProjectItem("wsdl", "HelloWorldService.wsdl").select();
 
 		new ContextMenu("Web Services", "Test in JBoss Web Service Tester").select();
 

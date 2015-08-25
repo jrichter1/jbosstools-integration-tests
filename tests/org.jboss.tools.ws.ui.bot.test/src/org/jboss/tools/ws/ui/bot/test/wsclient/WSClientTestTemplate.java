@@ -135,9 +135,7 @@ public class WSClientTestTemplate extends SOAPTestBase {
 		ResourceNavigator navigator = new ResourceNavigator();
 		navigator.open();
 		Project project = navigator.getProject(getWsProjectName());
-		
-		//workaround for https://bugs.eclipse.org/bugs/show_bug.cgi?id=468427
-		project.collapse();
+		project.refresh();
 		
 		String pkg = (targetPkg != null && !"".equals(targetPkg.trim())) ? getWsPackage() :
 			"com.parasoft.wsdl.calculator";
