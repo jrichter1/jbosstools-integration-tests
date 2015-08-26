@@ -8,7 +8,6 @@ import org.jboss.reddeer.common.wait.AbstractWait;
 import org.jboss.reddeer.common.wait.TimePeriod;
 import org.jboss.reddeer.common.wait.WaitUntil;
 import org.jboss.reddeer.common.wait.WaitWhile;
-import org.jboss.reddeer.core.condition.JobIsRunning;
 import org.jboss.reddeer.core.condition.ShellWithTextIsActive;
 import org.jboss.reddeer.eclipse.exception.EclipseLayerException;
 import org.jboss.reddeer.eclipse.ui.console.ConsoleView;
@@ -54,6 +53,7 @@ public class WebServiceClientHelper {
 		page.setWebServiceRuntime(runtime.getName());
 		page.setClientProject(targetProject);
 		page.setClientEARProject(earProject);
+		AbstractWait.sleep(TimePeriod.SHORT);
 		if (pkg != null && pkg.trim().length()>0) {
 			wizard.next();
 			new WaitWhile(new ShellWithTextIsActive("Progress Information"));

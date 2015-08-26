@@ -17,10 +17,10 @@
 		<requirementsDirectory>${project.build.directory}/requirements</requirementsDirectory>
 		<jbosstools.test.jboss-wildfly-8.home>${requirementsDirectory}/wildfly-8.2.0.Final</jbosstools.test.jboss-wildfly-8.home>
 		
-		<apache-cfx-2.x.dir>${requirementsDirectory}/apache-cxf-2.x/</apache-cfx-2.x.dir>
-		<apache-cxf-2.x>${apache-cfx-2.x.dir}/apache-cxf-3.1.2/</apache-cxf-2.x>
-		<apache-cxf-2.x.url>http://archive.apache.org/dist/cxf/3.1.2/apache-cxf-3.1.2.zip</apache-cxf-2.x.url>
-		<apache-cxf-2.x.md5>ad93c77cb249791e2b0163664775cb1b</apache-cxf-2.x.md5>
+		<apache-cfx-2.x.dir>${requirementsDirectory}/apache-cxf-2.x</apache-cfx-2.x.dir>
+		<apache-cxf-2.x>${apache-cfx-2.x.dir}/apache-cxf-3.1.1/</apache-cxf-2.x>
+		<apache-cxf-2.x.url>http://archive.apache.org/dist/cxf/3.1.1/apache-cxf-3.1.1.zip</apache-cxf-2.x.url>
+		<apache-cxf-2.x.md5>142d0261de8012e6eafd780587313681</apache-cxf-2.x.md5>
 
 		<systemProperties>${integrationTestsSystemProperties} -Dws.scope=${ws.scope} -Dapache-cxf-2.x=${apache-cxf-2.x} -Dreddeer.config=${reddeer.config} -Djbosstools.test.jboss-wildfly-8.home=${jbosstools.test.jboss-wildfly-8.home} -Dreddeer.close.shells=false</systemProperties>
 		<surefire.timeout>10800</surefire.timeout>

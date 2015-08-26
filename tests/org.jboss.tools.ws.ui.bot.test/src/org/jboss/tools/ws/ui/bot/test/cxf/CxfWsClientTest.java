@@ -1,11 +1,5 @@
 package org.jboss.tools.ws.ui.bot.test.cxf;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.Properties;
-
 import org.jboss.reddeer.workbench.ui.dialogs.WorkbenchPreferenceDialog;
 import org.jboss.tools.ws.reddeer.ui.preferences.WsCxf2xPreferencePage;
 import org.jboss.tools.ws.ui.bot.test.webservice.WebServiceRuntime;
