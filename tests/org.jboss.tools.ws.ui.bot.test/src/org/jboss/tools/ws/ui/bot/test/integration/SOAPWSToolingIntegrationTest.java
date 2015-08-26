@@ -67,9 +67,11 @@ public class SOAPWSToolingIntegrationTest extends SOAPTestBase {
 
 	private WsTesterView openWSDLFileInWSTester() {
 		ProjectExplorer projectExplorer = new ProjectExplorer();
-		projectExplorer.open();
+		projectExplorer.activate();
 		Project project = projectExplorer.getProject(getWsProjectName());
 		project.refresh();
+		AbstractWait.sleep(TimePeriod.SHORT);
+		project.getProjectItem("wsdl").select();
 		project.getProjectItem("wsdl", "HelloWorldService.wsdl").select();
 
 		new ContextMenu("Web Services", "Test in JBoss Web Service Tester").select();

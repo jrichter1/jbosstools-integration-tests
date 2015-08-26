@@ -63,6 +63,17 @@ public abstract class SOAPTestBase {
 	@BeforeClass
 	public static void initialize() {
 		EclipseCDIHelper.disableFolding();
+
+		ServersView view = new ServersView();
+		view.open();
+		try {
+			view.getServer(getConfiguredServerName()).stop();
+			new WaitWhile(new JobIsRunning());
+		} catch (ServersViewException ex) {
+			LOGGER.info("The server " + getConfiguredServerName() + " is not running");			
+		} catch (EclipseLayerException ex) {
+			LOGGER.warning("No server with name " + getConfiguredServerName() + " is avaliable");
+		} 
 	}
 	
 	@Before
@@ -95,17 +106,6 @@ public abstract class SOAPTestBase {
 	@AfterClass
 	public static void deleteAll() {
 		ProjectHelper.deleteAllProjects();
-
-		ServersView view = new ServersView();
-		view.open();
-		try {
-			view.getServer(getConfiguredServerName()).stop();
-			new WaitWhile(new JobIsRunning());
-		} catch (ServersViewException ex) {
-			LOGGER.info("The server " + getConfiguredServerName() + " is not running");			
-		} catch (EclipseLayerException ex) {
-			LOGGER.warning("No server with name " + getConfiguredServerName() + " is avaliable");
-		} 
 	}
 
 	protected static String getConfiguredRuntimeName() {
