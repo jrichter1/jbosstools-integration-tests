@@ -120,9 +120,11 @@ public abstract class WebServiceTestBase extends SOAPTestBase {
 		wizard.open();
 
 		WebServiceFirstWizardPage page = new WebServiceFirstWizardPage();
+		new WaitWhile(new JobIsRunning(), TimePeriod.NORMAL);
 		page.setServiceType(type);
 		page.setSource(source);
 		page.setServerRuntime(getConfiguredServerName());
+		AbstractWait.sleep(TimePeriod.SHORT);
 		page.setWebServiceRuntime(serviceRuntime.getName());
 		try {
 			page.setServiceProject(getWsProjectName());
@@ -160,7 +162,7 @@ public abstract class WebServiceTestBase extends SOAPTestBase {
 				Assert.fail(msg);
 			}
 		}
-		new WaitWhile(new JobIsRunning(), TimePeriod.LONG);
+		new WaitWhile(new JobIsRunning(), TimePeriod.NORMAL);
 	}
 
 	private void checkErrorDialog(WizardDialog openedWizard) {

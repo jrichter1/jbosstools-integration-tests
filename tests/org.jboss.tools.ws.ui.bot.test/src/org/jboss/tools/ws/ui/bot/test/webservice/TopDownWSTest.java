@@ -22,6 +22,9 @@ import org.jboss.reddeer.core.condition.ShellWithTextIsActive;
 import org.jboss.reddeer.eclipse.core.resources.ProjectItem;
 import org.jboss.reddeer.eclipse.exception.EclipseLayerException;
 import org.jboss.reddeer.eclipse.jdt.ui.ProjectExplorer;
+import org.jboss.reddeer.eclipse.wst.server.ui.view.Server;
+import org.jboss.reddeer.eclipse.wst.server.ui.view.ServersView;
+import org.jboss.reddeer.eclipse.wst.server.ui.view.ServersViewException;
 import org.jboss.reddeer.swt.exception.SWTLayerException;
 import org.jboss.reddeer.swt.impl.button.PushButton;
 import org.jboss.reddeer.swt.impl.shell.DefaultShell;
@@ -173,6 +176,13 @@ public class TopDownWSTest extends WebServiceTestBase {
 		topDownWS(
 				TopDownWSTest.class.getResourceAsStream("/resources/jbossws/ClassB.wsdl"),
 				WebServiceRuntime.JBOSS_WS, pkg);
+		Server server = new ServersView().getServer(getConfiguredServerName());
+		try {
+			server.start();
+			new WaitWhile(new JobIsRunning(), TimePeriod.LONG);
+		} catch (ServersViewException ex) {
+			LOGGER.info("Server " + getConfiguredServerName() + " is already running");
+		}
 		switch (getLevel()) {
 		case DEVELOP:
 		case ASSEMBLE:
@@ -180,11 +190,8 @@ public class TopDownWSTest extends WebServiceTestBase {
 		/*workaround for https://bugs.eclipse.org/bugs/show_bug.cgi?id=377624
 		 choosing 'Deploy' should normally deploy the project automatically*/
 		case DEPLOY:
-			ServersViewHelper.runProjectOnServer(getEarProjectName());
-			break;
-			
+			ServersViewHelper.runProjectOnServer(getEarProjectName());			
 		default:
-			new WaitWhile(new JobIsRunning(), TimePeriod.LONG);
 			break;
 		}
 		DeploymentHelper.assertServiceDeployed(DeploymentHelper.getWSDLUrl(getWsProjectName(), getWsName()), 10000);

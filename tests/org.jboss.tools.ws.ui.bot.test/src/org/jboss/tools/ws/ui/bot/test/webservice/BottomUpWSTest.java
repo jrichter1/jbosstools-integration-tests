@@ -13,6 +13,9 @@ package org.jboss.tools.ws.ui.bot.test.webservice;
 import org.jboss.reddeer.common.wait.TimePeriod;
 import org.jboss.reddeer.common.wait.WaitWhile;
 import org.jboss.reddeer.core.condition.JobIsRunning;
+import org.jboss.reddeer.eclipse.wst.server.ui.view.Server;
+import org.jboss.reddeer.eclipse.wst.server.ui.view.ServersView;
+import org.jboss.reddeer.eclipse.wst.server.ui.view.ServersViewException;
 import org.jboss.tools.ws.reddeer.ui.wizards.wst.WebServiceWizardPageBase.SliderLevel;
 import org.jboss.tools.ws.ui.bot.test.utils.DeploymentHelper;
 import org.jboss.tools.ws.ui.bot.test.utils.ServersViewHelper;
@@ -94,6 +97,13 @@ public class BottomUpWSTest extends WebServiceTestBase {
 	protected void bottomUpJbossWebService() {
 		bottomUpWS(BottomUpWSTest.class.getResourceAsStream("/resources/jbossws/ClassA.java.ws"),
 				WebServiceRuntime.JBOSS_WS);
+		Server server = new ServersView().getServer(getConfiguredServerName());
+		try {
+			server.start();
+			new WaitWhile(new JobIsRunning(), TimePeriod.LONG);
+		} catch (ServersViewException ex) {
+			LOGGER.info("Server " + getConfiguredServerName() + " is already running");
+		}
 		switch (getLevel()) {
 		case DEVELOP:
 		case ASSEMBLE:
@@ -105,10 +115,8 @@ public class BottomUpWSTest extends WebServiceTestBase {
 			 */
 		case DEPLOY:
 			ServersViewHelper.runProjectOnServer(getEarProjectName());
-			break;
 
 		default:
-			new WaitWhile(new JobIsRunning(), TimePeriod.LONG);
 			break;
 		}
 		DeploymentHelper.assertServiceDeployed(DeploymentHelper.getWSDLUrl(getWsProjectName(), getWsName()), 10000);

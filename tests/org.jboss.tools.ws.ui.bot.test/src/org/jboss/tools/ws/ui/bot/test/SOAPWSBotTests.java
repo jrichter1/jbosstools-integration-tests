@@ -24,13 +24,13 @@ import org.junit.runners.Suite.SuiteClasses;
 	SampleSoapServicesTest.class,
 	SOAPWSToolingIntegrationTest.class,
 	BottomUpWSTest.class,
-	TopDownWSTest.class, 
-	WsClientTest.class, 
-	WsTesterTest.class,
-	EAPFromJavaTest.class,
-	EAPFromWSDLTest.class,
+//	TopDownWSTest.class, 
+//	WsClientTest.class, 
+//	WsTesterTest.class,
+//	EAPFromJavaTest.class,
+//	EAPFromWSDLTest.class,
 	
-	CxfWsClientTest.class
+//	CxfWsClientTest.class
 })
 public class SOAPWSBotTests {
 

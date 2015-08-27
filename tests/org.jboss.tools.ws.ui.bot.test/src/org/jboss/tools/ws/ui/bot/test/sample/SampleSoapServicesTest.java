@@ -23,8 +23,8 @@ import javax.xml.namespace.QName;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
-import org.jboss.reddeer.common.wait.WaitWhile;
-import org.jboss.reddeer.core.condition.JobIsRunning;
+import org.jboss.reddeer.common.wait.AbstractWait;
+import org.jboss.reddeer.common.wait.TimePeriod;
 import org.jboss.reddeer.workbench.impl.editor.TextEditor;
 import org.jboss.tools.ws.reddeer.ui.wizards.ws.ui.SampleWebServiceWizard;
 import org.jboss.tools.ws.reddeer.ui.wizards.ws.ui.SimpleWebServiceWizard;
@@ -127,8 +127,9 @@ public class SampleSoapServicesTest extends SOAPTestBase {
 		Asserts.assertContain(dd, "<servlet-name>" + svcName + "</servlet-name>");
 		ServersViewHelper.removeProjectFromServer(project, getConfiguredServerName());
 		ServersViewHelper.runProjectOnServer(project);
+		waitForPublish();
 		try {
-			new WaitWhile(new JobIsRunning());
+			AbstractWait.sleep(TimePeriod.getCustom(3));
 			WSClient c = new WSClient(new URL("http://" + SERVER_URL + "/" + project + "/" + svcName),
 					new QName("http://" + svcPkg + "/", svcClass + "Service"),
 					new QName("http://" + svcPkg + "/", svcClass + "Port"));
