@@ -26,7 +26,7 @@ import org.junit.runners.Suite.SuiteClasses;
 	BottomUpWSTest.class,
 	TopDownWSTest.class, 
 	WsClientTest.class, 
-	WsTesterTest.class,
+//	WsTesterTest.class,
 	EAPFromJavaTest.class,
 	EAPFromWSDLTest.class,
 	

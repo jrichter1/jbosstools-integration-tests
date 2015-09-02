@@ -17,6 +17,7 @@ import java.util.List;
 
 import javax.jws.WebService;
 
+import org.jboss.reddeer.core.exception.CoreLayerException;
 import org.jboss.reddeer.eclipse.core.resources.Project;
 import org.jboss.reddeer.eclipse.core.resources.ProjectItem;
 import org.jboss.reddeer.eclipse.jdt.ui.packageexplorer.PackageExplorer;
@@ -184,7 +185,7 @@ public class WSClientTestTemplate extends SOAPTestBase {
 				pkg.select();
 				pkg.delete();
 			}
-		} catch(SWTLayerException e) {
+		} catch(CoreLayerException e) {
 			pe.open();
 			src = p.getProjectItem("src");
 			List<ProjectItem> pkgs = src.getChildren();

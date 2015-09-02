@@ -10,6 +10,7 @@ import org.jboss.reddeer.common.wait.WaitUntil;
 import org.jboss.reddeer.common.wait.WaitWhile;
 import org.jboss.reddeer.core.condition.JobIsRunning;
 import org.jboss.reddeer.core.condition.ShellWithTextIsActive;
+import org.jboss.reddeer.core.exception.CoreLayerException;
 import org.jboss.reddeer.eclipse.exception.EclipseLayerException;
 import org.jboss.reddeer.eclipse.ui.console.ConsoleView;
 import org.jboss.reddeer.eclipse.wst.server.ui.view.ServersView;
@@ -28,35 +29,41 @@ import org.junit.Assert;
 
 public class WebServiceClientHelper {
 
-	private WebServiceClientHelper() {};
-	
+	private WebServiceClientHelper() {
+	};
+
 	/**
 	 * Method creates Web Service Client for entered wsdl file, web project,
 	 * level of creation and name of package for client
+	 * 
 	 * @param wsdl
 	 * @param targetProject
 	 * @param level
 	 * @param pkg
 	 */
-	public static void createClient(String serverName, String wsdl,
-			WebServiceRuntime runtime, String targetProject,
+	public static void createClient(String serverName, String wsdl, WebServiceRuntime runtime, String targetProject,
 			String earProject, SliderLevel level, String pkg) {
 		WebServiceClientWizard wizard = new WebServiceClientWizard();
 		wizard.open();
 
 		WebServiceClientWizardPage page = new WebServiceClientWizardPage();
 		new WaitWhile(new JobIsRunning(), TimePeriod.NORMAL, false);
-		
+
 		page.setSource(wsdl);
 		new WaitUntil(new WebServiceClientPageIsValidated(), TimePeriod.getCustom(2), true);
 
 		page.setClientSlider(level);
 		page.setServerRuntime(serverName);
 		page.setWebServiceRuntime(runtime.getName());
-		page.setClientProject(targetProject);
-		page.setClientEARProject(earProject);
+		try {
+			page.setClientProject(targetProject);
+			page.setClientEARProject(earProject);
+		} catch (CoreLayerException ex) {
+			//ignore and try to continue with default values
+			ex.printStackTrace();
+		}
 		AbstractWait.sleep(TimePeriod.SHORT);
-		if (pkg != null && pkg.trim().length()>0) {
+		if (pkg != null && pkg.trim().length() > 0) {
 			wizard.next();
 			new WaitWhile(new ShellWithTextIsActive("Progress Information"));
 			page.setPackageName(pkg);
@@ -64,17 +71,17 @@ public class WebServiceClientHelper {
 		wizard.finish();
 
 		checkErrorDialog(wizard);
-		
-		//check if there is any error in console output
+
+		// check if there is any error in console output
 		checkErrorInConsoleOutput(serverName, earProject);
 	}
 
 	/**
-	 * let's fail if there's some error in the wizard,
-	 * and close error dialog and the wizard so other tests
-	 * can continue
+	 * let's fail if there's some error in the wizard, and close error dialog
+	 * and the wizard so other tests can continue
 	 * 
-	 * @param wsWizard if error dialog appeared the parent wizard will be closed
+	 * @param wsWizard
+	 *            if error dialog appeared the parent wizard will be closed
 	 */
 	private static void checkErrorDialog(WizardDialog wsWizard) {
 		Shell shell = new DefaultShell();
@@ -94,16 +101,14 @@ public class WebServiceClientHelper {
 		if (consoleText.contains("ERROR")) {
 			consoleView.clearConsole();
 			String deploymentInfoMessage = " [deployment status: ";
-			if(projectIsDeployed(serverName, projectName)) {
+			if (projectIsDeployed(serverName, projectName)) {
 				deploymentInfoMessage += "deployed";
 			} else {
 				deploymentInfoMessage += "NOT DEPLOYED";
 			}
 			deploymentInfoMessage += "]";
-			
-			fail("Console contains error"
-					+ deploymentInfoMessage
-					+ "\n" + consoleText);
+
+			fail("Console contains error" + deploymentInfoMessage + "\n" + consoleText);
 		}
 	}
 
@@ -119,7 +124,7 @@ public class WebServiceClientHelper {
 	}
 
 	/**
-	 *  
+	 * 
 	 * @param serverName
 	 * @param projectName
 	 * @return
@@ -130,7 +135,7 @@ public class WebServiceClientHelper {
 			ServersView sw = new ServersView();
 			sw.getServer(serverName).getModule(projectName);
 			return true;
-		} catch(EclipseLayerException e) {
+		} catch (EclipseLayerException e) {
 			return false;
 		}
 	}
@@ -141,7 +146,7 @@ public class WebServiceClientHelper {
 
 		private static final String REQUIRED_TEXT = "Select a service definition and move the slider to set the level of client generation.";
 		private String infoText;
-		
+
 		@Override
 		public boolean test() {
 			infoText = page.getInfoText();
@@ -152,6 +157,6 @@ public class WebServiceClientHelper {
 		public String description() {
 			return "Required text is '" + REQUIRED_TEXT + "' but there is '" + infoText + "'";
 		}
-		
+
 	}
 }

@@ -82,7 +82,8 @@ public class ServersViewHelper {
 		
 		for (ServerModule module : modules) {
 			if (module != null) {
-				AbstractWait.sleep(TimePeriod.SHORT);
+				new WaitWhile(new JobIsRunning(), TimePeriod.LONG);
+				serversView.activate();
 				module.remove();
 			}
 		}

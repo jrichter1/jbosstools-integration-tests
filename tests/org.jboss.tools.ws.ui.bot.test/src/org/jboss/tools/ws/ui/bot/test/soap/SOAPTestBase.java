@@ -96,14 +96,11 @@ public abstract class SOAPTestBase {
 	
 	@After
 	public void cleanup() {
-		new WaitWhile(new JobIsRunning(), TimePeriod.LONG);
 		ServersViewHelper.removeAllProjectsFromServer(getConfiguredServerName());
 		new WaitWhile(new JobIsRunning(), TimePeriod.LONG);
 		
 		ConsoleView console = new ConsoleView();
-		if (!console.isOpened()) {
-			console.open();
-		}
+		console.open();
 		console.clearConsole();
 	}
 
