@@ -64,7 +64,7 @@
 									<type>zip</type>
 								</artifactItem>
 							</artifactItems>
-							<outputDirectory>${project.basedir}/resources/</outputDirectory>
+							<outputDirectory>${project.basedir}/resources</outputDirectory>
 						</configuration>
 					</execution>
 					<execution>
