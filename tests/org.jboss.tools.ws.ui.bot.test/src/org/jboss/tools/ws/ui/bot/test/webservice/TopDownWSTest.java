@@ -14,17 +14,12 @@ import java.util.logging.Level;
 
 import org.jboss.reddeer.common.exception.WaitTimeoutExpiredException;
 import org.jboss.reddeer.common.matcher.RegexMatcher;
-import org.jboss.reddeer.common.wait.TimePeriod;
 import org.jboss.reddeer.common.wait.WaitUntil;
 import org.jboss.reddeer.common.wait.WaitWhile;
-import org.jboss.reddeer.core.condition.JobIsRunning;
 import org.jboss.reddeer.core.condition.ShellWithTextIsActive;
 import org.jboss.reddeer.eclipse.core.resources.ProjectItem;
 import org.jboss.reddeer.eclipse.exception.EclipseLayerException;
 import org.jboss.reddeer.eclipse.jdt.ui.ProjectExplorer;
-import org.jboss.reddeer.eclipse.wst.server.ui.view.Server;
-import org.jboss.reddeer.eclipse.wst.server.ui.view.ServersView;
-import org.jboss.reddeer.eclipse.wst.server.ui.view.ServersViewException;
 import org.jboss.reddeer.swt.exception.SWTLayerException;
 import org.jboss.reddeer.swt.impl.button.PushButton;
 import org.jboss.reddeer.swt.impl.shell.DefaultShell;
@@ -39,7 +34,7 @@ import org.junit.Test;
  *
  */
 public class TopDownWSTest extends WebServiceTestBase {
-
+	
 	@Override
 	protected String getEarProjectName() {
 		return "TopDownWS-ear";
@@ -131,9 +126,6 @@ public class TopDownWSTest extends WebServiceTestBase {
 		prepareAssembleService();
 		
 		topDownWS(null);
-		
-		/* If there were WSDL file than it was also used in web.xml */
-		confirmWebServiceNameOverwrite();
 	}
 
 	private void confirmWebServiceNameOverwrite() {
@@ -176,13 +168,13 @@ public class TopDownWSTest extends WebServiceTestBase {
 		topDownWS(
 				TopDownWSTest.class.getResourceAsStream("/resources/jbossws/ClassB.wsdl"),
 				WebServiceRuntime.JBOSS_WS, pkg);
-		Server server = new ServersView().getServer(getConfiguredServerName());
-		try {
-			server.start();
-			new WaitWhile(new JobIsRunning(), TimePeriod.LONG);
-		} catch (ServersViewException ex) {
-			LOGGER.info("Server " + getConfiguredServerName() + " is already running");
-		}
+		
+		/* If a service with the same name exists, overwrite it */
+		confirmWebServiceNameOverwrite();
+		
+		// If the server was stopped before the test, start it
+		ServersViewHelper.startServer(getConfiguredServerName());
+		
 		switch (getLevel()) {
 		case DEVELOP:
 		case ASSEMBLE:
@@ -192,6 +184,7 @@ public class TopDownWSTest extends WebServiceTestBase {
 		case DEPLOY:
 			ServersViewHelper.runProjectOnServer(getEarProjectName());			
 		default:
+			ServersViewHelper.waitForPublish(getConfiguredServerName());
 			break;
 		}
 		DeploymentHelper.assertServiceDeployed(DeploymentHelper.getWSDLUrl(getWsProjectName(), getWsName()), 10000);

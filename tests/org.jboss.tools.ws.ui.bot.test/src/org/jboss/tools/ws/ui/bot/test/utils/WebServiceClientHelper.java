@@ -8,6 +8,7 @@ import org.jboss.reddeer.common.wait.AbstractWait;
 import org.jboss.reddeer.common.wait.TimePeriod;
 import org.jboss.reddeer.common.wait.WaitUntil;
 import org.jboss.reddeer.common.wait.WaitWhile;
+import org.jboss.reddeer.core.condition.JobIsRunning;
 import org.jboss.reddeer.core.condition.ShellWithTextIsActive;
 import org.jboss.reddeer.eclipse.exception.EclipseLayerException;
 import org.jboss.reddeer.eclipse.ui.console.ConsoleView;
@@ -44,6 +45,7 @@ public class WebServiceClientHelper {
 		wizard.open();
 
 		WebServiceClientWizardPage page = new WebServiceClientWizardPage();
+		new WaitWhile(new JobIsRunning(), TimePeriod.NORMAL, false);
 		
 		page.setSource(wsdl);
 		new WaitUntil(new WebServiceClientPageIsValidated(), TimePeriod.getCustom(2), true);
@@ -62,7 +64,7 @@ public class WebServiceClientHelper {
 		wizard.finish();
 
 		checkErrorDialog(wizard);
-
+		
 		//check if there is any error in console output
 		checkErrorInConsoleOutput(serverName, earProject);
 	}

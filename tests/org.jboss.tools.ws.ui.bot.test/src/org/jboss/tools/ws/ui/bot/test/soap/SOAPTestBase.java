@@ -5,7 +5,6 @@ import java.util.logging.Logger;
 
 import org.jboss.ide.eclipse.as.reddeer.server.requirement.ServerRequirement;
 import org.jboss.ide.eclipse.as.reddeer.server.requirement.ServerRequirement.JBossServer;
-import org.jboss.reddeer.common.wait.AbstractWait;
 import org.jboss.reddeer.common.wait.TimePeriod;
 import org.jboss.reddeer.common.wait.WaitWhile;
 import org.jboss.reddeer.core.condition.JobIsRunning;
@@ -66,10 +65,13 @@ public abstract class SOAPTestBase {
 	public static void initialize() {
 		EclipseCDIHelper.disableFolding();
 
+		// Every test class starts with the server stopped and clean to avoid deployment issues
 		ServersView view = new ServersView();
 		view.open();
 		try {
-			view.getServer(getConfiguredServerName()).stop();
+			Server server = view.getServer(getConfiguredServerName());
+			view.activate();
+			server.stop();
 			new WaitWhile(new JobIsRunning(), TimePeriod.NORMAL);
 		} catch (ServersViewException ex) {
 			LOGGER.info("The server " + getConfiguredServerName() + " is not running");			
@@ -94,9 +96,9 @@ public abstract class SOAPTestBase {
 	
 	@After
 	public void cleanup() {
+		new WaitWhile(new JobIsRunning(), TimePeriod.LONG);
 		ServersViewHelper.removeAllProjectsFromServer(getConfiguredServerName());
 		new WaitWhile(new JobIsRunning(), TimePeriod.LONG);
-		ServersViewHelper.serverClean(getConfiguredServerName());
 		
 		ConsoleView console = new ConsoleView();
 		if (!console.isOpened()) {
@@ -132,15 +134,6 @@ public abstract class SOAPTestBase {
 
 	protected void setWsProjectName(String wsProjectName) {
 		this.wsProjectName = wsProjectName;
-	}
-
-	protected void waitForPublish() {
-		ServersView view = new ServersView();
-		view.open();
-		AbstractWait.sleep(TimePeriod.SHORT);
-		Server server = view.getServer(getConfiguredServerName());
-		view.open();
-		server.publish();
 	}
 	
 	protected abstract String getEarProjectName();

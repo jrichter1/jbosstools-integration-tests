@@ -26,7 +26,6 @@ import org.jboss.reddeer.common.wait.TimePeriod;
 import org.jboss.reddeer.common.wait.WaitUntil;
 import org.jboss.reddeer.common.wait.WaitWhile;
 import org.jboss.reddeer.core.condition.JobIsRunning;
-import org.jboss.reddeer.core.exception.CoreLayerException;
 import org.jboss.reddeer.jface.wizard.WizardDialog;
 import org.jboss.reddeer.swt.api.Button;
 import org.jboss.reddeer.swt.api.Shell;
@@ -126,12 +125,9 @@ public abstract class WebServiceTestBase extends SOAPTestBase {
 		page.setServerRuntime(getConfiguredServerName());
 		AbstractWait.sleep(TimePeriod.SHORT);
 		page.setWebServiceRuntime(serviceRuntime.getName());
-		try {
-			page.setServiceProject(getWsProjectName());
-			page.setServiceEARProject(getEarProjectName());
-		} catch (CoreLayerException ex) {
-			LOGGER.warning("Service project selection failed, attempting to continue with default");
-		}
+		page.setServiceProject(getWsProjectName());
+		page.setServiceEARProject(getEarProjectName());
+		AbstractWait.sleep(TimePeriod.SHORT);
 		page.setServiceSlider(level);
 		if (page.isClientEnabled()) {
 			page.setClientSlider(SliderLevel.NO_CLIENT);
@@ -162,7 +158,6 @@ public abstract class WebServiceTestBase extends SOAPTestBase {
 				Assert.fail(msg);
 			}
 		}
-		new WaitWhile(new JobIsRunning(), TimePeriod.NORMAL);
 	}
 
 	private void checkErrorDialog(WizardDialog openedWizard) {

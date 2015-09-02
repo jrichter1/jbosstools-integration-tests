@@ -185,9 +185,8 @@ public class ProjectHelper {
 	}
 
 	public static void deleteAllProjects() {
-		ProjectExplorer projectExplorer = new ProjectExplorer();
+		projectExplorer = new ProjectExplorer();
 		projectExplorer.activate();
-		AbstractWait.sleep(TimePeriod.SHORT);
 		projectExplorer.deleteAllProjects();
 	}
 

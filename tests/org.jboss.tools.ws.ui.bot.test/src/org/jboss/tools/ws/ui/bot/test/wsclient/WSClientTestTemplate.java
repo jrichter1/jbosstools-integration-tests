@@ -17,9 +17,6 @@ import java.util.List;
 
 import javax.jws.WebService;
 
-import org.jboss.reddeer.common.wait.TimePeriod;
-import org.jboss.reddeer.common.wait.WaitWhile;
-import org.jboss.reddeer.core.condition.JobIsRunning;
 import org.jboss.reddeer.eclipse.core.resources.Project;
 import org.jboss.reddeer.eclipse.core.resources.ProjectItem;
 import org.jboss.reddeer.eclipse.jdt.ui.packageexplorer.PackageExplorer;
@@ -30,7 +27,6 @@ import org.jboss.tools.ws.ui.bot.test.soap.SOAPTestBase;
 import org.jboss.tools.ws.ui.bot.test.utils.ServersViewHelper;
 import org.jboss.tools.ws.ui.bot.test.utils.WebServiceClientHelper;
 import org.jboss.tools.ws.ui.bot.test.webservice.WebServiceRuntime;
-import org.junit.After;
 import org.junit.Test;
 
 /**
@@ -108,14 +104,14 @@ public class WSClientTestTemplate extends SOAPTestBase {
 		clientTest(null);
 	}
 
-	@After
 	@Override
 	public void cleanup() {
-		deleteAllPackages();
 		super.cleanup();
+		deleteAllPackages();
 	}
 
 	protected void clientTest(String targetPkg) {
+		ServersViewHelper.startServer(getConfiguredServerName());
 		WebServiceClientHelper.createClient(
 				getConfiguredServerName(),
 				 "http://soaptest.parasoft.com/calculator.wsdl",
@@ -125,7 +121,6 @@ public class WSClientTestTemplate extends SOAPTestBase {
 				getLevel(),
 				targetPkg);
 
-		new WaitWhile(new JobIsRunning(), TimePeriod.LONG);
 		assertThatExpectedFilesExists(targetPkg);
 		
 		assertThatEARProjectIsDeployed();
@@ -159,6 +154,9 @@ public class WSClientTestTemplate extends SOAPTestBase {
 	private void assertThatEARProjectIsDeployed() {
 		switch (getLevel()) {
 		
+		case ASSEMBLE:
+		case DEVELOP:
+
 		/*workaround for https://bugs.eclipse.org/bugs/show_bug.cgi?id=428982
 		 choosing 'Deploy' should normally deploy the project automatically*/
 		case DEPLOY:
@@ -167,6 +165,7 @@ public class WSClientTestTemplate extends SOAPTestBase {
 		case TEST:
 		case START:
 		case INSTALL:
+			ServersViewHelper.waitForPublish(getConfiguredServerName());
 			if(!WebServiceClientHelper.projectIsDeployed(getConfiguredServerName(), getEarProjectName())) {
 				fail("Project was not found on the server.");
 			}
