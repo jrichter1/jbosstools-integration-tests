@@ -13,6 +13,8 @@ package org.jboss.tools.ws.reddeer.ui.wizards.wst;
 import org.hamcrest.core.AnyOf;
 import org.hamcrest.core.Is;
 import org.hamcrest.core.StringStartsWith;
+import org.jboss.reddeer.common.wait.TimePeriod;
+import org.jboss.reddeer.common.wait.WaitUntil;
 import org.jboss.reddeer.core.exception.CoreLayerException;
 import org.jboss.reddeer.core.matcher.WithLabelMatcher;
 import org.jboss.reddeer.core.matcher.WithMnemonicTextMatcher;
@@ -20,6 +22,7 @@ import org.jboss.reddeer.jface.wizard.WizardPage;
 import org.jboss.reddeer.swt.api.Combo;
 import org.jboss.reddeer.swt.api.Group;
 import org.jboss.reddeer.swt.api.Text;
+import org.jboss.reddeer.swt.condition.WidgetIsEnabled;
 import org.jboss.reddeer.swt.impl.button.PushButton;
 import org.jboss.reddeer.swt.impl.combo.DefaultCombo;
 import org.jboss.reddeer.swt.impl.combo.LabeledCombo;
@@ -60,6 +63,9 @@ public abstract class WebServiceWizardPageBase extends WizardPage {
 	}
 
 	public void setServerRuntime(String name) {
+		new WaitUntil(new WidgetIsEnabled(new DefaultHyperlink(
+				new WithMnemonicTextMatcher(StringStartsWith.startsWith("Server runtime:"))
+				)));
 		new DefaultHyperlink(
 				new WithMnemonicTextMatcher(StringStartsWith.startsWith("Server runtime:"))
 				).activate();
@@ -68,6 +74,9 @@ public abstract class WebServiceWizardPageBase extends WizardPage {
 	}
 
 	public void setWebServiceRuntime(String name) {
+		new WaitUntil(new WidgetIsEnabled(new DefaultHyperlink(
+				new WithMnemonicTextMatcher(StringStartsWith.startsWith("Web service runtime:"))
+				)));
 		new DefaultHyperlink(
 				new WithMnemonicTextMatcher(StringStartsWith.startsWith("Web service runtime:"))
 				).activate();
@@ -77,6 +86,9 @@ public abstract class WebServiceWizardPageBase extends WizardPage {
 	}
 
 	protected void setTargetProject(String label, String name) {
+		new WaitUntil(new WidgetIsEnabled(new DefaultHyperlink(
+				new WithMnemonicTextMatcher(StringStartsWith.startsWith(label))
+				)));
 		new DefaultHyperlink(
 				new WithMnemonicTextMatcher(StringStartsWith.startsWith(label))
 				).activate();
@@ -96,6 +108,7 @@ public abstract class WebServiceWizardPageBase extends WizardPage {
 	 * @param idx
 	 */
 	protected void setSlider(SliderLevel level, int idx) {
+		new WaitUntil(new WidgetIsEnabled(new DefaultScale(idx)), TimePeriod.getCustom(5));
 		new DefaultScale(idx).setSelection(level.ordinal());
 	}
 

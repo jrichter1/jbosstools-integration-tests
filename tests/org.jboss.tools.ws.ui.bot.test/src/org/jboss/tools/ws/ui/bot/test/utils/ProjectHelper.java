@@ -58,7 +58,7 @@ public class ProjectHelper {
 
 	private ProjectHelper() {
 	};
-	
+
 	/**
 	 * Method creates basic java class for entered project with entered package
 	 * and class name
@@ -214,7 +214,7 @@ public class ProjectHelper {
 		cleanAllProjects();
 		AbstractWait.sleep(TimePeriod.getCustom(2));
 	}
-	
+
 	/**
 	 * Add configured runtime into project as targeted runtime
 	 * 

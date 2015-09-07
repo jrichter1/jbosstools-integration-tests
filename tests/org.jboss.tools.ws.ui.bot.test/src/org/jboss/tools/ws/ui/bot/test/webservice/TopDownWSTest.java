@@ -82,9 +82,6 @@ public class TopDownWSTest extends WebServiceTestBase {
 		prepareAssembleService();
 
 		topDownWS();
-
-		/* If there were WSDL file than it was also used in web.xml */
-		confirmWebServiceNameOverwrite();
 	}
 	
 	@Test
@@ -184,9 +181,9 @@ public class TopDownWSTest extends WebServiceTestBase {
 		case DEPLOY:
 			ServersViewHelper.runProjectOnServer(getEarProjectName());			
 		default:
-			ServersViewHelper.waitForPublish(getConfiguredServerName());
 			break;
 		}
+		ServersViewHelper.waitForPublish(getConfiguredServerName());
 		DeploymentHelper.assertServiceDeployed(DeploymentHelper.getWSDLUrl(getWsProjectName(), getWsName()), 10000);
 	}
 

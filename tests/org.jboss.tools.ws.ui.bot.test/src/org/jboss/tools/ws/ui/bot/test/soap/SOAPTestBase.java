@@ -8,6 +8,7 @@ import org.jboss.ide.eclipse.as.reddeer.server.requirement.ServerRequirement.JBo
 import org.jboss.reddeer.common.wait.TimePeriod;
 import org.jboss.reddeer.common.wait.WaitWhile;
 import org.jboss.reddeer.core.condition.JobIsRunning;
+import org.jboss.reddeer.core.handler.ShellHandler;
 import org.jboss.reddeer.eclipse.exception.EclipseLayerException;
 import org.jboss.reddeer.eclipse.ui.console.ConsoleView;
 import org.jboss.reddeer.eclipse.ui.perspectives.JavaEEPerspective;
@@ -16,6 +17,9 @@ import org.jboss.reddeer.eclipse.wst.server.ui.view.ServersView;
 import org.jboss.reddeer.eclipse.wst.server.ui.view.ServersViewException;
 import org.jboss.reddeer.junit.requirement.inject.InjectRequirement;
 import org.jboss.reddeer.requirements.openperspective.OpenPerspectiveRequirement.OpenPerspective;
+import org.jboss.reddeer.swt.impl.button.PushButton;
+import org.jboss.reddeer.swt.impl.button.RadioButton;
+import org.jboss.reddeer.swt.impl.menu.ShellMenu;
 import org.jboss.tools.ws.reddeer.ui.wizards.wst.WebServiceWizardPageBase.SliderLevel;
 import org.jboss.tools.ws.ui.bot.test.WSTestBase;
 import org.jboss.tools.ws.ui.bot.test.utils.EclipseCDIHelper;
@@ -100,13 +104,25 @@ public abstract class SOAPTestBase {
 		new WaitWhile(new JobIsRunning(), TimePeriod.LONG);
 		
 		ConsoleView console = new ConsoleView();
-		console.open();
+		if (!console.isOpened()) {
+			console.open();
+		}
+		console.activate();
 		console.clearConsole();
+		
+		ShellHandler.getInstance().closeAllNonWorbenchShells();
 	}
 
 	@AfterClass
 	public static void deleteAll() {
 		ProjectHelper.deleteAllProjects();
+	}
+	
+	protected void cleanProjects() {
+		new ShellMenu("Project", "Clean...").select();
+		new RadioButton("Clean all projects").click();
+		new PushButton("OK").click();
+		new WaitWhile(new JobIsRunning(), TimePeriod.NORMAL, false);
 	}
 
 	protected static String getConfiguredRuntimeName() {

@@ -4,13 +4,11 @@ import static org.junit.Assert.fail;
 
 import org.eclipse.swt.SWTException;
 import org.jboss.reddeer.common.condition.WaitCondition;
-import org.jboss.reddeer.common.wait.AbstractWait;
 import org.jboss.reddeer.common.wait.TimePeriod;
 import org.jboss.reddeer.common.wait.WaitUntil;
 import org.jboss.reddeer.common.wait.WaitWhile;
 import org.jboss.reddeer.core.condition.JobIsRunning;
 import org.jboss.reddeer.core.condition.ShellWithTextIsActive;
-import org.jboss.reddeer.core.exception.CoreLayerException;
 import org.jboss.reddeer.eclipse.exception.EclipseLayerException;
 import org.jboss.reddeer.eclipse.ui.console.ConsoleView;
 import org.jboss.reddeer.eclipse.wst.server.ui.view.ServersView;
@@ -55,14 +53,9 @@ public class WebServiceClientHelper {
 		page.setClientSlider(level);
 		page.setServerRuntime(serverName);
 		page.setWebServiceRuntime(runtime.getName());
-		try {
-			page.setClientProject(targetProject);
-			page.setClientEARProject(earProject);
-		} catch (CoreLayerException ex) {
-			//ignore and try to continue with default values
-			ex.printStackTrace();
-		}
-		AbstractWait.sleep(TimePeriod.SHORT);
+		page.setClientProject(targetProject);
+		page.setClientEARProject(earProject);
+		
 		if (pkg != null && pkg.trim().length() > 0) {
 			wizard.next();
 			new WaitWhile(new ShellWithTextIsActive("Progress Information"));

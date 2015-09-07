@@ -34,6 +34,9 @@ import org.jboss.reddeer.swt.api.StyledText;
 import org.jboss.reddeer.swt.condition.WidgetIsEnabled;
 import org.jboss.reddeer.swt.exception.SWTLayerException;
 import org.jboss.reddeer.swt.impl.button.PushButton;
+import org.jboss.reddeer.swt.impl.button.RadioButton;
+import org.jboss.reddeer.swt.impl.combo.DefaultCombo;
+import org.jboss.reddeer.swt.impl.menu.ShellMenu;
 import org.jboss.reddeer.swt.impl.shell.DefaultShell;
 import org.jboss.reddeer.swt.impl.styledtext.DefaultStyledText;
 import org.jboss.reddeer.swt.impl.text.DefaultText;
@@ -107,13 +110,8 @@ public abstract class WebServiceTestBase extends SOAPTestBase {
 			break;
 		}
 
-		// refresh workspace - workaround for JBIDE-6731
-		try {
-			ResourcesPlugin.getWorkspace().getRoot().refreshLocal(IWorkspaceRoot.DEPTH_INFINITE,
-					new NullProgressMonitor());
-		} catch (CoreException e) {
-			LOGGER.log(Level.WARNING, e.getMessage(), e);
-		}
+		// clean projects and wait for eclipse to build the workspace
+		cleanProjects();
 
 		// create a web service
 		WebServiceWizard wizard = new WebServiceWizard();
@@ -124,20 +122,15 @@ public abstract class WebServiceTestBase extends SOAPTestBase {
 		page.setServiceType(type);
 		page.setSource(source);
 		page.setServerRuntime(getConfiguredServerName());
-		AbstractWait.sleep(TimePeriod.SHORT);
 		page.setWebServiceRuntime(serviceRuntime.getName());
-		try {
-			page.setServiceProject(getWsProjectName());
-			page.setServiceEARProject(getEarProjectName());
-		} catch (CoreLayerException ex) {
-			LOGGER.warning("Service project selection failed, attempting to continue with default");
-		}
-		AbstractWait.sleep(TimePeriod.SHORT);
+		page.setServiceProject(getWsProjectName());
+		page.setServiceEARProject(getEarProjectName());
+
 		page.setServiceSlider(level);
 		if (page.isClientEnabled()) {
 			page.setClientSlider(SliderLevel.NO_CLIENT);
 		}
-		AbstractWait.sleep(TimePeriod.SHORT);
+
 		wizard.next();
 
 		checkErrorDialog(wizard);
