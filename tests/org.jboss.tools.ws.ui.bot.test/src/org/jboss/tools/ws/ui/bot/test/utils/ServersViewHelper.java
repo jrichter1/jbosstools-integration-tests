@@ -3,6 +3,7 @@ package org.jboss.tools.ws.ui.bot.test.utils;
 import java.util.List;
 import java.util.logging.Logger;
 
+import org.hamcrest.core.StringContains;
 import org.hamcrest.core.StringStartsWith;
 import org.jboss.reddeer.common.condition.WaitCondition;
 import org.jboss.reddeer.common.wait.AbstractWait;
@@ -178,7 +179,7 @@ public class ServersViewHelper {
 	private static void clearServerConsole(String serverName) {
 		ConsoleView consoleView = new ConsoleView();
 		consoleView.open();
-		consoleView.switchConsole(new WithMnemonicTextMatcher(new StringStartsWith(serverName)));
+		consoleView.switchConsole(new WithMnemonicTextMatcher(new StringContains(serverName)));
 		consoleView.clearConsole();
 	}
 

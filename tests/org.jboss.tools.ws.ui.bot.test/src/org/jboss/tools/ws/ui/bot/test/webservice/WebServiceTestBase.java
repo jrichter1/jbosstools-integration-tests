@@ -123,8 +123,12 @@ public abstract class WebServiceTestBase extends SOAPTestBase {
 		page.setSource(source);
 		page.setServerRuntime(getConfiguredServerName());
 		page.setWebServiceRuntime(serviceRuntime.getName());
-		page.setServiceProject(getWsProjectName());
-		page.setServiceEARProject(getEarProjectName());
+		try {
+			page.setServiceProject(getWsProjectName());
+			page.setServiceEARProject(getEarProjectName());
+		} catch (CoreLayerException ex) {
+			//todo something
+		}
 
 		page.setServiceSlider(level);
 		if (page.isClientEnabled()) {

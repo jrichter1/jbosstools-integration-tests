@@ -9,6 +9,7 @@ import org.jboss.reddeer.common.wait.WaitUntil;
 import org.jboss.reddeer.common.wait.WaitWhile;
 import org.jboss.reddeer.core.condition.JobIsRunning;
 import org.jboss.reddeer.core.condition.ShellWithTextIsActive;
+import org.jboss.reddeer.core.exception.CoreLayerException;
 import org.jboss.reddeer.eclipse.exception.EclipseLayerException;
 import org.jboss.reddeer.eclipse.ui.console.ConsoleView;
 import org.jboss.reddeer.eclipse.wst.server.ui.view.ServersView;
@@ -53,8 +54,12 @@ public class WebServiceClientHelper {
 		page.setClientSlider(level);
 		page.setServerRuntime(serverName);
 		page.setWebServiceRuntime(runtime.getName());
-		page.setClientProject(targetProject);
-		page.setClientEARProject(earProject);
+		try {
+			page.setClientProject(targetProject);
+			page.setClientEARProject(earProject);
+		} catch (CoreLayerException ex) {
+			//todo something
+		}
 		
 		if (pkg != null && pkg.trim().length() > 0) {
 			wizard.next();
