@@ -109,7 +109,7 @@ public class BottomUpWSTest extends WebServiceTestBase {
 		default:
 			break;
 		}
-		ServersViewHelper.waitForPublish(getConfiguredServerName());
+		ServersViewHelper.waitForDeployment(getConfiguredServerName());
 		DeploymentHelper.assertServiceDeployed(DeploymentHelper.getWSDLUrl(getWsProjectName(), getWsName()), 10000);
 	}
 }

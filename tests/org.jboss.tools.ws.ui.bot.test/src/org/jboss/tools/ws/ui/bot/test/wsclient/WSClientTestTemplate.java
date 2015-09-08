@@ -165,7 +165,7 @@ public class WSClientTestTemplate extends SOAPTestBase {
 		case TEST:
 		case START:
 		case INSTALL:
-			ServersViewHelper.waitForPublish(getConfiguredServerName());
+			ServersViewHelper.waitForDeployment(getConfiguredServerName());
 			if(!WebServiceClientHelper.projectIsDeployed(getConfiguredServerName(), getEarProjectName())) {
 				fail("Project was not found on the server.");
 			}
