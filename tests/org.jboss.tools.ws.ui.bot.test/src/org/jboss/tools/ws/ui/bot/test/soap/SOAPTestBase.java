@@ -9,7 +9,6 @@ import org.jboss.reddeer.common.wait.TimePeriod;
 import org.jboss.reddeer.common.wait.WaitWhile;
 import org.jboss.reddeer.core.condition.JobIsRunning;
 import org.jboss.reddeer.core.handler.ShellHandler;
-import org.jboss.reddeer.eclipse.ui.console.ConsoleView;
 import org.jboss.reddeer.eclipse.ui.perspectives.JavaEEPerspective;
 import org.jboss.reddeer.junit.requirement.inject.InjectRequirement;
 import org.jboss.reddeer.requirements.openperspective.OpenPerspectiveRequirement.OpenPerspective;
@@ -85,15 +84,7 @@ public abstract class SOAPTestBase {
 	
 	@After
 	public void cleanup() {
-		ServersViewHelper.removeAllProjectsFromServer(getConfiguredServerName());
-		
-		ConsoleView console = new ConsoleView();
-		if (!console.isOpened()) {
-			console.open();
-		}
-		console.activate();
-		console.clearConsole();
-		
+		ServersViewHelper.removeAllProjectsFromServer(getConfiguredServerName());		
 		ShellHandler.getInstance().closeAllNonWorbenchShells();
 	}
 
