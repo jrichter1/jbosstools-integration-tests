@@ -105,7 +105,7 @@ public class BottomUpWSTest extends WebServiceTestBase {
 			 * 'Deploy' should normally deploy the project automatically
 			 */
 		case DEPLOY:
-			ServersViewHelper.runProjectOnServer(getEarProjectName());
+			ServersViewHelper.runProjectOnServer(getEarProjectName(), getConfiguredServerName());
 		default:
 			break;
 		}

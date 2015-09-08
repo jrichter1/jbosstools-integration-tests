@@ -126,8 +126,7 @@ public class SampleSoapServicesTest extends SOAPTestBase {
 		String dd = ResourceHelper.readFile(getDeploymentDescriptor(project));
 		Asserts.assertContain(dd, "<servlet-name>" + svcName + "</servlet-name>");
 		ServersViewHelper.removeProjectFromServer(project, getConfiguredServerName());
-		ServersViewHelper.runProjectOnServer(project);
-		ServersViewHelper.waitForDeployment(getConfiguredServerName());
+		ServersViewHelper.runProjectOnServer(project, getConfiguredServerName());
 		try {
 			AbstractWait.sleep(TimePeriod.getCustom(3));
 			WSClient c = new WSClient(new URL("http://" + SERVER_URL + "/" + project + "/" + svcName),

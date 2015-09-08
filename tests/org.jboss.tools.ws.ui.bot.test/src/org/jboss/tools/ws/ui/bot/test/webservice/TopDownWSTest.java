@@ -179,7 +179,7 @@ public class TopDownWSTest extends WebServiceTestBase {
 		/*workaround for https://bugs.eclipse.org/bugs/show_bug.cgi?id=377624
 		 choosing 'Deploy' should normally deploy the project automatically*/
 		case DEPLOY:
-			ServersViewHelper.runProjectOnServer(getEarProjectName());			
+			ServersViewHelper.runProjectOnServer(getEarProjectName(), getConfiguredServerName());			
 		default:
 			break;
 		}

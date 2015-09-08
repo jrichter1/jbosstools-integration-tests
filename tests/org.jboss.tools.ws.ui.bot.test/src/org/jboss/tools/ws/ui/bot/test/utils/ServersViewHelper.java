@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import org.hamcrest.core.StringContains;
-import org.hamcrest.core.StringStartsWith;
 import org.jboss.reddeer.common.condition.WaitCondition;
 import org.jboss.reddeer.common.wait.AbstractWait;
 import org.jboss.reddeer.common.wait.TimePeriod;
@@ -95,7 +94,7 @@ public class ServersViewHelper {
 				String moduleName = module.getLabel().getName();
 				clearServerConsole(serverName);
 				module.remove();
-				new WaitUntil(new ConsoleHasText("Undeployed \"" + moduleName), TimePeriod.LONG);
+				new WaitUntil(new ConsoleHasText("Undeployed \"" + moduleName), TimePeriod.LONG, false);
 			}
 		}
 	}
@@ -103,14 +102,13 @@ public class ServersViewHelper {
 	/**
 	 * Method runs project on the configured server
 	 */
-	public static void runProjectOnServer(String projectName) {
+	public static void runProjectOnServer(String projectName, String serverName) {
 		new ProjectExplorer().getProject(projectName).select();
 		new ShellMenu(org.hamcrest.core.Is.is(IDELabel.Menu.RUN), org.hamcrest.core.Is.is(IDELabel.Menu.RUN_AS),
 				org.hamcrest.core.StringContains.containsString("Run on Server")).select();
 		new DefaultShell("Run On Server");
 		new PushButton(IDELabel.Button.FINISH).click();
-		new WaitUntil(new JobIsRunning(), TimePeriod.getCustom(5), false);
-		new WaitWhile(new JobIsRunning(), TimePeriod.LONG);
+		waitForDeployment(serverName);
 	}
 
 	/**
@@ -124,6 +122,10 @@ public class ServersViewHelper {
 		ModifyModulesPage page = new ModifyModulesPage();
 		page.add(projectName);
 		dialog.finish();
+		
+		if (!ServerState.STOPPED.equals(server.getLabel().getState())) {
+			waitForDeployment(serverName);
+		}
 	}
 
 	public static void serverClean(String serverName) {

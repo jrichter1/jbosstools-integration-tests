@@ -118,7 +118,7 @@ public class EAPFromJavaTest extends WebServiceTestBase {
 		Assert.assertNotNull(content);
 		Assert.assertTrue(content.contains("<servlet-class>test.ws.Echo</servlet-class>"));
 		Assert.assertTrue(content.contains("<url-pattern>/Echo</url-pattern>"));
-		ServersViewHelper.runProjectOnServer(getEarProjectName());
+		ServersViewHelper.runProjectOnServer(getEarProjectName(), getConfiguredServerName());
 		DeploymentHelper.assertServiceDeployed(DeploymentHelper.getWSDLUrl(getWsProjectName(), getWsName()), 10000);
 		servicePassed = true;
 	}
@@ -144,7 +144,7 @@ public class EAPFromJavaTest extends WebServiceTestBase {
 		 */
 		setJSPFileContent();
 		AbstractWait.sleep(TimePeriod.getCustom(2));
-		ServersViewHelper.runProjectOnServer(getWsClientProjectName());
+		ServersViewHelper.runProjectOnServer(getWsClientProjectName(), getConfiguredServerName());
 		ServersViewHelper.serverClean(getConfiguredServerName());
 		String pageContent = DeploymentHelper
 				.getPage("http://localhost:8080/" + getWsClientProjectName() + "/index.jsp", 15000);

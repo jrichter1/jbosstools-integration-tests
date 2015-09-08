@@ -140,7 +140,7 @@ public class EAPFromWSDLTest extends WebServiceTestBase {
 		 */
 		jaxWsApi22RequirementWorkaround(getWsProjectName(), getWsPackage());
 
-		ServersViewHelper.runProjectOnServer(getEarProjectName());
+		ServersViewHelper.runProjectOnServer(getEarProjectName(), getConfiguredServerName());
 		DeploymentHelper.assertServiceDeployed(DeploymentHelper.getWSDLUrl(getWsProjectName(), getWsName()), 10000);
 		servicePassed = true;
 	}
