@@ -94,7 +94,7 @@ public class ServersViewHelper {
 				String moduleName = module.getLabel().getName();
 				clearServerConsole(serverName);
 				module.remove();
-				new WaitUntil(new ConsoleHasText("Undeployed \"" + moduleName), TimePeriod.LONG, false);
+				new WaitUntil(new ConsoleHasText("Undeployed \"" + moduleName), TimePeriod.getCustom(20), false);
 			}
 		}
 	}

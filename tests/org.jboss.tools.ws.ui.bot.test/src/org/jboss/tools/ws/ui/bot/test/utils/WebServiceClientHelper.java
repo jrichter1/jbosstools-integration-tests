@@ -18,7 +18,8 @@ import org.jboss.reddeer.eclipse.wst.server.ui.view.ServersView;
 import org.jboss.reddeer.jface.wizard.WizardDialog;
 import org.jboss.reddeer.swt.api.Label;
 import org.jboss.reddeer.swt.api.Shell;
-import org.jboss.reddeer.swt.condition.ButtonWithTextIsEnabled;
+import org.jboss.reddeer.swt.condition.WidgetIsEnabled;
+import org.jboss.reddeer.swt.impl.button.NextButton;
 import org.jboss.reddeer.swt.impl.button.PushButton;
 import org.jboss.reddeer.swt.impl.label.DefaultLabel;
 import org.jboss.reddeer.swt.impl.shell.DefaultShell;
@@ -68,7 +69,7 @@ public class WebServiceClientHelper {
 		}
 
 		if (pkg != null && pkg.trim().length() > 0) {
-			new WaitWhile(new ButtonWithTextIsEnabled(new PushButton("Next >")), TimePeriod.getCustom(5), false);
+			new WaitUntil(new WidgetIsEnabled(new NextButton()), TimePeriod.getCustom(5), false);
 			wizard.next();
 			new WaitWhile(new ShellWithTextIsActive("Progress Information"));
 			page.setPackageName(pkg);
@@ -120,6 +121,7 @@ public class WebServiceClientHelper {
 	}
 
 	private static void selectServerConsole(String serverName) {
+		new ConsoleView().activate();
 		Label consoleName = new DefaultLabel();
 		if (!consoleName.getText().startsWith(serverName)) {
 			new DefaultToolItem("Display Selected Console").click();

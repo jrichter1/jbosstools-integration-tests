@@ -25,9 +25,9 @@ import org.jboss.reddeer.jface.wizard.WizardDialog;
 import org.jboss.reddeer.swt.api.Button;
 import org.jboss.reddeer.swt.api.Shell;
 import org.jboss.reddeer.swt.api.StyledText;
-import org.jboss.reddeer.swt.condition.ButtonWithTextIsEnabled;
 import org.jboss.reddeer.swt.condition.WidgetIsEnabled;
 import org.jboss.reddeer.swt.exception.SWTLayerException;
+import org.jboss.reddeer.swt.impl.button.NextButton;
 import org.jboss.reddeer.swt.impl.button.PushButton;
 import org.jboss.reddeer.swt.impl.shell.DefaultShell;
 import org.jboss.reddeer.swt.impl.styledtext.DefaultStyledText;
@@ -129,7 +129,7 @@ public abstract class WebServiceTestBase extends SOAPTestBase {
 			page.setClientSlider(SliderLevel.NO_CLIENT);
 		}
 
-		new WaitWhile(new ButtonWithTextIsEnabled(new PushButton("Next >")), TimePeriod.getCustom(5), false);
+		new WaitUntil(new WidgetIsEnabled(new NextButton()), TimePeriod.getCustom(5), false);
 		wizard.next();
 
 		checkErrorDialog(wizard);
