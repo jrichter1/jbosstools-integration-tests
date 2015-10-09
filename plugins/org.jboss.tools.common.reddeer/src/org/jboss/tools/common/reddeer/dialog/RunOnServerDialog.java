@@ -8,7 +8,7 @@
  * Contributors:
  * Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.ws.ui.bot.test.uiutils;
+package org.jboss.tools.common.reddeer.dialog;
 
 import java.util.List;
 

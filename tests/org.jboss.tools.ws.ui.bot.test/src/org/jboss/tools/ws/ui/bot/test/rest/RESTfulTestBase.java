@@ -39,14 +39,14 @@ import org.jboss.reddeer.common.wait.TimePeriod;
 import org.jboss.reddeer.common.wait.WaitUntil;
 import org.jboss.reddeer.common.wait.WaitWhile;
 import org.jboss.reddeer.workbench.impl.editor.TextEditor;
+import org.jboss.tools.common.reddeer.dialog.RunOnServerDialog;
+import org.jboss.tools.common.reddeer.utils.ResourceHelper;
 import org.jboss.tools.ws.reddeer.editor.ExtendedTextEditor;
 import org.jboss.tools.ws.reddeer.jaxrs.core.RESTfulWebService;
 import org.jboss.tools.ws.reddeer.jaxrs.core.RESTfulWebServicesNode;
 import org.jboss.tools.ws.reddeer.swt.condition.ProblemsCount;
 import org.jboss.tools.ws.reddeer.ui.tester.views.WsTesterView;
 import org.jboss.tools.ws.ui.bot.test.WSTestBase;
-import org.jboss.tools.ws.ui.bot.test.uiutils.RunOnServerDialog;
-import org.jboss.tools.ws.ui.bot.test.utils.ResourceHelper;
 import org.junit.Assert;
 
 /**

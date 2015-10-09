@@ -1,4 +1,4 @@
-package org.jboss.tools.ws.ui.bot.test.uiutils;
+package org.jboss.tools.common.reddeer.dialog;
 
 import org.jboss.reddeer.swt.api.Shell;
 import org.jboss.reddeer.swt.api.TreeItem;

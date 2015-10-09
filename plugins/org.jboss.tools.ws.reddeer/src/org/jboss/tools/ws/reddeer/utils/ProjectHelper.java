@@ -9,10 +9,7 @@
  * Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
 
-package org.jboss.tools.ws.ui.bot.test.utils;
-
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.fail;
+package org.jboss.tools.ws.reddeer.utils;
 
 import java.io.File;
 import java.io.IOException;
@@ -39,14 +36,14 @@ import org.jboss.reddeer.swt.impl.text.LabeledText;
 import org.jboss.reddeer.workbench.condition.EditorWithTitleIsActive;
 import org.jboss.reddeer.workbench.impl.editor.DefaultEditor;
 import org.jboss.reddeer.workbench.impl.editor.TextEditor;
+import org.jboss.tools.common.reddeer.dialog.JavaBuildPathPropertiesPage;
+import org.jboss.tools.common.reddeer.dialog.ProjectPropertiesDialog;
+import org.jboss.tools.common.reddeer.dialog.TargetedRuntimesPropertiesPage;
 import org.jboss.tools.common.reddeer.label.IDELabel;
 import org.jboss.tools.ws.reddeer.ui.wizards.CreateNewFileWizardPage;
 import org.jboss.tools.ws.reddeer.ui.wizards.jst.j2ee.EARProjectWizard;
 import org.jboss.tools.ws.reddeer.ui.wizards.jst.servlet.DynamicWebProjectWizard;
 import org.jboss.tools.ws.reddeer.ui.wizards.wst.NewWsdlFileWizard;
-import org.jboss.tools.ws.ui.bot.test.uiutils.JavaBuildPathPropertiesPage;
-import org.jboss.tools.ws.ui.bot.test.uiutils.PropertiesDialog;
-import org.jboss.tools.ws.ui.bot.test.uiutils.TargetedRuntimesPropertiesPage;
 
 /**
  * @author jjankovi
@@ -162,7 +159,7 @@ public class ProjectHelper {
 	}
 
 	public static void setProjectJRE(String projectName) {
-		PropertiesDialog dialog = new PropertiesDialog();
+		ProjectPropertiesDialog dialog = new ProjectPropertiesDialog();
 		dialog.open(projectName);
 
 		JavaBuildPathPropertiesPage page = new JavaBuildPathPropertiesPage();
@@ -202,13 +199,8 @@ public class ProjectHelper {
 		new WaitWhile(new JobIsRunning(), TimePeriod.LONG, false);
 	}
 
-	public static void importWSTestProject(String projectName, String serverName) {
-		try {
-			importProject(new File("resources/projects/" + projectName).getCanonicalPath());
-		} catch (IOException e) {
-			e.printStackTrace();
-			fail(e.getMessage());
-		}
+	public static void importWSTestProject(String projectName, String serverName) throws IOException {
+		importProject(new File("resources/projects/" + projectName).getCanonicalPath());
 		addConfiguredRuntimeIntoProject(projectName, serverName);
 		setProjectJRE(projectName);
 		cleanAllProjects();
@@ -221,7 +213,7 @@ public class ProjectHelper {
 	 * @param project
 	 */
 	public static void addConfiguredRuntimeIntoProject(String projectName, String configuredRuntime) {
-		PropertiesDialog dialog = new PropertiesDialog();
+		ProjectPropertiesDialog dialog = new ProjectPropertiesDialog();
 		dialog.open(projectName);
 
 		TargetedRuntimesPropertiesPage page = new TargetedRuntimesPropertiesPage();
@@ -233,14 +225,17 @@ public class ProjectHelper {
 		dialog.finish();
 	}
 
-	private static void importProject(String projectLocation) {
+	private static boolean importProject(String projectLocation) {
 		ExternalProjectImportWizardDialog importDialog = new ExternalProjectImportWizardDialog();
 		importDialog.open();
 		WizardProjectsImportPage importPage = new WizardProjectsImportPage();
 		importPage.setRootDirectory(projectLocation);
-		assertFalse("There is no project to import", importPage.getProjects().isEmpty());
+		if (importPage.getProjects().isEmpty()) {
+			return false;
+		}
 		importPage.selectAllProjects();
 		importPage.copyProjectsIntoWorkspace(true);
 		importDialog.finish();
+		return true;
 	}
 }

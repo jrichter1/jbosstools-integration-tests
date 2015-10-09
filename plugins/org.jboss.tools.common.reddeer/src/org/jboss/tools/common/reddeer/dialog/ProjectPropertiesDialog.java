@@ -1,8 +1,5 @@
-package org.jboss.tools.ws.ui.bot.test.uiutils;
+package org.jboss.tools.common.reddeer.dialog;
 
-import static org.junit.Assert.assertThat;
-
-import org.hamcrest.core.Is;
 import org.jboss.reddeer.eclipse.jdt.ui.ProjectExplorer;
 import org.jboss.reddeer.eclipse.core.resources.Project;
 import org.jboss.reddeer.core.condition.JobIsRunning;
@@ -19,7 +16,7 @@ import org.jboss.tools.common.reddeer.label.IDELabel;
  * @author Radoslav Rabara
  *
  */
-public class PropertiesDialog {
+public class ProjectPropertiesDialog {
 
 	private String projectName;
 
@@ -33,11 +30,6 @@ public class PropertiesDialog {
 		projectExplorer.open();
 		Project project = projectExplorer.getProject(projectName);
 		project.select();
-	
-		// Open Project Properties
-		assertThat("Project name", project.getName(), Is.is(projectName));
-		assertThat("Project with name '" + projectName + "' is selected",
-				project.isSelected(), Is.is(true));
 	
 		new WaitWhile(new JobIsRunning(), TimePeriod.LONG);
 		new ShellMenu(IDELabel.Menu.PROJECT, IDELabel.Menu.PROPERTIES).select();

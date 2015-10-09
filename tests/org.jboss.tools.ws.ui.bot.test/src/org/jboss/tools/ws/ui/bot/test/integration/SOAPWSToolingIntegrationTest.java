@@ -11,6 +11,9 @@
 package org.jboss.tools.ws.ui.bot.test.integration;
 
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+import java.io.IOException;
 
 import org.jboss.reddeer.common.wait.WaitUntil;
 import org.jboss.reddeer.common.wait.WaitWhile;
@@ -20,9 +23,9 @@ import org.jboss.reddeer.swt.impl.menu.ContextMenu;
 import org.jboss.tools.ws.reddeer.swt.condition.WsTesterNotEmptyResponseText;
 import org.jboss.tools.ws.reddeer.ui.tester.views.WsTesterView;
 import org.jboss.tools.ws.reddeer.ui.tester.views.WsTesterView.RequestType;
+import org.jboss.tools.ws.reddeer.utils.ProjectHelper;
+import org.jboss.tools.ws.reddeer.utils.ServersViewHelper;
 import org.jboss.tools.ws.ui.bot.test.soap.SOAPTestBase;
-import org.jboss.tools.ws.ui.bot.test.utils.ProjectHelper;
-import org.jboss.tools.ws.ui.bot.test.utils.ServersViewHelper;
 import org.junit.Test;
 
 /**
@@ -45,7 +48,12 @@ public class SOAPWSToolingIntegrationTest extends SOAPTestBase {
 	@Override
 	public void setup() {
 		if (!ProjectHelper.projectExists(getWsProjectName())) {
-			ProjectHelper.importWSTestProject(getWsProjectName(), getConfiguredRuntimeName());
+			try {
+				ProjectHelper.importWSTestProject(getWsProjectName(), getConfiguredRuntimeName());
+			} catch (IOException e) {
+				e.printStackTrace();
+				fail(e.getMessage());
+			}
 			ServersViewHelper.runProjectOnServer(getWsProjectName());
 		}
 	}

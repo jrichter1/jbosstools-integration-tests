@@ -24,8 +24,8 @@ import org.jboss.reddeer.swt.exception.SWTLayerException;
 import org.jboss.reddeer.swt.impl.button.PushButton;
 import org.jboss.reddeer.swt.impl.shell.DefaultShell;
 import org.jboss.tools.ws.reddeer.ui.wizards.wst.WebServiceWizardPageBase.SliderLevel;
+import org.jboss.tools.ws.reddeer.utils.ServersViewHelper;
 import org.jboss.tools.ws.ui.bot.test.utils.DeploymentHelper;
-import org.jboss.tools.ws.ui.bot.test.utils.ServersViewHelper;
 import org.junit.Test;
 
 /**

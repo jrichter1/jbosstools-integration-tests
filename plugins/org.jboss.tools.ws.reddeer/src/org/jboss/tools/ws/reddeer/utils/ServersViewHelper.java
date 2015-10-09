@@ -1,4 +1,4 @@
-package org.jboss.tools.ws.ui.bot.test.utils;
+package org.jboss.tools.ws.reddeer.utils;
 
 import java.util.List;
 import java.util.logging.Logger;

@@ -11,8 +11,8 @@
 package org.jboss.tools.ws.ui.bot.test.webservice;
 
 import org.jboss.tools.ws.reddeer.ui.wizards.wst.WebServiceWizardPageBase.SliderLevel;
+import org.jboss.tools.ws.reddeer.utils.ServersViewHelper;
 import org.jboss.tools.ws.ui.bot.test.utils.DeploymentHelper;
-import org.jboss.tools.ws.ui.bot.test.utils.ServersViewHelper;
 import org.junit.Test;
 
 /**

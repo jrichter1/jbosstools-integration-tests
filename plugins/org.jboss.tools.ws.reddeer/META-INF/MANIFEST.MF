@@ -31,7 +31,8 @@ Export-Package: org.jboss.tools.ws.reddeer.editor,
  org.jboss.tools.ws.reddeer.ui.wizards.jst.jsp,
  org.jboss.tools.ws.reddeer.ui.wizards.jst.servlet,
  org.jboss.tools.ws.reddeer.ui.wizards.ws.ui,
- org.jboss.tools.ws.reddeer.ui.wizards.wst
+ org.jboss.tools.ws.reddeer.ui.wizards.wst,
+ org.jboss.tools.ws.reddeer.utils
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Eclipse-BundleShape: jar

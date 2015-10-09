@@ -10,12 +10,17 @@ Require-Bundle: org.eclipse.core.runtime,
  org.jboss.reddeer.junit,
  org.jboss.reddeer.common;bundle-version="0.6.0",
  org.jboss.reddeer.workbench;bundle-version="0.7.0",
- org.jboss.reddeer.core
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+ org.jboss.reddeer.core,
+ org.jboss.reddeer.eclipse,
+ org.eclipse.swt,
+ org.hamcrest.core,
+ org.eclipse.core.resources
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
 Export-Package: org.jboss.tools.common.reddeer.label,
  org.jboss.tools.common.reddeer.preferences,
- org.jboss.tools.common.reddeer.utils
+ org.jboss.tools.common.reddeer.utils,
+ org.jboss.tools.common.reddeer.dialog
 Import-Package: org.apache.log4j
 Eclipse-BundleShape: jar
 Bundle-Localization: plugin

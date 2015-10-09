@@ -24,13 +24,13 @@ import org.jboss.reddeer.requirements.openperspective.OpenPerspectiveRequirement
 import org.jboss.reddeer.common.wait.AbstractWait;
 import org.jboss.reddeer.common.wait.TimePeriod;
 import org.jboss.reddeer.workbench.impl.editor.TextEditor;
+import org.jboss.tools.common.reddeer.utils.ResourceHelper;
 import org.jboss.tools.ws.reddeer.ui.wizards.CreateNewFileWizardPage;
 import org.jboss.tools.ws.reddeer.ui.wizards.jst.jsp.NewJSPFileWizard;
 import org.jboss.tools.ws.reddeer.ui.wizards.wst.WebServiceWizardPageBase.SliderLevel;
+import org.jboss.tools.ws.reddeer.utils.ProjectHelper;
+import org.jboss.tools.ws.reddeer.utils.ServersViewHelper;
 import org.jboss.tools.ws.ui.bot.test.utils.DeploymentHelper;
-import org.jboss.tools.ws.ui.bot.test.utils.ProjectHelper;
-import org.jboss.tools.ws.ui.bot.test.utils.ResourceHelper;
-import org.jboss.tools.ws.ui.bot.test.utils.ServersViewHelper;
 import org.jboss.tools.ws.ui.bot.test.utils.WebServiceClientHelper;
 import org.jboss.tools.ws.ui.bot.test.webservice.WebServiceRuntime;
 import org.jboss.tools.ws.ui.bot.test.webservice.WebServiceTestBase;

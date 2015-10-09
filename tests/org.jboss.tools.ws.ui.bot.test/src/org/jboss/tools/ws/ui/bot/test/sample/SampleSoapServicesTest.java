@@ -26,12 +26,12 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.jboss.reddeer.common.wait.AbstractWait;
 import org.jboss.reddeer.common.wait.TimePeriod;
 import org.jboss.reddeer.workbench.impl.editor.TextEditor;
+import org.jboss.tools.common.reddeer.utils.ResourceHelper;
 import org.jboss.tools.ws.reddeer.ui.wizards.ws.ui.SampleWebServiceWizard;
 import org.jboss.tools.ws.reddeer.ui.wizards.ws.ui.SimpleWebServiceWizard;
+import org.jboss.tools.ws.reddeer.utils.ServersViewHelper;
 import org.jboss.tools.ws.ui.bot.test.soap.SOAPTestBase;
 import org.jboss.tools.ws.ui.bot.test.utils.Asserts;
-import org.jboss.tools.ws.ui.bot.test.utils.ResourceHelper;
-import org.jboss.tools.ws.ui.bot.test.utils.ServersViewHelper;
 import org.jboss.tools.ws.ui.bot.test.wsclient.WSClient;
 import org.junit.Test;
 

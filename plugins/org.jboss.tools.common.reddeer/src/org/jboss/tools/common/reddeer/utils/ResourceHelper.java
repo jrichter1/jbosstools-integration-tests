@@ -9,7 +9,7 @@
  * Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
 
-package org.jboss.tools.ws.ui.bot.test.utils;
+package org.jboss.tools.common.reddeer.utils;
 
 import java.io.File;
 import java.io.IOException;

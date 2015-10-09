@@ -1,4 +1,4 @@
-package org.jboss.tools.ws.ui.bot.test.uiutils;
+package org.jboss.tools.common.reddeer.dialog;
 
 import org.hamcrest.Matcher;
 import org.jboss.reddeer.swt.api.TreeItem;
@@ -13,7 +13,7 @@ import org.jboss.reddeer.swt.impl.tree.DefaultTree;
 public class JavaBuildPathPropertiesPage {
 
 	/**
-	 * Selects this page in {@link PropertiesDialog} 
+	 * Selects this page in {@link ProjectPropertiesDialog} 
 	 */
 	public void select() {
 		for(TreeItem ti : new DefaultTree().getItems()) {

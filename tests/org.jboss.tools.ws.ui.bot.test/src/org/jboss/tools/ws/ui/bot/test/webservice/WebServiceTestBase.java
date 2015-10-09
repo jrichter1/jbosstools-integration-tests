@@ -37,14 +37,14 @@ import org.jboss.reddeer.swt.impl.text.DefaultText;
 import org.jboss.reddeer.workbench.impl.editor.DefaultEditor;
 import org.jboss.reddeer.workbench.impl.editor.TextEditor;
 import org.jboss.tools.common.reddeer.label.IDELabel;
+import org.jboss.tools.common.reddeer.utils.ResourceHelper;
 import org.jboss.tools.ws.reddeer.ui.wizards.wst.WebServiceFirstWizardPage;
 import org.jboss.tools.ws.reddeer.ui.wizards.wst.WebServiceFirstWizardPage.ServiceType;
 import org.jboss.tools.ws.reddeer.ui.wizards.wst.WebServiceSecondWizardPage;
 import org.jboss.tools.ws.reddeer.ui.wizards.wst.WebServiceWizard;
 import org.jboss.tools.ws.reddeer.ui.wizards.wst.WebServiceWizardPageBase.SliderLevel;
+import org.jboss.tools.ws.reddeer.utils.ProjectHelper;
 import org.jboss.tools.ws.ui.bot.test.soap.SOAPTestBase;
-import org.jboss.tools.ws.ui.bot.test.utils.ProjectHelper;
-import org.jboss.tools.ws.ui.bot.test.utils.ResourceHelper;
 import org.junit.Assert;
 
 /**

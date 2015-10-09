@@ -21,8 +21,8 @@ import org.jboss.reddeer.requirements.server.ServerReqState;
 import org.jboss.tools.ws.reddeer.jaxrs.core.RESTfulWebServicesNode;
 import org.jboss.tools.ws.reddeer.ui.tester.views.WsTesterView;
 import org.jboss.tools.ws.reddeer.ui.tester.views.WsTesterView.RequestType;
+import org.jboss.tools.ws.reddeer.utils.ServersViewHelper;
 import org.jboss.tools.ws.ui.bot.test.rest.RESTfulTestBase;
-import org.jboss.tools.ws.ui.bot.test.utils.ServersViewHelper;
 import org.junit.Test;
 
 /**
