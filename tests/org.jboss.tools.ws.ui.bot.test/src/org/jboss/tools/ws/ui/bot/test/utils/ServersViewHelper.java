@@ -168,9 +168,16 @@ public class ServersViewHelper {
 		
 		public ProjectIsDeployed(String projectName, String serverName) {
 			view.activate();
-			Server server = new ServersView().getServer(serverName);
-			AbstractWait.sleep(TimePeriod.SHORT);
-			view.activate();
+			Server server = null;
+			try {
+				AbstractWait.sleep(TimePeriod.SHORT);
+				server = new ServersView().getServer(serverName);
+			} catch (EclipseLayerException ex) {
+				view.close();
+				view.open();
+				AbstractWait.sleep(TimePeriod.SHORT);
+				server = new ServersView().getServer(serverName);
+			}
 			module = server.getModule(projectName);
 		}
 		
