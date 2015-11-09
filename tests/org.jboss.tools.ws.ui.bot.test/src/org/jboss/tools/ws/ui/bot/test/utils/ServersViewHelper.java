@@ -22,9 +22,11 @@ import org.jboss.reddeer.eclipse.wst.server.ui.view.ServersViewEnums.ServerPubli
 import org.jboss.reddeer.eclipse.wst.server.ui.view.ServersViewEnums.ServerState;
 import org.jboss.reddeer.eclipse.wst.server.ui.wizard.ModifyModulesDialog;
 import org.jboss.reddeer.eclipse.wst.server.ui.wizard.ModifyModulesPage;
+import org.jboss.reddeer.swt.condition.TreeHasChildren;
 import org.jboss.reddeer.swt.impl.button.PushButton;
 import org.jboss.reddeer.swt.impl.menu.ShellMenu;
 import org.jboss.reddeer.swt.impl.shell.DefaultShell;
+import org.jboss.reddeer.swt.impl.tree.DefaultTree;
 import org.jboss.tools.common.reddeer.label.IDELabel;
 
 /**
@@ -168,16 +170,8 @@ public class ServersViewHelper {
 		
 		public ProjectIsDeployed(String projectName, String serverName) {
 			view.activate();
-			Server server = null;
-			try {
-				AbstractWait.sleep(TimePeriod.SHORT);
-				server = new ServersView().getServer(serverName);
-			} catch (EclipseLayerException ex) {
-				view.close();
-				view.open();
-				AbstractWait.sleep(TimePeriod.SHORT);
-				server = new ServersView().getServer(serverName);
-			}
+			new WaitUntil(new TreeHasChildren(new DefaultTree()), TimePeriod.getCustom(2));
+			Server server = view.getServer(serverName);
 			module = server.getModule(projectName);
 		}
 		
