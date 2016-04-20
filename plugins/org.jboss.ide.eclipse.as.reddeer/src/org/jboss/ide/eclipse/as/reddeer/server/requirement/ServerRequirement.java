@@ -155,7 +155,7 @@ public class ServerRequirement extends ServerReqBase implements Requirement<JBos
 				}
 				
 				if(version.equals("10.x")){
-					serverTypeLabelText = label+" "+ "10.0" +" (Experimental)";
+					serverTypeLabelText = label+" "+ "10.0";
 				}
 			}
 			for (TreeItem item : new DefaultTreeItem("Red Hat JBoss Middleware").getItems()){
