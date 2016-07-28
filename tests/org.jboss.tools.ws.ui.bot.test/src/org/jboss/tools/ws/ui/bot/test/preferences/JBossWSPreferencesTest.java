@@ -62,6 +62,15 @@ public class JBossWSPreferencesTest {
 
 	@BeforeClass
 	public static void preparePrerequisites() {
+		System.out.println(System.getenv("***********************************"));
+		System.out.println(System.getenv("***********************************"));
+		System.out.println(System.getenv("***********************************"));
+		System.out.println(System.getenv("***********************************"));
+		System.out.println(System.getenv("JAVA_HOME"));
+		System.out.println(System.getenv("***********************************"));
+		System.out.println(System.getenv("***********************************"));
+		System.out.println(System.getenv("***********************************"));
+		System.out.println(System.getenv("***********************************"));
 		jbossWSRuntimePreferencePage = new JBossWSRuntimePreferencePage();
 		new WorkbenchPreferenceDialog().open();
 		new WorkbenchPreferenceDialog().select(jbossWSRuntimePreferencePage);
