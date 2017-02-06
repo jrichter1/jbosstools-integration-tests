@@ -17,6 +17,7 @@ import java.io.File;
 import java.util.List;
 
 import org.hamcrest.Matcher;
+import org.jboss.reddeer.common.exception.WaitTimeoutExpiredException;
 import org.jboss.reddeer.common.wait.TimePeriod;
 import org.jboss.reddeer.common.wait.WaitUntil;
 import org.jboss.reddeer.common.wait.WaitWhile;
@@ -29,8 +30,10 @@ import org.jboss.reddeer.junit.requirement.inject.InjectRequirement;
 import org.jboss.reddeer.swt.condition.WidgetIsEnabled;
 import org.jboss.reddeer.swt.impl.button.BackButton;
 import org.jboss.reddeer.swt.impl.button.CancelButton;
+import org.jboss.reddeer.swt.impl.button.CheckBox;
 import org.jboss.reddeer.swt.impl.button.FinishButton;
 import org.jboss.reddeer.swt.impl.button.NextButton;
+import org.jboss.reddeer.swt.impl.button.NoButton;
 import org.jboss.reddeer.swt.impl.button.OkButton;
 import org.jboss.reddeer.swt.impl.button.PushButton;
 import org.jboss.reddeer.swt.impl.combo.DefaultCombo;
@@ -250,6 +253,18 @@ public class CreateApplicationFromTemplateTest {
 
 		new DefaultShell(OpenShiftLabel.Shell.IMPORT_APPLICATION);
 		new FinishButton().click();
+		
+		try {
+			new WaitUntil(new ShellWithTextIsAvailable(OpenShiftLabel.Shell.CHEATSHEET), TimePeriod.LONG);
+			
+			new DefaultShell(OpenShiftLabel.Shell.CHEATSHEET);
+			new CheckBox(0).click();
+			new NoButton().click();
+			
+			new WaitWhile(new ShellWithTextIsAvailable(OpenShiftLabel.Shell.CHEATSHEET));
+		} catch (WaitTimeoutExpiredException ex) {
+			// do nothing if cheat sheet is not provided
+		}
 
 		ProjectExplorer projectExplorer = new ProjectExplorer();
 		projectExplorer.open();
