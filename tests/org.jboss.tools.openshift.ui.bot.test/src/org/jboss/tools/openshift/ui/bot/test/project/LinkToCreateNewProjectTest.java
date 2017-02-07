@@ -46,6 +46,7 @@ public class LinkToCreateNewProjectTest {
 		TreeItem newProjectLinkItem = null;
 		try {
 			explorer.reopen();
+			connectionItem.expand();
 			newProjectLinkItem = connectionItem.getItem("No projects are available."
 					+ " Click here to create a new project...");
 		} catch (RedDeerException ex) {
