@@ -135,7 +135,7 @@ public class CreateServerAdapterTest extends AbstractCreateApplicationTest {
 	@After
 	public void removeAdapterIfExists() {
 		try {
-			new WaitWhile(new JobIsRunning(), TimePeriod.LONG);
+			new WaitWhile(new JobIsRunning(), TimePeriod.getCustom(150));
 			new ServerAdapter(Version.OPENSHIFT3, BUILD_CONFIG).delete();
 		} catch (OpenShiftToolsException ex) {
 			// do nothing, adapter does not exists
