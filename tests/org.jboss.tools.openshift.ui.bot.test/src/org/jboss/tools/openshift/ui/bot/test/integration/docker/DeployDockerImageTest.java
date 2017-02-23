@@ -33,6 +33,7 @@ import org.jboss.reddeer.junit.runner.RedDeerSuite;
 import org.jboss.reddeer.junit.screenshot.CaptureScreenshotException;
 import org.jboss.reddeer.junit.screenshot.ScreenshotCapturer;
 import org.jboss.reddeer.swt.api.TreeItem;
+import org.jboss.reddeer.swt.condition.TreeContainsItem;
 import org.jboss.reddeer.swt.condition.WidgetIsEnabled;
 import org.jboss.reddeer.swt.impl.button.BackButton;
 import org.jboss.reddeer.swt.impl.button.CancelButton;
@@ -148,6 +149,8 @@ public class DeployDockerImageTest {
 	private static void pullHelloImageIfDoesNotExist() {
 		DockerExplorerView dockerExplorer = new DockerExplorerView();
 		DockerConnection dockerConnection = dockerExplorer.getDockerConnectionByName(DOCKER_CONNECTION);
+		
+		new WaitWhile(new TreeContainsItem(dockerConnection.getTreeItem().getParent(), "Loading..."));
 		
 		if (dockerConnection.getImage(HELLO_OS_DOCKER_IMAGE, TAG) == null) {
 			dockerConnection.pullImage(HELLO_OS_DOCKER_IMAGE, TAG);
