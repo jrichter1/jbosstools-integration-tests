@@ -130,6 +130,13 @@ public class DeployDockerImageTest {
 				dockerExplorer.createDockerConnectionUnix(DOCKER_CONNECTION, 
 						"unix:///var/run/docker.sock");
 			}
+		} else if (RunningPlatform.isLinux() && connectionsNames.size() > 1) {
+			for (String name : connectionsNames) {
+				if (name.startsWith("unix:///var/run/docker.sock")) {
+					DOCKER_CONNECTION = name;
+					break;
+				}
+			}
 		} else {
 			DOCKER_CONNECTION = connectionsNames.get(0);
 		}
@@ -140,7 +147,8 @@ public class DeployDockerImageTest {
 	 */
 	private static void pullHelloImageIfDoesNotExist() {
 		DockerExplorerView dockerExplorer = new DockerExplorerView();
-		DockerConnection dockerConnection = dockerExplorer.getDockerConnectionByName(DOCKER_CONNECTION); 
+		DockerConnection dockerConnection = dockerExplorer.getDockerConnectionByName(DOCKER_CONNECTION);
+		
 		if (dockerConnection.getImage(HELLO_OS_DOCKER_IMAGE, TAG) == null) {
 			dockerConnection.pullImage(HELLO_OS_DOCKER_IMAGE, TAG);
 		}
