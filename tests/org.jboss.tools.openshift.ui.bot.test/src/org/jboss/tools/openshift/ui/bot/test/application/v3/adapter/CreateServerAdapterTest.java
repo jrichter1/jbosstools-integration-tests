@@ -37,6 +37,7 @@ import org.jboss.tools.openshift.reddeer.enums.ResourceState;
 import org.jboss.tools.openshift.reddeer.exception.OpenShiftToolsException;
 import org.jboss.tools.openshift.reddeer.utils.DatastoreOS3;
 import org.jboss.tools.openshift.reddeer.utils.OpenShiftLabel;
+import org.jboss.tools.openshift.reddeer.utils.TestUtils;
 import org.jboss.tools.openshift.reddeer.view.OpenShiftExplorerView;
 import org.jboss.tools.openshift.reddeer.view.resources.ServerAdapter;
 import org.jboss.tools.openshift.reddeer.view.resources.ServerAdapter.Version;
@@ -128,6 +129,7 @@ public class CreateServerAdapterTest extends AbstractCreateApplicationTest {
 		new WaitUntil(new WidgetIsEnabled(new NextButton()));
 		
 		new NextButton().click();
+		TestUtils.acceptSSLCertificate();
 
 		new WaitUntil(new WidgetIsEnabled(new BackButton()));
 	}

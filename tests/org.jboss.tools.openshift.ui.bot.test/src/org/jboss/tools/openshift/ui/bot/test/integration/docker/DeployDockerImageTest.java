@@ -219,7 +219,7 @@ public class DeployDockerImageTest {
 				openshiftConnectionRequirement.getConnection()).refresh();
 		try {
 			new WaitUntil(new OpenShiftResourceExists(Resource.POD, new StringContains("hello-openshift"),
-				ResourceState.RUNNING, projectName), TimePeriod.getCustom(240));
+				ResourceState.RUNNING, projectName), TimePeriod.VERY_LONG);
 		} catch (WaitTimeoutExpiredException ex) {
 			fail("There should be a running application pod for a deployed docker image, "
 					+ "but it does not exist.");
