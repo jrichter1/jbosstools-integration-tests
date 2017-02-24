@@ -49,15 +49,15 @@ import org.jboss.reddeer.swt.impl.tree.DefaultTreeItem;
 import org.jboss.tools.openshift.reddeer.condition.OpenShiftResourceExists;
 import org.jboss.tools.openshift.reddeer.enums.Resource;
 import org.jboss.tools.openshift.reddeer.enums.ResourceState;
+import org.jboss.tools.openshift.reddeer.requirement.CleanOpenShiftConnectionRequirement;
+import org.jboss.tools.openshift.reddeer.requirement.CleanOpenShiftConnectionRequirement.CleanConnection;
 import org.jboss.tools.openshift.reddeer.requirement.OpenShiftConnectionRequirement;
 import org.jboss.tools.openshift.reddeer.requirement.OpenShiftConnectionRequirement.RequiredBasicConnection;
 import org.jboss.tools.openshift.reddeer.requirement.OpenShiftProjectRequirement;
-import org.jboss.tools.openshift.reddeer.requirement.CleanOpenShiftConnectionRequirement.CleanConnection;
 import org.jboss.tools.openshift.reddeer.requirement.OpenShiftProjectRequirement.RequiredProject;
 import org.jboss.tools.openshift.reddeer.utils.OpenShiftLabel;
 import org.jboss.tools.openshift.reddeer.utils.TestUtils;
 import org.jboss.tools.openshift.reddeer.view.OpenShiftExplorerView;
-import org.jboss.tools.openshift.reddeer.view.resources.OpenShift3Connection;
 import org.jboss.tools.openshift.reddeer.view.resources.OpenShiftProject;
 import org.jboss.tools.openshift.reddeer.view.resources.OpenShiftResource;
 import org.jboss.tools.openshift.reddeer.wizard.v3.NewOpenShift3ApplicationWizard;
@@ -95,6 +95,9 @@ public class CreateApplicationFromTemplateTest {
 
 	@InjectRequirement
 	private OpenShiftConnectionRequirement connectionReq;
+	
+	@InjectRequirement
+	private CleanOpenShiftConnectionRequirement cleanReq;
 
 	@BeforeClass
 	public static void importTestsProject() {
@@ -315,15 +318,8 @@ public class CreateApplicationFromTemplateTest {
 		deleteProject(kitchensinkProject);
 		deleteProject(helloworldProject);
 
-		OpenShift3Connection connection = explorer.getOpenShift3Connection();
-		cleanup(connection.getProject(projectReq.getProject().getDisplayName()));
-	}
-
-	private void cleanup(OpenShiftProject project) {
-		for (Resource resourceType : Resource.values()) {
-			List<OpenShiftResource> resources = project.getOpenShiftResources(resourceType);
-			resources.forEach(resource -> resource.delete());
-		}
+		cleanReq.fulfill();
+		projectReq.fulfill();
 	}
 
 	@AfterClass
