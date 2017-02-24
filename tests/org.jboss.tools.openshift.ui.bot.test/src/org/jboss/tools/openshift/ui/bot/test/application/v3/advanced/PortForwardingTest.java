@@ -17,6 +17,7 @@ import org.jboss.reddeer.common.wait.TimePeriod;
 import org.jboss.reddeer.common.wait.WaitUntil;
 import org.jboss.reddeer.common.wait.WaitWhile;
 import org.jboss.reddeer.core.condition.JobIsRunning;
+import org.jboss.reddeer.swt.api.Shell;
 import org.jboss.reddeer.swt.api.Table;
 import org.jboss.reddeer.swt.condition.WidgetIsEnabled;
 import org.jboss.reddeer.swt.impl.button.CheckBox;
@@ -61,6 +62,7 @@ public class PortForwardingTest extends AbstractCreateApplicationTest {
 	@Test
 	public void testPortForwardingButtonsAccessibility() {		
 		openPortForwardingDialog();
+		Shell portForwardingDialog = new DefaultShell(OpenShiftLabel.Shell.APPLICATION_PORT_FORWARDING);
 		
 		PushButton startAllButton = new PushButton(OpenShiftLabel.Button.START_ALL);
 		PushButton stopAllButton = new PushButton(OpenShiftLabel.Button.STOP_ALL);
@@ -71,20 +73,20 @@ public class PortForwardingTest extends AbstractCreateApplicationTest {
 		startAllButton.click();
 		
 		new WaitWhile(new JobIsRunning(), TimePeriod.LONG);
-		new DefaultShell(OpenShiftLabel.Shell.APPLICATION_PORT_FORWARDING);
+		portForwardingDialog.setFocus();
 		new WaitUntil(new WidgetIsEnabled(new OkButton()));
 
-		new DefaultShell(OpenShiftLabel.Shell.APPLICATION_PORT_FORWARDING);
+		portForwardingDialog.setFocus();
 		assertFalse("Button Start All should be disabled at this point.", startAllButton.isEnabled());
 		assertTrue("Button Stop All should be enabled at this point.", stopAllButton.isEnabled());
 		
 		stopAllButton.click();
 		
 		new WaitWhile(new JobIsRunning(), TimePeriod.LONG);
-		new DefaultShell(OpenShiftLabel.Shell.APPLICATION_PORT_FORWARDING);
+		portForwardingDialog.setFocus();
 		new WaitUntil(new WidgetIsEnabled(new OkButton()));
 
-		new DefaultShell(OpenShiftLabel.Shell.APPLICATION_PORT_FORWARDING);
+		portForwardingDialog.setFocus();
 		assertTrue("Button Start All should be enabled at this point.", startAllButton.isEnabled());
 		assertFalse("Button Stop All should be disabled at this point.", stopAllButton.isEnabled());
 	}
