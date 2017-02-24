@@ -73,7 +73,8 @@ public class PortForwardingTest extends AbstractCreateApplicationTest {
 		new WaitWhile(new JobIsRunning(), TimePeriod.LONG);
 		new DefaultShell(OpenShiftLabel.Shell.APPLICATION_PORT_FORWARDING);
 		new WaitUntil(new WidgetIsEnabled(new OkButton()));
-		
+
+		new DefaultShell(OpenShiftLabel.Shell.APPLICATION_PORT_FORWARDING);
 		assertFalse("Button Start All should be disabled at this point.", startAllButton.isEnabled());
 		assertTrue("Button Stop All should be enabled at this point.", stopAllButton.isEnabled());
 		
@@ -82,7 +83,8 @@ public class PortForwardingTest extends AbstractCreateApplicationTest {
 		new WaitWhile(new JobIsRunning(), TimePeriod.LONG);
 		new DefaultShell(OpenShiftLabel.Shell.APPLICATION_PORT_FORWARDING);
 		new WaitUntil(new WidgetIsEnabled(new OkButton()));
-		
+
+		new DefaultShell(OpenShiftLabel.Shell.APPLICATION_PORT_FORWARDING);
 		assertTrue("Button Start All should be enabled at this point.", startAllButton.isEnabled());
 		assertFalse("Button Stop All should be disabled at this point.", stopAllButton.isEnabled());
 	}

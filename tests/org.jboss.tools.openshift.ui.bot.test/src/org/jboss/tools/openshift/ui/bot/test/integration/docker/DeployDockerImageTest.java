@@ -150,7 +150,9 @@ public class DeployDockerImageTest {
 		DockerExplorerView dockerExplorer = new DockerExplorerView();
 		DockerConnection dockerConnection = dockerExplorer.getDockerConnectionByName(DOCKER_CONNECTION);
 		
-		new WaitWhile(new TreeContainsItem(dockerConnection.getTreeItem().getParent(), "Loading..."));
+		dockerConnection.getTreeItem().expand();
+		new WaitWhile(new TreeContainsItem(dockerConnection.getTreeItem().getParent(),
+				dockerConnection.getTreeItem().getText(), "Loading..."));
 		
 		if (dockerConnection.getImage(HELLO_OS_DOCKER_IMAGE, TAG) == null) {
 			dockerConnection.pullImage(HELLO_OS_DOCKER_IMAGE, TAG);
