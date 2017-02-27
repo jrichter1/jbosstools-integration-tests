@@ -325,5 +325,6 @@ public class CreateApplicationFromTemplateTest {
 	@AfterClass
 	public static void deleteTestsProjectFromWorkspace() {
 		new ProjectExplorer().getProject(TESTS_PROJECT).delete(false);
+		DatastoreOS3.generateProjectName();
 	}
 }
