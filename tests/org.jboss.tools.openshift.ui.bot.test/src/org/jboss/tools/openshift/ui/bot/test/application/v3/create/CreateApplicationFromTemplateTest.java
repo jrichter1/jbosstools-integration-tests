@@ -16,6 +16,7 @@ import static org.junit.Assert.assertTrue;
 import java.io.File;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.hamcrest.Matcher;
 import org.hamcrest.core.StringStartsWith;
 import org.jboss.reddeer.common.wait.TimePeriod;
@@ -53,10 +54,10 @@ import org.jboss.tools.openshift.reddeer.requirement.CleanOpenShiftConnectionReq
 import org.jboss.tools.openshift.reddeer.requirement.CleanOpenShiftConnectionRequirement.CleanConnection;
 import org.jboss.tools.openshift.reddeer.requirement.OpenShiftConnectionRequirement;
 import org.jboss.tools.openshift.reddeer.requirement.OpenShiftConnectionRequirement.RequiredBasicConnection;
-import org.jboss.tools.openshift.reddeer.requirement.OpenShiftProjectRequirement;
-import org.jboss.tools.openshift.reddeer.requirement.OpenShiftProjectRequirement.RequiredProject;
+import org.jboss.tools.openshift.reddeer.utils.DatastoreOS3;
 import org.jboss.tools.openshift.reddeer.utils.OpenShiftLabel;
 import org.jboss.tools.openshift.reddeer.utils.TestUtils;
+import org.jboss.tools.openshift.reddeer.utils.v3.OpenShift3NativeProjectUtils;
 import org.jboss.tools.openshift.reddeer.view.OpenShiftExplorerView;
 import org.jboss.tools.openshift.reddeer.view.resources.OpenShiftProject;
 import org.jboss.tools.openshift.reddeer.view.resources.OpenShiftResource;
@@ -70,7 +71,6 @@ import org.junit.Test;
 
 @RequiredBasicConnection
 @CleanConnection
-@RequiredProject
 public class CreateApplicationFromTemplateTest {
 
 	private String gitFolder = "jboss-eap-quickstarts";
@@ -89,9 +89,6 @@ public class CreateApplicationFromTemplateTest {
 
 	private String srcRepoURI;
 	private String applicationName;
-
-	@InjectRequirement
-	private OpenShiftProjectRequirement projectReq;
 
 	@InjectRequirement
 	private OpenShiftConnectionRequirement connectionReq;
@@ -115,6 +112,10 @@ public class CreateApplicationFromTemplateTest {
 
 	@Before
 	public void setUp() {
+		DatastoreOS3.generateProjectName();
+		OpenShift3NativeProjectUtils.getOrCreateProject(DatastoreOS3.PROJECT1,
+			DatastoreOS3.PROJECT1_DISPLAYED_NAME, StringUtils.EMPTY, connectionReq.getConnection());
+		
 		TestUtils.cleanupGitFolder(gitFolder);
 		deleteProject(kitchensinkProject);
 		deleteProject(helloworldProject);
@@ -133,7 +134,7 @@ public class CreateApplicationFromTemplateTest {
 
 	@Test
 	public void createApplicationFromLocalWorkspaceTemplate() {
-		new NewOpenShift3ApplicationWizard().openWizardFromExplorer(projectReq.getProject().getDisplayName());
+		new NewOpenShift3ApplicationWizard().openWizardFromExplorer(DatastoreOS3.PROJECT1_DISPLAYED_NAME);
 		new DefaultTabItem(OpenShiftLabel.TextLabels.LOCAL_TEMPLATE).activate();
 		new PushButton(OpenShiftLabel.Button.BROWSE_WORKSPACE).click();
 
@@ -156,7 +157,7 @@ public class CreateApplicationFromTemplateTest {
 
 	@Test
 	public void createApplicationFromLocalFileSystemTemplate() {
-		new NewOpenShift3ApplicationWizard().openWizardFromExplorer(projectReq.getProject().getDisplayName());
+		new NewOpenShift3ApplicationWizard().openWizardFromExplorer(DatastoreOS3.PROJECT1_DISPLAYED_NAME);
 		new DefaultTabItem(OpenShiftLabel.TextLabels.LOCAL_TEMPLATE).activate();
 		new LabeledText(OpenShiftLabel.TextLabels.SELECT_LOCAL_TEMPLATE).setText(
 				TESTS_PROJECT_LOCATION + File.separator + "eap64-basic-s2i.json");
@@ -169,7 +170,7 @@ public class CreateApplicationFromTemplateTest {
 
 	@Test
 	public void createApplicationFromTemplateProvidedByURL() {
-		new NewOpenShift3ApplicationWizard().openWizardFromExplorer(projectReq.getProject().getDisplayName());
+		new NewOpenShift3ApplicationWizard().openWizardFromExplorer(DatastoreOS3.PROJECT1_DISPLAYED_NAME);
 		new DefaultTabItem(OpenShiftLabel.TextLabels.LOCAL_TEMPLATE).activate();
 		new LabeledText(OpenShiftLabel.TextLabels.SELECT_LOCAL_TEMPLATE).setText(URL);
 
@@ -181,7 +182,7 @@ public class CreateApplicationFromTemplateTest {
 
 	@Test
 	public void testCreateApplicationFromServerTemplate() {
-		new NewOpenShift3ApplicationWizard().openWizardFromExplorer(projectReq.getProject().getDisplayName());
+		new NewOpenShift3ApplicationWizard().openWizardFromExplorer(DatastoreOS3.PROJECT1_DISPLAYED_NAME);
 		new DefaultTree().selectItems(new DefaultTreeItem(OpenShiftLabel.Others.EAP_TEMPLATE));
 
 		completeApplicationCreationAndVerify(kitchensinkProject);
@@ -278,12 +279,12 @@ public class CreateApplicationFromTemplateTest {
 		OpenShiftExplorerView explorer = new OpenShiftExplorerView();
 		explorer.open();
 		OpenShiftProject project = explorer.getOpenShift3Connection()
-				.getProject(projectReq.getProject().getDisplayName());
+				.getProject(DatastoreOS3.PROJECT1_DISPLAYED_NAME);
 		project.refresh();
 
 		new WaitWhile(new JobIsRunning(), TimePeriod.getCustom(120));
 		new WaitUntil(new OpenShiftResourceExists(Resource.BUILD_CONFIG, (Matcher<String>) null,
-				ResourceState.UNSPECIFIED, projectReq.getProject().getDisplayName()), TimePeriod.LONG, false);
+				ResourceState.UNSPECIFIED, DatastoreOS3.PROJECT1_DISPLAYED_NAME), TimePeriod.LONG, false);
 
 		List<OpenShiftResource> buildConfig = project.getOpenShiftResources(Resource.BUILD_CONFIG);
 		assertTrue("There should be precisely 1 build config for created application, but there is following amount"
@@ -319,7 +320,6 @@ public class CreateApplicationFromTemplateTest {
 		deleteProject(helloworldProject);
 
 		cleanReq.fulfill();
-		projectReq.fulfill();
 	}
 
 	@AfterClass
