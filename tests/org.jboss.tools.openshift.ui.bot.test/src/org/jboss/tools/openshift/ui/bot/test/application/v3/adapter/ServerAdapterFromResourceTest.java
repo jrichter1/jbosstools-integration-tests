@@ -116,7 +116,7 @@ public class ServerAdapterFromResourceTest {
 		} finally {
 			try {
 				project.delete();
-			} catch (RedDeerException e) {
+			} catch (RedDeerException | NullPointerException e) {
 				LOGGER.warn("Unable to delete openshift project " + DatastoreOS3.TEST_PROJECT);
 				LOGGER.warn(e.toString());
 			}

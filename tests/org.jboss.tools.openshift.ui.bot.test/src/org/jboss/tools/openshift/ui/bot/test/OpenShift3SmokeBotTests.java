@@ -65,52 +65,52 @@ import org.junit.runners.Suite.SuiteClasses;
 @RunWith(RedDeerSuite.class)
 @SuiteClasses({	
 	// General
-	OCBinaryLocationTest.class,
-	
-	// Connection
-	OpenNewConnectionWizardTest.class,
-	CreateNewConnectionTest.class,
-	RemoveConnectionTest.class,
-	ConnectionWizardHandlingTest.class,
-	StoreConnectionTest.class,
-	ConnectionPropertiesTest.class,
-	
-	// Project
-	ProjectNameValidationTest.class,
-	LinkToCreateNewProjectTest.class,
-	CreateNewProjectTest.class,
-	DeleteProjectTest.class,
-	ResourcesTest.class,
-	ProjectPropertiesTest.class,
-	
-	// Application wizard handling
-	OpenNewApplicationWizardTest.class,
-	OpenNewApplicationWizardWithNoProjectTest.class,
-	NewApplicationWizardHandlingTest.class,
-	TemplateParametersTest.class,
-	LabelsTest.class,
-	BuilderImageApplicationWizardHandlingTest.class,
-	
-	// Creation of a new application
-	CreateApplicationFromTemplateTest.class,
-	CreateApplicationOnBuilderImageTest.class,
-	DeploymentTest.class,
-	
-	// Application handling
-	DeleteResourceTest.class,
-	TriggerBuildTest.class,
-	ImportApplicationTest.class,
-	PortForwardingTest.class,
-	LogsTest.class,
-	EditResourcesTest.class,
-
-	// Advanced application testing
- 	DeployEclipseProjectTest.class,	
- 	DeployDockerImageTest.class,
- 	CreateResourcesTest.class,
-	
-	// Server adapter
-	ServerAdapterWizardHandlingTest.class,
+//	OCBinaryLocationTest.class,
+//	
+//	// Connection
+//	OpenNewConnectionWizardTest.class,
+//	CreateNewConnectionTest.class,
+//	RemoveConnectionTest.class,
+//	ConnectionWizardHandlingTest.class,
+//	StoreConnectionTest.class,
+//	ConnectionPropertiesTest.class,
+//	
+//	// Project
+//	ProjectNameValidationTest.class,
+//	LinkToCreateNewProjectTest.class,
+//	CreateNewProjectTest.class,
+//	DeleteProjectTest.class,
+//	ResourcesTest.class,
+//	ProjectPropertiesTest.class,
+//	
+//	// Application wizard handling
+//	OpenNewApplicationWizardTest.class,
+//	OpenNewApplicationWizardWithNoProjectTest.class,
+//	NewApplicationWizardHandlingTest.class,
+//	TemplateParametersTest.class,
+//	LabelsTest.class,
+//	BuilderImageApplicationWizardHandlingTest.class,
+//	
+//	// Creation of a new application
+//	CreateApplicationFromTemplateTest.class,
+//	CreateApplicationOnBuilderImageTest.class,
+//	DeploymentTest.class,
+//	
+//	// Application handling
+//	DeleteResourceTest.class,
+//	TriggerBuildTest.class,
+//	ImportApplicationTest.class,
+//	PortForwardingTest.class,
+//	LogsTest.class,
+//	EditResourcesTest.class,
+//
+//	// Advanced application testing
+// 	DeployEclipseProjectTest.class,	
+// 	DeployDockerImageTest.class,
+// 	CreateResourcesTest.class,
+//	
+//	// Server adapter
+//	ServerAdapterWizardHandlingTest.class,
 	CreateServerAdapterTest.class,
 	ServerAdapterFromResourceTest.class,
 	PublishChangesTest.class
