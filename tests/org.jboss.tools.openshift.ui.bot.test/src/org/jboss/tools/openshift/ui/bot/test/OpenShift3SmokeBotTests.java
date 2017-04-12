@@ -111,7 +111,7 @@ import org.junit.runners.Suite.SuiteClasses;
 //	
 //	// Server adapter
 //	ServerAdapterWizardHandlingTest.class,
-	CreateServerAdapterTest.class,
+//	CreateServerAdapterTest.class,
 	ServerAdapterFromResourceTest.class,
 	PublishChangesTest.class
 })
