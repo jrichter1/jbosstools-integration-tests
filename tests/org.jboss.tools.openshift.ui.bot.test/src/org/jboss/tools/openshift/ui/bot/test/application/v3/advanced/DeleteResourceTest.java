@@ -14,10 +14,10 @@ import static org.junit.Assert.fail;
 
 import java.util.List;
 
-import org.jboss.reddeer.common.exception.WaitTimeoutExpiredException;
-import org.jboss.reddeer.common.wait.TimePeriod;
-import org.jboss.reddeer.common.wait.WaitUntil;
-import org.jboss.reddeer.common.wait.WaitWhile;
+import org.eclipse.reddeer.common.exception.WaitTimeoutExpiredException;
+import org.eclipse.reddeer.common.wait.TimePeriod;
+import org.eclipse.reddeer.common.wait.WaitUntil;
+import org.eclipse.reddeer.common.wait.WaitWhile;
 import org.jboss.tools.openshift.reddeer.condition.AmountOfResourcesExists;
 import org.jboss.tools.openshift.reddeer.condition.OpenShiftResourceExists;
 import org.jboss.tools.openshift.reddeer.enums.Resource;
@@ -33,10 +33,9 @@ public class DeleteResourceTest extends AbstractCreateApplicationTest {
 	@BeforeClass
 	public static void waitForApplication() {
 		new WaitUntil(new OpenShiftResourceExists(Resource.BUILD, "eap-app-1", ResourceState.COMPLETE), 
-				TimePeriod.getCustom(600), true, TimePeriod.getCustom(8));
+				TimePeriod.getCustom(600));
 		
-		new WaitUntil(new AmountOfResourcesExists(Resource.POD, 2), TimePeriod.VERY_LONG, true,
-				TimePeriod.getCustom(5));
+		new WaitUntil(new AmountOfResourcesExists(Resource.POD, 2), TimePeriod.VERY_LONG, true);
 	}
 	
 	@Test

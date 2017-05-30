@@ -12,20 +12,20 @@ package org.jboss.tools.openshift.ui.bot.test.application.importing;
 
 import static org.junit.Assert.assertTrue;
 
-import org.jboss.reddeer.common.wait.TimePeriod;
-import org.jboss.reddeer.common.wait.WaitUntil;
-import org.jboss.reddeer.common.wait.WaitWhile;
-import org.jboss.reddeer.core.condition.JobIsRunning;
-import org.jboss.reddeer.core.condition.ShellWithTextIsAvailable;
-import org.jboss.reddeer.eclipse.jdt.ui.ProjectExplorer;
-import org.jboss.reddeer.swt.impl.button.FinishButton;
-import org.jboss.reddeer.swt.impl.menu.ContextMenu;
-import org.jboss.reddeer.swt.impl.shell.DefaultShell;
-import org.jboss.tools.openshift.reddeer.wizard.v2.ApplicationCreator;
+import org.eclipse.reddeer.common.wait.TimePeriod;
+import org.eclipse.reddeer.common.wait.WaitUntil;
+import org.eclipse.reddeer.common.wait.WaitWhile;
+import org.eclipse.reddeer.eclipse.ui.navigator.resources.ProjectExplorer;
+import org.eclipse.reddeer.swt.condition.ShellIsAvailable;
+import org.eclipse.reddeer.swt.impl.button.FinishButton;
+import org.eclipse.reddeer.swt.impl.menu.ContextMenu;
+import org.eclipse.reddeer.swt.impl.shell.DefaultShell;
+import org.eclipse.reddeer.workbench.core.condition.JobIsRunning;
 import org.jboss.tools.openshift.reddeer.utils.DatastoreOS2;
 import org.jboss.tools.openshift.reddeer.utils.OpenShiftLabel;
 import org.jboss.tools.openshift.reddeer.utils.v2.DeleteUtils;
 import org.jboss.tools.openshift.reddeer.view.OpenShiftExplorerView;
+import org.jboss.tools.openshift.reddeer.wizard.v2.ApplicationCreator;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -64,13 +64,13 @@ public class ID501ImportApplicationViaExplorerTest {
 		
 		new ContextMenu(OpenShiftLabel.ContextMenu.IMPORT_APPLICATION).select();
 		
-		new WaitUntil(new ShellWithTextIsAvailable(OpenShiftLabel.Shell.IMPORT_APPLICATION), TimePeriod.LONG);
+		new WaitUntil(new ShellIsAvailable(OpenShiftLabel.Shell.IMPORT_APPLICATION), TimePeriod.LONG);
 		
 		new DefaultShell(OpenShiftLabel.Shell.IMPORT_APPLICATION);
 		
 		new FinishButton().click();
 		
-		new WaitWhile(new ShellWithTextIsAvailable(OpenShiftLabel.Shell.IMPORT_APPLICATION), TimePeriod.LONG);
+		new WaitWhile(new ShellIsAvailable(OpenShiftLabel.Shell.IMPORT_APPLICATION), TimePeriod.LONG);
 		new WaitWhile(new JobIsRunning(), TimePeriod.LONG);
 		
 		assertTrue("There is no project in project explorer. Importing was no successfull.",

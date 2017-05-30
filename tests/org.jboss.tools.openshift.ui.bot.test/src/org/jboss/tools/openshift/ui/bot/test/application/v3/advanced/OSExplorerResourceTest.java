@@ -14,12 +14,12 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
-import org.jboss.reddeer.core.exception.CoreLayerException;
-import org.jboss.reddeer.junit.requirement.inject.InjectRequirement;
-import org.jboss.reddeer.junit.runner.RedDeerSuite;
-import org.jboss.reddeer.swt.impl.button.OkButton;
-import org.jboss.reddeer.swt.impl.menu.ContextMenu;
-import org.jboss.reddeer.swt.impl.shell.DefaultShell;
+import org.eclipse.reddeer.core.exception.CoreLayerException;
+import org.eclipse.reddeer.junit.requirement.inject.InjectRequirement;
+import org.eclipse.reddeer.junit.runner.RedDeerSuite;
+import org.eclipse.reddeer.swt.impl.button.OkButton;
+import org.eclipse.reddeer.swt.impl.menu.ContextMenu;
+import org.eclipse.reddeer.swt.impl.shell.DefaultShell;
 import org.jboss.tools.openshift.reddeer.enums.Resource;
 import org.jboss.tools.openshift.reddeer.requirement.CleanOpenShiftConnectionRequirement;
 import org.jboss.tools.openshift.reddeer.requirement.CleanOpenShiftConnectionRequirement.CleanConnection;

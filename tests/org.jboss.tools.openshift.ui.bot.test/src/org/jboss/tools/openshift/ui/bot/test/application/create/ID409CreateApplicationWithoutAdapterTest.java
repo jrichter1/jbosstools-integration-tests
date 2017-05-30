@@ -12,14 +12,14 @@ package org.jboss.tools.openshift.ui.bot.test.application.create;
 
 import static org.junit.Assert.fail;
 
-import org.jboss.reddeer.common.exception.RedDeerException;
-import org.jboss.reddeer.common.wait.TimePeriod;
-import org.jboss.reddeer.common.wait.WaitUntil;
-import org.jboss.reddeer.eclipse.exception.EclipseLayerException;
-import org.jboss.reddeer.eclipse.jdt.ui.ProjectExplorer;
-import org.jboss.reddeer.eclipse.wst.server.ui.view.ServersView;
-import org.jboss.reddeer.jface.viewer.handler.TreeViewerHandler;
-import org.jboss.reddeer.swt.impl.tree.DefaultTree;
+import org.eclipse.reddeer.common.exception.RedDeerException;
+import org.eclipse.reddeer.common.wait.TimePeriod;
+import org.eclipse.reddeer.common.wait.WaitUntil;
+import org.eclipse.reddeer.eclipse.exception.EclipseLayerException;
+import org.eclipse.reddeer.eclipse.ui.navigator.resources.ProjectExplorer;
+import org.eclipse.reddeer.eclipse.wst.server.ui.cnf.ServersView2;
+import org.eclipse.reddeer.jface.handler.TreeViewerHandler;
+import org.eclipse.reddeer.swt.impl.tree.DefaultTree;
 import org.jboss.tools.openshift.reddeer.condition.v2.OpenShiftApplicationExists;
 import org.jboss.tools.openshift.reddeer.utils.DatastoreOS2;
 import org.jboss.tools.openshift.reddeer.utils.OpenShiftLabel;
@@ -53,7 +53,7 @@ public class ID409CreateApplicationWithoutAdapterTest {
 		new WaitUntil(new OpenShiftApplicationExists(DatastoreOS2.USERNAME, DatastoreOS2.SERVER, 
 				DatastoreOS2.DOMAIN, applicationName), TimePeriod.LONG);
 		
-		ServersView serversView = new ServersView();
+		ServersView2 serversView = new ServersView2();
 		serversView.open();
 		
 		try {

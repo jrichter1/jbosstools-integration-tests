@@ -15,45 +15,45 @@ import static org.junit.Assert.assertTrue;
 import java.util.List;
 import java.util.function.Predicate;
 
-import org.jboss.reddeer.common.condition.AbstractWaitCondition;
-import org.jboss.reddeer.common.exception.WaitTimeoutExpiredException;
-import org.jboss.reddeer.common.logging.Logger;
-import org.jboss.reddeer.common.wait.TimePeriod;
-import org.jboss.reddeer.common.wait.WaitUntil;
-import org.jboss.reddeer.common.wait.WaitWhile;
-import org.jboss.reddeer.core.condition.JobIsRunning;
-import org.jboss.reddeer.core.exception.CoreLayerException;
-import org.jboss.reddeer.eclipse.condition.ServerHasPublishState;
-import org.jboss.reddeer.eclipse.condition.ServerHasState;
-import org.jboss.reddeer.eclipse.core.resources.Project;
-import org.jboss.reddeer.eclipse.core.resources.ProjectItem;
-import org.jboss.reddeer.eclipse.debug.core.BreakpointsView;
-import org.jboss.reddeer.eclipse.debug.core.DebugView;
-import org.jboss.reddeer.eclipse.debug.core.VariablesView;
-import org.jboss.reddeer.eclipse.jdt.ui.ProjectExplorer;
-import org.jboss.reddeer.eclipse.ui.browser.BrowserEditor;
-import org.jboss.reddeer.eclipse.ui.console.ConsoleView;
-import org.jboss.reddeer.eclipse.ui.perspectives.DebugPerspective;
-import org.jboss.reddeer.eclipse.wst.server.ui.view.ServersView;
-import org.jboss.reddeer.eclipse.wst.server.ui.view.ServersViewEnums.ServerPublishState;
-import org.jboss.reddeer.eclipse.wst.server.ui.view.ServersViewEnums.ServerState;
-import org.jboss.reddeer.junit.requirement.inject.InjectRequirement;
-import org.jboss.reddeer.junit.runner.RedDeerSuite;
-import org.jboss.reddeer.junit.screenshot.CaptureScreenshotException;
-import org.jboss.reddeer.requirements.openperspective.OpenPerspectiveRequirement.OpenPerspective;
-import org.jboss.reddeer.swt.api.TreeItem;
-import org.jboss.reddeer.swt.impl.button.OkButton;
-import org.jboss.reddeer.swt.impl.menu.ContextMenu;
-import org.jboss.reddeer.swt.impl.menu.ShellMenu;
-import org.jboss.reddeer.swt.impl.shell.DefaultShell;
-import org.jboss.reddeer.swt.impl.styledtext.DefaultStyledText;
-import org.jboss.reddeer.swt.impl.toolbar.DefaultToolItem;
-import org.jboss.reddeer.swt.impl.tree.DefaultTree;
-import org.jboss.reddeer.swt.impl.tree.DefaultTreeItem;
-import org.jboss.reddeer.workbench.exception.WorkbenchLayerException;
-import org.jboss.reddeer.workbench.impl.editor.TextEditor;
-import org.jboss.reddeer.workbench.impl.shell.WorkbenchShell;
-import org.jboss.reddeer.workbench.ui.dialogs.WorkbenchPreferenceDialog;
+import org.eclipse.reddeer.common.condition.AbstractWaitCondition;
+import org.eclipse.reddeer.common.exception.WaitTimeoutExpiredException;
+import org.eclipse.reddeer.common.logging.Logger;
+import org.eclipse.reddeer.common.wait.TimePeriod;
+import org.eclipse.reddeer.common.wait.WaitUntil;
+import org.eclipse.reddeer.common.wait.WaitWhile;
+import org.eclipse.reddeer.core.exception.CoreLayerException;
+import org.eclipse.reddeer.eclipse.condition.ServerHasPublishState;
+import org.eclipse.reddeer.eclipse.condition.ServerHasState;
+import org.eclipse.reddeer.eclipse.core.resources.Project;
+import org.eclipse.reddeer.eclipse.core.resources.ProjectItem;
+import org.eclipse.reddeer.eclipse.debug.ui.views.breakpoints.BreakpointsView;
+import org.eclipse.reddeer.eclipse.debug.ui.views.launch.LaunchView;
+import org.eclipse.reddeer.eclipse.debug.ui.views.variables.VariablesView;
+import org.eclipse.reddeer.eclipse.ui.browser.BrowserEditor;
+import org.eclipse.reddeer.eclipse.ui.console.ConsoleView;
+import org.eclipse.reddeer.eclipse.ui.navigator.resources.ProjectExplorer;
+import org.eclipse.reddeer.eclipse.ui.perspectives.DebugPerspective;
+import org.eclipse.reddeer.eclipse.wst.server.ui.cnf.ServersView2;
+import org.eclipse.reddeer.eclipse.wst.server.ui.cnf.ServersViewEnums.ServerPublishState;
+import org.eclipse.reddeer.eclipse.wst.server.ui.cnf.ServersViewEnums.ServerState;
+import org.eclipse.reddeer.junit.requirement.inject.InjectRequirement;
+import org.eclipse.reddeer.junit.runner.RedDeerSuite;
+import org.eclipse.reddeer.junit.screenshot.CaptureScreenshotException;
+import org.eclipse.reddeer.requirements.openperspective.OpenPerspectiveRequirement.OpenPerspective;
+import org.eclipse.reddeer.swt.api.TreeItem;
+import org.eclipse.reddeer.swt.impl.button.OkButton;
+import org.eclipse.reddeer.swt.impl.menu.ContextMenu;
+import org.eclipse.reddeer.swt.impl.menu.ShellMenu;
+import org.eclipse.reddeer.swt.impl.shell.DefaultShell;
+import org.eclipse.reddeer.swt.impl.styledtext.DefaultStyledText;
+import org.eclipse.reddeer.swt.impl.toolbar.DefaultToolItem;
+import org.eclipse.reddeer.swt.impl.tree.DefaultTree;
+import org.eclipse.reddeer.swt.impl.tree.DefaultTreeItem;
+import org.eclipse.reddeer.workbench.core.condition.JobIsRunning;
+import org.eclipse.reddeer.workbench.exception.WorkbenchLayerException;
+import org.eclipse.reddeer.workbench.impl.editor.TextEditor;
+import org.eclipse.reddeer.workbench.impl.shell.WorkbenchShell;
+import org.eclipse.reddeer.workbench.ui.dialogs.WorkbenchPreferenceDialog;
 import org.jboss.tools.openshift.reddeer.preference.page.JavaDebugPreferencePage;
 import org.jboss.tools.openshift.reddeer.requirement.OpenShiftCommandLineToolsRequirement.OCBinary;
 import org.jboss.tools.openshift.reddeer.requirement.OpenShiftConnectionRequirement;
@@ -122,7 +122,7 @@ public class DebuggingEAPAppTest extends AbstractCreateApplicationTest {
 
 		// now it shoud be stopped in debug mode.
 
-		checkDebugView();
+		checkLaunchView();
 
 		checkVariablesView();
 	}
@@ -184,8 +184,8 @@ public class DebuggingEAPAppTest extends AbstractCreateApplicationTest {
 	}
 
 	private static void waitForserverAdapterToBeInRightState() {
-		new WaitUntil(new ServerHasState(new ServersView().getServer(serverAdapter.getLabel()), ServerState.DEBUGGING));
-		new WaitUntil(new ServerHasPublishState(new ServersView().getServer(serverAdapter.getLabel()),
+		new WaitUntil(new ServerHasState(new ServersView2().getServer(serverAdapter.getLabel()), ServerState.DEBUGGING));
+		new WaitUntil(new ServerHasPublishState(new ServersView2().getServer(serverAdapter.getLabel()),
 				ServerPublishState.SYNCHRONIZED));
 	}
 
@@ -222,8 +222,8 @@ public class DebuggingEAPAppTest extends AbstractCreateApplicationTest {
 		});
 	}
 
-	private void checkDebugView() {
-		DebugView debugView = new DebugView();
+	private void checkLaunchView() {
+		LaunchView debugView = new LaunchView();
 		debugView.open();
 
 		TreeItem createHelloMessageDebugItem = ensureCorrectFrameIsSelected(debugView);
@@ -231,7 +231,7 @@ public class DebuggingEAPAppTest extends AbstractCreateApplicationTest {
 		assertTrue(createHelloMessageDebugItem.getText().contains("createHelloMessage"));
 	}
 
-	private TreeItem ensureCorrectFrameIsSelected(DebugView debugView) {
+	private TreeItem ensureCorrectFrameIsSelected(LaunchView debugView) {
 		List<TreeItem> items;
 		TreeItem createHelloMessageDebugItem;
 
@@ -242,7 +242,7 @@ public class DebuggingEAPAppTest extends AbstractCreateApplicationTest {
 			// no stack trace available. Try to close&reopen Debug view (dirty
 			// hack)
 			debugView.close();
-			debugView = new DebugView();
+			debugView = new LaunchView();
 			debugView.open();
 			items = getSuspendedThreadTreeItem(debugView).getItems();
 		}
@@ -273,7 +273,7 @@ public class DebuggingEAPAppTest extends AbstractCreateApplicationTest {
 
 	}
 
-	private TreeItem getSuspendedThreadTreeItem(DebugView debugView) {
+	private TreeItem getSuspendedThreadTreeItem(LaunchView debugView) {
 		// get top item
 		debugView.activate();
 		DefaultTree parent = new DefaultTree();
@@ -345,7 +345,7 @@ public class DebuggingEAPAppTest extends AbstractCreateApplicationTest {
 				new ContextMenu("Show In", "Web Browser").select();
 				return false;
 			}
-		}, TimePeriod.NORMAL, false);
+		}, TimePeriod.DEFAULT, false);
 	}
 
 	private ProjectItem getHelloServiceFile() {
@@ -385,7 +385,7 @@ public class DebuggingEAPAppTest extends AbstractCreateApplicationTest {
 	// https://github.com/jboss-reddeer/reddeer/issues/1668 is fixed.
 	private void setNewVariableValue(String newValue, final String... variablePath) {
 		new WaitWhile(new JobIsRunning());
-		DebugView debugView = new DebugView();
+		LaunchView debugView = new LaunchView();
 		debugView.open();
 
 		ensureCorrectFrameIsSelected(debugView);

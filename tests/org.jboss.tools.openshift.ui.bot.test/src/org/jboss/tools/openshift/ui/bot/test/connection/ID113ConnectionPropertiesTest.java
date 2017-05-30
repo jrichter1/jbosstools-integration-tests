@@ -12,11 +12,11 @@ package org.jboss.tools.openshift.ui.bot.test.connection;
 
 import static org.junit.Assert.assertTrue;
 
-import org.jboss.reddeer.common.wait.TimePeriod;
-import org.jboss.reddeer.common.wait.WaitWhile;
-import org.jboss.reddeer.core.condition.ShellWithTextIsAvailable;
-import org.jboss.reddeer.eclipse.ui.views.properties.PropertiesView;
-import org.jboss.reddeer.swt.impl.menu.ContextMenu;
+import org.eclipse.reddeer.common.wait.TimePeriod;
+import org.eclipse.reddeer.common.wait.WaitWhile;
+import org.eclipse.reddeer.eclipse.ui.views.properties.PropertySheet;
+import org.eclipse.reddeer.swt.condition.ShellIsAvailable;
+import org.eclipse.reddeer.swt.impl.menu.ContextMenu;
 import org.jboss.tools.openshift.reddeer.utils.DatastoreOS2;
 import org.jboss.tools.openshift.reddeer.utils.OpenShiftLabel;
 import org.jboss.tools.openshift.reddeer.view.OpenShiftExplorerView;
@@ -38,7 +38,7 @@ public class ID113ConnectionPropertiesTest {
 		explorer.getOpenShift2Connection(DatastoreOS2.USERNAME, DatastoreOS2.SERVER).select();
 		new ContextMenu(OpenShiftLabel.ContextMenu.PROPERTIES).select();
 		
-		PropertiesView properties = new PropertiesView();
+		PropertySheet properties = new PropertySheet();
 		String hostValue = properties.getProperty("Host").getPropertyValue();
 		String persistedKeyValue =  properties.getProperty("Persisted Key").getPropertyValue();
 		String usernameValue = properties.getProperty("Username").getPropertyValue();
@@ -58,6 +58,6 @@ public class ID113ConnectionPropertiesTest {
 				usernameValue.equals(DatastoreOS2.USERNAME));	
 		
 		explorer.open();
-		new WaitWhile(new ShellWithTextIsAvailable("Progress Information"), TimePeriod.LONG);
+		new WaitWhile(new ShellIsAvailable("Progress Information"), TimePeriod.LONG);
 	}
 }

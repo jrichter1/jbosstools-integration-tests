@@ -14,21 +14,21 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import org.jboss.reddeer.common.exception.WaitTimeoutExpiredException;
-import org.jboss.reddeer.common.wait.TimePeriod;
-import org.jboss.reddeer.common.wait.WaitUntil;
-import org.jboss.reddeer.common.wait.WaitWhile;
-import org.jboss.reddeer.core.condition.ShellWithTextIsAvailable;
-import org.jboss.reddeer.eclipse.ui.console.ConsoleView;
-import org.jboss.reddeer.swt.api.TreeItem;
-import org.jboss.reddeer.swt.impl.button.CancelButton;
-import org.jboss.reddeer.swt.impl.button.FinishButton;
-import org.jboss.reddeer.swt.impl.button.PushButton;
-import org.jboss.reddeer.swt.impl.menu.ContextMenu;
-import org.jboss.reddeer.swt.impl.shell.DefaultShell;
-import org.jboss.reddeer.swt.impl.table.DefaultTable;
-import org.jboss.reddeer.swt.impl.text.LabeledText;
-import org.jboss.reddeer.workbench.api.View;
+import org.eclipse.reddeer.common.exception.WaitTimeoutExpiredException;
+import org.eclipse.reddeer.common.wait.TimePeriod;
+import org.eclipse.reddeer.common.wait.WaitUntil;
+import org.eclipse.reddeer.common.wait.WaitWhile;
+import org.eclipse.reddeer.eclipse.ui.console.ConsoleView;
+import org.eclipse.reddeer.swt.api.TreeItem;
+import org.eclipse.reddeer.swt.condition.ShellIsAvailable;
+import org.eclipse.reddeer.swt.impl.button.CancelButton;
+import org.eclipse.reddeer.swt.impl.button.FinishButton;
+import org.eclipse.reddeer.swt.impl.button.PushButton;
+import org.eclipse.reddeer.swt.impl.menu.ContextMenu;
+import org.eclipse.reddeer.swt.impl.shell.DefaultShell;
+import org.eclipse.reddeer.swt.impl.table.DefaultTable;
+import org.eclipse.reddeer.swt.impl.text.LabeledText;
+import org.eclipse.reddeer.workbench.api.View;
 import org.jboss.tools.openshift.reddeer.condition.ConsoleHasSomeText;
 import org.jboss.tools.openshift.reddeer.utils.DatastoreOS2;
 import org.jboss.tools.openshift.reddeer.utils.OpenShiftLabel;
@@ -69,7 +69,7 @@ public class ID705TailFilesTest extends IDXXXCreateTestingApplication {
 		
 		new ContextMenu(contextMenuPath).select();
 		
-		new WaitUntil(new ShellWithTextIsAvailable(OpenShiftLabel.Shell.TAIL_FILES), TimePeriod.LONG);
+		new WaitUntil(new ShellIsAvailable(OpenShiftLabel.Shell.TAIL_FILES), TimePeriod.LONG);
 		
 		new DefaultShell(OpenShiftLabel.Shell.TAIL_FILES);
 		
@@ -120,7 +120,7 @@ public class ID705TailFilesTest extends IDXXXCreateTestingApplication {
 		
 		new ContextMenu(contextMenuPath).select();
 		
-		new WaitUntil(new ShellWithTextIsAvailable(OpenShiftLabel.Shell.TAIL_FILES), TimePeriod.LONG);
+		new WaitUntil(new ShellIsAvailable(OpenShiftLabel.Shell.TAIL_FILES), TimePeriod.LONG);
 		
 		new DefaultShell(OpenShiftLabel.Shell.TAIL_FILES);
 		
@@ -129,7 +129,7 @@ public class ID705TailFilesTest extends IDXXXCreateTestingApplication {
 		
 		new CancelButton().click();
 		
-		new WaitWhile(new ShellWithTextIsAvailable(OpenShiftLabel.Shell.TAIL_FILES), TimePeriod.LONG);
+		new WaitWhile(new ShellIsAvailable(OpenShiftLabel.Shell.TAIL_FILES), TimePeriod.LONG);
 	}
 	
 	private static void verifyTailing(View viewOfItem, TreeItem itemToHandle) {
@@ -140,7 +140,7 @@ public class ID705TailFilesTest extends IDXXXCreateTestingApplication {
 		
 		new ConsoleView().open();
 		try {
-			new WaitUntil(new org.jboss.reddeer.eclipse.condition.ConsoleHasText("GET / HTTP"), TimePeriod.LONG);
+			new WaitUntil(new org.eclipse.reddeer.eclipse.condition.ConsoleHasText("GET / HTTP"), TimePeriod.LONG);
 		} catch (WaitTimeoutExpiredException ex) {
 			fail("Console should contain info in tailing files about showing an application in browser.");
 		}	

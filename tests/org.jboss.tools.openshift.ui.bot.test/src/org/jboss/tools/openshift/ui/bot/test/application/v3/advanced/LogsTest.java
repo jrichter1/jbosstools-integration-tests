@@ -16,16 +16,16 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import org.apache.commons.lang.StringUtils;
-import org.jboss.reddeer.common.exception.WaitTimeoutExpiredException;
-import org.jboss.reddeer.common.wait.TimePeriod;
-import org.jboss.reddeer.common.wait.WaitUntil;
-import org.jboss.reddeer.eclipse.condition.ConsoleHasNoChange;
-import org.jboss.reddeer.eclipse.condition.ConsoleHasText;
-import org.jboss.reddeer.eclipse.ui.console.ConsoleView;
-import org.jboss.reddeer.junit.requirement.inject.InjectRequirement;
-import org.jboss.reddeer.junit.runner.RedDeerSuite;
-import org.jboss.reddeer.requirements.openperspective.OpenPerspectiveRequirement.OpenPerspective;
-import org.jboss.reddeer.swt.impl.menu.ContextMenu;
+import org.eclipse.reddeer.common.exception.WaitTimeoutExpiredException;
+import org.eclipse.reddeer.common.wait.TimePeriod;
+import org.eclipse.reddeer.common.wait.WaitUntil;
+import org.eclipse.reddeer.eclipse.condition.ConsoleHasNoChange;
+import org.eclipse.reddeer.eclipse.condition.ConsoleHasText;
+import org.eclipse.reddeer.eclipse.ui.console.ConsoleView;
+import org.eclipse.reddeer.junit.requirement.inject.InjectRequirement;
+import org.eclipse.reddeer.junit.runner.RedDeerSuite;
+import org.eclipse.reddeer.requirements.openperspective.OpenPerspectiveRequirement.OpenPerspective;
+import org.eclipse.reddeer.swt.impl.menu.ContextMenu;
 import org.jboss.tools.common.reddeer.perspectives.JBossPerspective;
 import org.jboss.tools.openshift.reddeer.condition.ConsoleHasSomeText;
 import org.jboss.tools.openshift.reddeer.condition.PodsAreDeployed;
@@ -96,7 +96,7 @@ public class LogsTest {
 		pod.select();
 		new ContextMenu(OpenShiftLabel.ContextMenu.POD_LOG).select();
 
-		new WaitUntil(new ConsoleHasSomeText(), TimePeriod.NORMAL);
+		new WaitUntil(new ConsoleHasSomeText());
 		new WaitUntil(new ConsoleHasNoChange(TimePeriod.getCustom(WAIT_CONSOLE_NO_CHANGE)), TimePeriod.VERY_LONG);
 
 		assertTrue("Console label is incorrect, it should contains project name and pod name.\n" + "but label is: " + consoleView.getConsoleLabel(),
@@ -112,7 +112,7 @@ public class LogsTest {
 		pod.select();
 		new ContextMenu(OpenShiftLabel.ContextMenu.BUILD_LOG).select();
 
-		new WaitUntil(new ConsoleHasSomeText(), TimePeriod.NORMAL);
+		new WaitUntil(new ConsoleHasSomeText());
 		new WaitUntil(new ConsoleHasNoChange(TimePeriod.getCustom(WAIT_CONSOLE_NO_CHANGE)), TimePeriod.VERY_LONG);
 
 		assertTrue("Console label is incorrect, it should contain project name and name of build pod.\n"

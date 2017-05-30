@@ -10,7 +10,7 @@
  ******************************************************************************/
 package org.jboss.tools.openshift.ui.bot.test;
 
-import org.jboss.reddeer.junit.runner.RedDeerSuite;
+import org.eclipse.reddeer.junit.runner.RedDeerSuite;
 import org.jboss.tools.openshift.reddeer.utils.CleanUpOS3;
 import org.jboss.tools.openshift.ui.bot.test.application.v3.adapter.CreateServerAdapterTest;
 import org.jboss.tools.openshift.ui.bot.test.application.v3.adapter.DebuggingEAPAppTest;

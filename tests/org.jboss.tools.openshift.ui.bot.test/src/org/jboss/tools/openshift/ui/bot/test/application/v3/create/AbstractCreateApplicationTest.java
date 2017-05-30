@@ -12,12 +12,12 @@ package org.jboss.tools.openshift.ui.bot.test.application.v3.create;
 
 import java.io.File;
 
-import org.jboss.reddeer.common.exception.WaitTimeoutExpiredException;
-import org.jboss.reddeer.common.wait.TimePeriod;
-import org.jboss.reddeer.common.wait.WaitWhile;
-import org.jboss.reddeer.eclipse.jdt.ui.ProjectExplorer;
-import org.jboss.reddeer.jface.viewer.handler.TreeViewerHandler;
-import org.jboss.reddeer.junit.runner.RedDeerSuite;
+import org.eclipse.reddeer.common.exception.WaitTimeoutExpiredException;
+import org.eclipse.reddeer.common.wait.TimePeriod;
+import org.eclipse.reddeer.common.wait.WaitWhile;
+import org.eclipse.reddeer.eclipse.ui.navigator.resources.ProjectExplorer;
+import org.eclipse.reddeer.jface.handler.TreeViewerHandler;
+import org.eclipse.reddeer.junit.runner.RedDeerSuite;
 import org.jboss.tools.openshift.reddeer.condition.OpenShiftProjectExists;
 import org.jboss.tools.openshift.reddeer.utils.DatastoreOS3;
 import org.jboss.tools.openshift.reddeer.utils.OpenShiftLabel;

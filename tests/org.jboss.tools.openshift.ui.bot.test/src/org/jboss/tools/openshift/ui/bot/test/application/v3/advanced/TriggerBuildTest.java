@@ -14,12 +14,12 @@ import static org.junit.Assert.fail;
 
 import java.util.List;
 
-import org.jboss.reddeer.common.exception.WaitTimeoutExpiredException;
-import org.jboss.reddeer.common.wait.TimePeriod;
-import org.jboss.reddeer.common.wait.WaitUntil;
-import org.jboss.reddeer.common.wait.WaitWhile;
-import org.jboss.reddeer.core.condition.JobIsRunning;
-import org.jboss.reddeer.swt.impl.menu.ContextMenu;
+import org.eclipse.reddeer.common.exception.WaitTimeoutExpiredException;
+import org.eclipse.reddeer.common.wait.TimePeriod;
+import org.eclipse.reddeer.common.wait.WaitUntil;
+import org.eclipse.reddeer.common.wait.WaitWhile;
+import org.eclipse.reddeer.swt.impl.menu.ContextMenu;
+import org.eclipse.reddeer.workbench.core.condition.JobIsRunning;
 import org.jboss.tools.openshift.reddeer.condition.AmountOfResourcesExists;
 import org.jboss.tools.openshift.reddeer.condition.OpenShiftResourceExists;
 import org.jboss.tools.openshift.reddeer.enums.Resource;
@@ -36,11 +36,9 @@ public class TriggerBuildTest extends AbstractCreateApplicationTest {
 		OpenShiftExplorerView explorer = new OpenShiftExplorerView();
 		explorer.reopen();
 		
-		new WaitUntil(new OpenShiftResourceExists(Resource.BUILD_CONFIG), 
-				TimePeriod.getCustom(120), true, TimePeriod.getCustom(7));
+		new WaitUntil(new OpenShiftResourceExists(Resource.BUILD_CONFIG), TimePeriod.getCustom(120));
 		
-		new WaitUntil(new OpenShiftResourceExists(Resource.BUILD, "eap-app-1"), 
-				TimePeriod.LONG, true, TimePeriod.getCustom(7));
+		new WaitUntil(new OpenShiftResourceExists(Resource.BUILD, "eap-app-1"), TimePeriod.LONG);
 		
 		List<OpenShiftResource> builds = explorer.getOpenShift3Connection().getProject().
 				getOpenShiftResources(Resource.BUILD);
@@ -62,8 +60,7 @@ public class TriggerBuildTest extends AbstractCreateApplicationTest {
 		OpenShiftExplorerView explorer = new OpenShiftExplorerView();
 		explorer.reopen();
 		
-		new WaitUntil(new OpenShiftResourceExists(Resource.BUILD), 
-					TimePeriod.getCustom(240), true, TimePeriod.getCustom(7));
+		new WaitUntil(new OpenShiftResourceExists(Resource.BUILD), TimePeriod.getCustom(240));
 		
 		List<OpenShiftResource> builds = explorer.getOpenShift3Connection().getProject().
 				getOpenShiftResources(Resource.BUILD);

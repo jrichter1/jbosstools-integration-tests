@@ -12,10 +12,10 @@ package org.jboss.tools.openshift.ui.bot.test.connection;
 
 import static org.junit.Assert.fail;
 
-import org.jboss.reddeer.common.exception.RedDeerException;
-import org.jboss.reddeer.jface.exception.JFaceLayerException;
-import org.jboss.reddeer.junit.execution.annotation.RunIf;
-import org.jboss.reddeer.swt.impl.shell.DefaultShell;
+import org.eclipse.reddeer.common.exception.RedDeerException;
+import org.eclipse.reddeer.jface.exception.JFaceLayerException;
+import org.eclipse.reddeer.junit.execution.annotation.RunIf;
+import org.eclipse.reddeer.swt.impl.shell.DefaultShell;
 import org.jboss.tools.openshift.reddeer.utils.DatastoreOS2;
 import org.jboss.tools.openshift.reddeer.view.OpenShiftExplorerView;
 import org.junit.Test;

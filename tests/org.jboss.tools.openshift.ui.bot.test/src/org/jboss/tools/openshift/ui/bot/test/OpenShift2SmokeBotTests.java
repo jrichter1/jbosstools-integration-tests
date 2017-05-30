@@ -1,6 +1,6 @@
 package org.jboss.tools.openshift.ui.bot.test;
 
-import org.jboss.reddeer.junit.runner.RedDeerSuite;
+import org.eclipse.reddeer.junit.runner.RedDeerSuite;
 import org.jboss.tools.openshift.reddeer.utils.CleanUpOS2;
 import org.jboss.tools.openshift.ui.bot.test.application.adapter.ID804CreateServerAdapterTest;
 import org.jboss.tools.openshift.ui.bot.test.application.basic.ID303OpenNewApplicationWizardWithoutSSHKeyTest;

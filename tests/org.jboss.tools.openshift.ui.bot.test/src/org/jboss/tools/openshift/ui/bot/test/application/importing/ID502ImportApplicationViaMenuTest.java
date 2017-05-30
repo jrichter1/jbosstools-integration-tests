@@ -12,25 +12,25 @@ package org.jboss.tools.openshift.ui.bot.test.application.importing;
 
 import static org.junit.Assert.assertTrue;
 
-import org.jboss.reddeer.common.wait.TimePeriod;
-import org.jboss.reddeer.common.wait.WaitUntil;
-import org.jboss.reddeer.common.wait.WaitWhile;
-import org.jboss.reddeer.core.condition.JobIsRunning;
-import org.jboss.reddeer.core.condition.ShellWithTextIsAvailable;
-import org.jboss.reddeer.eclipse.jdt.ui.ProjectExplorer;
-import org.jboss.reddeer.jface.viewer.handler.TreeViewerHandler;
-import org.jboss.reddeer.swt.condition.WidgetIsEnabled;
-import org.jboss.reddeer.swt.impl.button.BackButton;
-import org.jboss.reddeer.swt.impl.button.FinishButton;
-import org.jboss.reddeer.swt.impl.button.NextButton;
-import org.jboss.reddeer.swt.impl.button.OkButton;
-import org.jboss.reddeer.swt.impl.button.PushButton;
-import org.jboss.reddeer.swt.impl.combo.DefaultCombo;
-import org.jboss.reddeer.swt.impl.menu.ShellMenu;
-import org.jboss.reddeer.swt.impl.shell.DefaultShell;
-import org.jboss.reddeer.swt.impl.tree.DefaultTree;
-import org.jboss.reddeer.swt.impl.tree.DefaultTreeItem;
-import org.jboss.reddeer.workbench.impl.shell.WorkbenchShell;
+import org.eclipse.reddeer.common.wait.TimePeriod;
+import org.eclipse.reddeer.common.wait.WaitUntil;
+import org.eclipse.reddeer.common.wait.WaitWhile;
+import org.eclipse.reddeer.eclipse.ui.navigator.resources.ProjectExplorer;
+import org.eclipse.reddeer.jface.handler.TreeViewerHandler;
+import org.eclipse.reddeer.swt.condition.ControlIsEnabled;
+import org.eclipse.reddeer.swt.condition.ShellIsAvailable;
+import org.eclipse.reddeer.swt.impl.button.BackButton;
+import org.eclipse.reddeer.swt.impl.button.FinishButton;
+import org.eclipse.reddeer.swt.impl.button.NextButton;
+import org.eclipse.reddeer.swt.impl.button.OkButton;
+import org.eclipse.reddeer.swt.impl.button.PushButton;
+import org.eclipse.reddeer.swt.impl.combo.DefaultCombo;
+import org.eclipse.reddeer.swt.impl.menu.ShellMenu;
+import org.eclipse.reddeer.swt.impl.shell.DefaultShell;
+import org.eclipse.reddeer.swt.impl.tree.DefaultTree;
+import org.eclipse.reddeer.swt.impl.tree.DefaultTreeItem;
+import org.eclipse.reddeer.workbench.core.condition.JobIsRunning;
+import org.eclipse.reddeer.workbench.impl.shell.WorkbenchShell;
 import org.jboss.tools.openshift.reddeer.utils.DatastoreOS2;
 import org.jboss.tools.openshift.reddeer.utils.OpenShiftLabel;
 import org.jboss.tools.openshift.reddeer.utils.v2.DeleteUtils;
@@ -65,7 +65,7 @@ public class ID502ImportApplicationViaMenuTest {
 
 		new NextButton().click();
 		
-		new WaitUntil(new ShellWithTextIsAvailable(OpenShiftLabel.Shell.IMPORT_APPLICATION));
+		new WaitUntil(new ShellIsAvailable(OpenShiftLabel.Shell.IMPORT_APPLICATION));
 		new DefaultShell(OpenShiftLabel.Shell.IMPORT_APPLICATION);
 		
 		for (String comboItem: new DefaultCombo(0).getItems()) {
@@ -79,7 +79,7 @@ public class ID502ImportApplicationViaMenuTest {
 		
 		new WaitWhile(new JobIsRunning(), TimePeriod.LONG);
 		
-		new WaitUntil(new WidgetIsEnabled(new BackButton()), TimePeriod.LONG);
+		new WaitUntil(new ControlIsEnabled(new BackButton()), TimePeriod.LONG);
 		
 		new DefaultShell(OpenShiftLabel.Shell.IMPORT_APPLICATION);
 		
@@ -89,7 +89,7 @@ public class ID502ImportApplicationViaMenuTest {
 		
 		treeViewerHandler.getTreeItem(new DefaultTree(), DatastoreOS2.DOMAIN, applicationName).select();
 		
-		new WaitUntil(new WidgetIsEnabled(new OkButton()), TimePeriod.LONG);
+		new WaitUntil(new ControlIsEnabled(new OkButton()), TimePeriod.LONG);
 		
 		new OkButton().click();
 		
@@ -97,7 +97,7 @@ public class ID502ImportApplicationViaMenuTest {
 		
 		new FinishButton().click();
 		
-		new WaitWhile(new ShellWithTextIsAvailable(OpenShiftLabel.Shell.IMPORT_APPLICATION), TimePeriod.LONG);
+		new WaitWhile(new ShellIsAvailable(OpenShiftLabel.Shell.IMPORT_APPLICATION), TimePeriod.LONG);
 		new WaitWhile(new JobIsRunning(), TimePeriod.LONG);
 		
 		assertTrue("There is no project in project explorer. Importing was no successfull.",

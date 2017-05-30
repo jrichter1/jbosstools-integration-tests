@@ -12,13 +12,13 @@ package org.jboss.tools.openshift.ui.bot.test.connection.v3;
 
 import static org.junit.Assert.assertFalse;
 
-import org.jboss.reddeer.common.wait.TimePeriod;
-import org.jboss.reddeer.common.wait.WaitWhile;
-import org.jboss.reddeer.core.condition.JobIsRunning;
-import org.jboss.reddeer.core.condition.ShellWithTextIsAvailable;
-import org.jboss.reddeer.swt.impl.button.OkButton;
-import org.jboss.reddeer.swt.impl.menu.ContextMenu;
-import org.jboss.reddeer.swt.impl.shell.DefaultShell;
+import org.eclipse.reddeer.common.wait.TimePeriod;
+import org.eclipse.reddeer.common.wait.WaitWhile;
+import org.eclipse.reddeer.swt.condition.ShellIsAvailable;
+import org.eclipse.reddeer.swt.impl.button.OkButton;
+import org.eclipse.reddeer.swt.impl.menu.ContextMenu;
+import org.eclipse.reddeer.swt.impl.shell.DefaultShell;
+import org.eclipse.reddeer.workbench.core.condition.JobIsRunning;
 import org.jboss.tools.openshift.reddeer.requirement.OpenShiftConnectionRequirement.RequiredBasicConnection;
 import org.jboss.tools.openshift.reddeer.utils.DatastoreOS3;
 import org.jboss.tools.openshift.reddeer.utils.OpenShiftLabel;
@@ -40,7 +40,7 @@ public class RemoveConnectionTest {
 		new DefaultShell(OpenShiftLabel.Shell.REMOVE_CONNECTION);
 		new OkButton().click();
 		
-		new WaitWhile(new ShellWithTextIsAvailable(OpenShiftLabel.Shell.REMOVE_CONNECTION),
+		new WaitWhile(new ShellIsAvailable(OpenShiftLabel.Shell.REMOVE_CONNECTION),
 				TimePeriod.LONG);
 		new WaitWhile(new JobIsRunning(), TimePeriod.LONG);
 		

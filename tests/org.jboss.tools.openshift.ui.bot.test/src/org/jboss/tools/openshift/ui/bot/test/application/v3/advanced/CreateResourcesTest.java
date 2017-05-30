@@ -15,20 +15,20 @@ import static org.junit.Assert.fail;
 
 import java.io.File;
 
-import org.jboss.reddeer.common.exception.WaitTimeoutExpiredException;
-import org.jboss.reddeer.common.wait.TimePeriod;
-import org.jboss.reddeer.common.wait.WaitUntil;
-import org.jboss.reddeer.common.wait.WaitWhile;
-import org.jboss.reddeer.core.condition.JobIsRunning;
-import org.jboss.reddeer.core.condition.ShellWithTextIsAvailable;
-import org.jboss.reddeer.swt.impl.button.CancelButton;
-import org.jboss.reddeer.swt.impl.button.FinishButton;
-import org.jboss.reddeer.swt.impl.button.OkButton;
-import org.jboss.reddeer.swt.impl.combo.LabeledCombo;
-import org.jboss.reddeer.swt.impl.menu.ContextMenu;
-import org.jboss.reddeer.swt.impl.shell.DefaultShell;
-import org.jboss.reddeer.swt.impl.text.LabeledText;
-import org.jboss.reddeer.swt.impl.tree.DefaultTree;
+import org.eclipse.reddeer.common.exception.WaitTimeoutExpiredException;
+import org.eclipse.reddeer.common.wait.TimePeriod;
+import org.eclipse.reddeer.common.wait.WaitUntil;
+import org.eclipse.reddeer.common.wait.WaitWhile;
+import org.eclipse.reddeer.swt.condition.ShellIsAvailable;
+import org.eclipse.reddeer.swt.impl.button.CancelButton;
+import org.eclipse.reddeer.swt.impl.button.FinishButton;
+import org.eclipse.reddeer.swt.impl.button.OkButton;
+import org.eclipse.reddeer.swt.impl.combo.LabeledCombo;
+import org.eclipse.reddeer.swt.impl.menu.ContextMenu;
+import org.eclipse.reddeer.swt.impl.shell.DefaultShell;
+import org.eclipse.reddeer.swt.impl.text.LabeledText;
+import org.eclipse.reddeer.swt.impl.tree.DefaultTree;
+import org.eclipse.reddeer.workbench.core.condition.JobIsRunning;
 import org.jboss.tools.openshift.reddeer.enums.Resource;
 import org.jboss.tools.openshift.reddeer.requirement.OpenShiftConnectionRequirement.RequiredBasicConnection;
 import org.jboss.tools.openshift.reddeer.utils.OpenShiftLabel;
@@ -124,13 +124,13 @@ public class CreateResourcesTest {
 		
 		new OkButton().click();
 		
-		new WaitWhile(new ShellWithTextIsAvailable(OpenShiftLabel.Shell.NEW_RESOURCE));
+		new WaitWhile(new ShellIsAvailable(OpenShiftLabel.Shell.NEW_RESOURCE));
 		new WaitWhile(new JobIsRunning(), TimePeriod.LONG);
 	}
 	
 	private void assertResourceShellIsAvailable() {
 		try {
-			new WaitUntil(new ShellWithTextIsAvailable(OpenShiftLabel.Shell.NEW_RESOURCE));
+			new WaitUntil(new ShellIsAvailable(OpenShiftLabel.Shell.NEW_RESOURCE));
 		} catch (WaitTimeoutExpiredException ex) {
 			fail("New OpenShift resource shell has not been opened");
 		}
@@ -138,7 +138,7 @@ public class CreateResourcesTest {
 		new DefaultShell(OpenShiftLabel.Shell.NEW_RESOURCE);
 		new CancelButton().click();
 		
-		new WaitWhile(new ShellWithTextIsAvailable(OpenShiftLabel.Shell.NEW_RESOURCE));
+		new WaitWhile(new ShellIsAvailable(OpenShiftLabel.Shell.NEW_RESOURCE));
 	}
 	
 	private void refreshProject() {

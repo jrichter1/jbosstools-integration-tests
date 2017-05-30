@@ -12,9 +12,9 @@ package org.jboss.tools.openshift.ui.bot.test.project;
 
 import static org.junit.Assert.fail;
 
-import org.jboss.reddeer.common.exception.RedDeerException;
-import org.jboss.reddeer.junit.requirement.inject.InjectRequirement;
-import org.jboss.reddeer.swt.api.TreeItem;
+import org.eclipse.reddeer.common.exception.RedDeerException;
+import org.eclipse.reddeer.junit.requirement.inject.InjectRequirement;
+import org.eclipse.reddeer.swt.api.TreeItem;
 import org.jboss.tools.openshift.reddeer.enums.Resource;
 import org.jboss.tools.openshift.reddeer.requirement.OpenShiftConnectionRequirement;
 import org.jboss.tools.openshift.reddeer.requirement.OpenShiftConnectionRequirement.RequiredBasicConnection;

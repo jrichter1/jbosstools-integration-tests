@@ -13,26 +13,25 @@ package org.jboss.tools.openshift.ui.bot.test.application.cartridge;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import org.jboss.reddeer.common.exception.WaitTimeoutExpiredException;
-import org.jboss.reddeer.common.wait.TimePeriod;
-import org.jboss.reddeer.common.wait.WaitUntil;
-import org.jboss.reddeer.common.wait.WaitWhile;
-import org.jboss.reddeer.core.condition.JobIsRunning;
-import org.jboss.reddeer.core.condition.ShellWithTextIsAvailable;
-import org.jboss.reddeer.core.exception.CoreLayerException;
-import org.jboss.reddeer.swt.api.Shell;
-import org.jboss.reddeer.swt.api.TableItem;
-import org.jboss.reddeer.swt.api.TreeItem;
-import org.jboss.reddeer.swt.condition.ShellIsAvailable;
-import org.jboss.reddeer.swt.condition.WidgetIsEnabled;
-import org.jboss.reddeer.swt.exception.SWTLayerException;
-import org.jboss.reddeer.swt.impl.button.FinishButton;
-import org.jboss.reddeer.swt.impl.button.OkButton;
-import org.jboss.reddeer.swt.impl.button.YesButton;
-import org.jboss.reddeer.swt.impl.menu.ContextMenu;
-import org.jboss.reddeer.swt.impl.shell.DefaultShell;
-import org.jboss.reddeer.swt.impl.table.DefaultTable;
-import org.jboss.reddeer.workbench.api.View;
+import org.eclipse.reddeer.common.exception.WaitTimeoutExpiredException;
+import org.eclipse.reddeer.common.wait.TimePeriod;
+import org.eclipse.reddeer.common.wait.WaitUntil;
+import org.eclipse.reddeer.common.wait.WaitWhile;
+import org.eclipse.reddeer.core.exception.CoreLayerException;
+import org.eclipse.reddeer.swt.api.Shell;
+import org.eclipse.reddeer.swt.api.TableItem;
+import org.eclipse.reddeer.swt.api.TreeItem;
+import org.eclipse.reddeer.swt.condition.ControlIsEnabled;
+import org.eclipse.reddeer.swt.condition.ShellIsAvailable;
+import org.eclipse.reddeer.swt.exception.SWTLayerException;
+import org.eclipse.reddeer.swt.impl.button.FinishButton;
+import org.eclipse.reddeer.swt.impl.button.OkButton;
+import org.eclipse.reddeer.swt.impl.button.YesButton;
+import org.eclipse.reddeer.swt.impl.menu.ContextMenu;
+import org.eclipse.reddeer.swt.impl.shell.DefaultShell;
+import org.eclipse.reddeer.swt.impl.table.DefaultTable;
+import org.eclipse.reddeer.workbench.api.View;
+import org.eclipse.reddeer.workbench.core.condition.JobIsRunning;
 import org.jboss.tools.openshift.reddeer.utils.DatastoreOS2;
 import org.jboss.tools.openshift.reddeer.utils.OpenShiftLabel;
 import org.jboss.tools.openshift.reddeer.view.OpenShiftExplorerView;
@@ -65,7 +64,7 @@ public class ID601EmbedCartridgeTest extends IDXXXCreateTestingApplication {
 		new ContextMenu(contextMenuPath).select();
 		
 		try {
-			new WaitUntil(new ShellWithTextIsAvailable(OpenShiftLabel.Shell.EDIT_CARTRIDGES), TimePeriod.LONG);
+			new WaitUntil(new ShellIsAvailable(OpenShiftLabel.Shell.EDIT_CARTRIDGES), TimePeriod.LONG);
 			// PASS
 		} catch (WaitTimeoutExpiredException ex) {
 			fail("Shell with embeddable cartridges has not been opened.");
@@ -85,16 +84,16 @@ public class ID601EmbedCartridgeTest extends IDXXXCreateTestingApplication {
 			// pass, bad notifications of event
 		}
 		
-		new WaitUntil(new WidgetIsEnabled(new FinishButton()), TimePeriod.LONG);
+		new WaitUntil(new ControlIsEnabled(new FinishButton()), TimePeriod.LONG);
 		
 		new FinishButton().click();
 		
-		new WaitUntil(new ShellWithTextIsAvailable(OpenShiftLabel.Shell.EMBEDDED_CARTRIDGE), TimePeriod.VERY_LONG);
+		new WaitUntil(new ShellIsAvailable(OpenShiftLabel.Shell.EMBEDDED_CARTRIDGE), TimePeriod.VERY_LONG);
 		
 		new DefaultShell(OpenShiftLabel.Shell.EMBEDDED_CARTRIDGE).setFocus();
 		new OkButton().click();
 	
-		new WaitWhile(new ShellWithTextIsAvailable(OpenShiftLabel.Shell.EDIT_CARTRIDGES), TimePeriod.LONG);
+		new WaitWhile(new ShellIsAvailable(OpenShiftLabel.Shell.EDIT_CARTRIDGES), TimePeriod.LONG);
 		new WaitWhile(new JobIsRunning(), TimePeriod.LONG);
 		
 		OpenShiftExplorerView explorer = new OpenShiftExplorerView();
@@ -134,11 +133,11 @@ public class ID601EmbedCartridgeTest extends IDXXXCreateTestingApplication {
 		new YesButton().click();
 		
 		new WaitWhile(new ShellIsAvailable(removeCartridge), TimePeriod.LONG);
-		new WaitUntil(new WidgetIsEnabled(new FinishButton()), TimePeriod.LONG);
+		new WaitUntil(new ControlIsEnabled(new FinishButton()), TimePeriod.LONG);
 		
 		new FinishButton().click();
 		
-		new WaitWhile(new ShellWithTextIsAvailable(OpenShiftLabel.Shell.EDIT_CARTRIDGES), TimePeriod.LONG);
+		new WaitWhile(new ShellIsAvailable(OpenShiftLabel.Shell.EDIT_CARTRIDGES), TimePeriod.LONG);
 		new WaitWhile(new JobIsRunning(), TimePeriod.LONG);
 		
 		explorer.open();

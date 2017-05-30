@@ -14,20 +14,20 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import org.jboss.reddeer.common.condition.WaitCondition;
-import org.jboss.reddeer.common.exception.RedDeerException;
-import org.jboss.reddeer.common.wait.WaitUntil;
-import org.jboss.reddeer.core.condition.ShellWithTextIsActive;
-import org.jboss.reddeer.core.exception.CoreLayerException;
-import org.jboss.reddeer.junit.execution.annotation.RunIf;
-import org.jboss.reddeer.junit.runner.RedDeerSuite;
-import org.jboss.reddeer.swt.api.Browser;
-import org.jboss.reddeer.swt.impl.browser.InternalBrowser;
-import org.jboss.reddeer.swt.impl.button.CancelButton;
-import org.jboss.reddeer.swt.impl.button.PushButton;
-import org.jboss.reddeer.swt.impl.combo.LabeledCombo;
-import org.jboss.reddeer.swt.impl.shell.DefaultShell;
-import org.jboss.reddeer.swt.impl.text.LabeledText;
+import org.eclipse.reddeer.common.condition.AbstractWaitCondition;
+import org.eclipse.reddeer.common.exception.RedDeerException;
+import org.eclipse.reddeer.common.wait.WaitUntil;
+import org.eclipse.reddeer.core.exception.CoreLayerException;
+import org.eclipse.reddeer.junit.execution.annotation.RunIf;
+import org.eclipse.reddeer.junit.runner.RedDeerSuite;
+import org.eclipse.reddeer.swt.api.Browser;
+import org.eclipse.reddeer.swt.condition.ShellIsAvailable;
+import org.eclipse.reddeer.swt.impl.browser.InternalBrowser;
+import org.eclipse.reddeer.swt.impl.button.CancelButton;
+import org.eclipse.reddeer.swt.impl.button.PushButton;
+import org.eclipse.reddeer.swt.impl.combo.LabeledCombo;
+import org.eclipse.reddeer.swt.impl.shell.DefaultShell;
+import org.eclipse.reddeer.swt.impl.text.LabeledText;
 import org.jboss.tools.openshift.reddeer.utils.DatastoreOS3;
 import org.jboss.tools.openshift.reddeer.utils.EmulatedLinkStyledText;
 import org.jboss.tools.openshift.reddeer.utils.OpenShiftLabel;
@@ -89,7 +89,7 @@ public class CreateNewConnectionTest {
 		EmulatedLinkStyledText linkText = new EmulatedLinkStyledText(OpenShiftLabel.TextLabels.RETRIEVE_TOKEN);
 		linkText.click(linkText.getPositionOfText(OpenShiftLabel.TextLabels.LINK_RETRIEVE) + 3);
 
-		new WaitUntil(new ShellWithTextIsActive(""));
+		new WaitUntil(new ShellIsAvailable(""));
 		final InternalBrowser internalBrowser = new InternalBrowser();
 
 		login(internalBrowser);
@@ -148,7 +148,7 @@ public class CreateNewConnectionTest {
 		return (String) internalBrowser.evaluate("return document.getElementsByTagName(\"code\")[0].innerHTML");
 	}
 
-	private class LoginPageIsLoaded implements WaitCondition {
+	private class LoginPageIsLoaded extends AbstractWaitCondition {
 
 		private TestCondition myTest;
 
@@ -167,10 +167,9 @@ public class CreateNewConnectionTest {
 		}
 
 		@Override
-		public String errorMessage() {
-			return "Login page is not fully loaded";
+		public String errorMessageUntil() {
+			return "Login page is not yet fully loaded";
 		}
-
 	}
 
 	private interface TestCondition {

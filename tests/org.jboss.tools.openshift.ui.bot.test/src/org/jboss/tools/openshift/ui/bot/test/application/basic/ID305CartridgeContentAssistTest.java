@@ -12,15 +12,15 @@ package org.jboss.tools.openshift.ui.bot.test.application.basic;
 
 import static org.junit.Assert.fail;
 
-import org.jboss.reddeer.common.wait.TimePeriod;
-import org.jboss.reddeer.common.wait.WaitWhile;
-import org.jboss.reddeer.core.condition.JobIsRunning;
-import org.jboss.reddeer.core.condition.ShellWithTextIsAvailable;
-import org.jboss.reddeer.jface.exception.JFaceLayerException;
-import org.jboss.reddeer.jface.viewer.handler.TreeViewerHandler;
-import org.jboss.reddeer.swt.impl.button.CancelButton;
-import org.jboss.reddeer.swt.impl.text.DefaultText;
-import org.jboss.reddeer.swt.impl.tree.DefaultTreeItem;
+import org.eclipse.reddeer.common.wait.TimePeriod;
+import org.eclipse.reddeer.common.wait.WaitWhile;
+import org.eclipse.reddeer.jface.exception.JFaceLayerException;
+import org.eclipse.reddeer.jface.handler.TreeViewerHandler;
+import org.eclipse.reddeer.swt.condition.ShellIsAvailable;
+import org.eclipse.reddeer.swt.impl.button.CancelButton;
+import org.eclipse.reddeer.swt.impl.text.DefaultText;
+import org.eclipse.reddeer.swt.impl.tree.DefaultTreeItem;
+import org.eclipse.reddeer.workbench.core.condition.JobIsRunning;
 import org.jboss.tools.openshift.reddeer.utils.DatastoreOS2;
 import org.jboss.tools.openshift.reddeer.utils.OpenShiftLabel;
 import org.jboss.tools.openshift.reddeer.wizard.v2.NewOpenShift2ApplicationWizard;
@@ -73,7 +73,7 @@ public class ID305CartridgeContentAssistTest {
 		
 		new CancelButton().click();
 		
-		new WaitWhile(new ShellWithTextIsAvailable(OpenShiftLabel.Shell.NEW_APP_WIZARD),
+		new WaitWhile(new ShellIsAvailable(OpenShiftLabel.Shell.NEW_APP_WIZARD),
 				TimePeriod.LONG);
 		
 		new WaitWhile(new JobIsRunning(), TimePeriod.LONG);

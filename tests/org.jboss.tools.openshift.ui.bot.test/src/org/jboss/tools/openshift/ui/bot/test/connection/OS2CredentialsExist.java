@@ -10,7 +10,7 @@
  ******************************************************************************/
 package org.jboss.tools.openshift.ui.bot.test.connection;
 
-import org.jboss.reddeer.junit.execution.TestMethodShouldRun;
+import org.eclipse.reddeer.junit.execution.TestMethodShouldRun;
 import org.junit.runners.model.FrameworkMethod;
 
 public class OS2CredentialsExist implements TestMethodShouldRun {

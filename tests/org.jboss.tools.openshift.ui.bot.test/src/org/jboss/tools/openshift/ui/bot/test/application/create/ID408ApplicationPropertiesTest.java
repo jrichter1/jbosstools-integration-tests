@@ -16,17 +16,17 @@ import static org.junit.Assert.fail;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.jboss.reddeer.common.wait.TimePeriod;
-import org.jboss.reddeer.common.wait.WaitUntil;
-import org.jboss.reddeer.common.wait.WaitWhile;
-import org.jboss.reddeer.core.condition.ShellWithTextIsAvailable;
-import org.jboss.reddeer.swt.api.Tree;
-import org.jboss.reddeer.swt.api.TreeItem;
-import org.jboss.reddeer.swt.impl.button.OkButton;
-import org.jboss.reddeer.swt.impl.menu.ContextMenu;
-import org.jboss.reddeer.swt.impl.shell.DefaultShell;
-import org.jboss.reddeer.swt.impl.tree.DefaultTree;
-import org.jboss.reddeer.workbench.api.View;
+import org.eclipse.reddeer.common.wait.TimePeriod;
+import org.eclipse.reddeer.common.wait.WaitUntil;
+import org.eclipse.reddeer.common.wait.WaitWhile;
+import org.eclipse.reddeer.swt.api.Tree;
+import org.eclipse.reddeer.swt.api.TreeItem;
+import org.eclipse.reddeer.swt.condition.ShellIsAvailable;
+import org.eclipse.reddeer.swt.impl.button.OkButton;
+import org.eclipse.reddeer.swt.impl.menu.ContextMenu;
+import org.eclipse.reddeer.swt.impl.shell.DefaultShell;
+import org.eclipse.reddeer.swt.impl.tree.DefaultTree;
+import org.eclipse.reddeer.workbench.api.View;
 import org.jboss.tools.openshift.reddeer.utils.DatastoreOS2;
 import org.jboss.tools.openshift.reddeer.utils.OpenShiftLabel;
 import org.jboss.tools.openshift.reddeer.utils.v2.DeleteUtils;
@@ -76,7 +76,7 @@ public class ID408ApplicationPropertiesTest {
 		
 		new ContextMenu(contextMenuPath).select();
 		
-		new WaitUntil(new ShellWithTextIsAvailable(OpenShiftLabel.Shell.APPLICATION_DETAILS),
+		new WaitUntil(new ShellIsAvailable(OpenShiftLabel.Shell.APPLICATION_DETAILS),
 				TimePeriod.LONG);
 		
 		new DefaultShell(OpenShiftLabel.Shell.APPLICATION_DETAILS);
@@ -105,7 +105,7 @@ public class ID408ApplicationPropertiesTest {
 				properties.get("Type").equals(applicationType));
 		
 		new OkButton().click();
-		new WaitWhile(new ShellWithTextIsAvailable(OpenShiftLabel.Shell.APPLICATION_DETAILS),
+		new WaitWhile(new ShellIsAvailable(OpenShiftLabel.Shell.APPLICATION_DETAILS),
 				TimePeriod.LONG);
 	}
 	

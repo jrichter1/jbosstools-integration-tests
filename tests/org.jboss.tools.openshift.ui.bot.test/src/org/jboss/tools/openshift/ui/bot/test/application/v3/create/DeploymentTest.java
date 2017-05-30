@@ -12,11 +12,11 @@ package org.jboss.tools.openshift.ui.bot.test.application.v3.create;
 
 import static org.junit.Assert.fail;
 
-import org.jboss.reddeer.common.exception.WaitTimeoutExpiredException;
-import org.jboss.reddeer.common.wait.TimePeriod;
-import org.jboss.reddeer.common.wait.WaitUntil;
-import org.jboss.reddeer.eclipse.ui.browser.BrowserEditor;
-import org.jboss.reddeer.swt.impl.menu.ContextMenu;
+import org.eclipse.reddeer.common.exception.WaitTimeoutExpiredException;
+import org.eclipse.reddeer.common.wait.TimePeriod;
+import org.eclipse.reddeer.common.wait.WaitUntil;
+import org.eclipse.reddeer.eclipse.ui.browser.BrowserEditor;
+import org.eclipse.reddeer.swt.impl.menu.ContextMenu;
 import org.jboss.tools.openshift.reddeer.condition.AmountOfResourcesExists;
 import org.jboss.tools.openshift.reddeer.condition.BrowserContainsText;
 import org.jboss.tools.openshift.reddeer.condition.OpenShiftResourceExists;
@@ -32,18 +32,17 @@ public class DeploymentTest extends AbstractCreateApplicationTest {
 	public void testDeploymentOfApplicationCreatedFromTemplate() {
 		OpenShiftExplorerView explorer = new OpenShiftExplorerView();
 		
-		new WaitUntil(new OpenShiftResourceExists(Resource.BUILD, "eap-app-1"), TimePeriod.NORMAL, false);
+		new WaitUntil(new OpenShiftResourceExists(Resource.BUILD, "eap-app-1"), TimePeriod.DEFAULT, false);
 		
 		try {
 			new WaitUntil(new OpenShiftResourceExists(Resource.BUILD, "eap-app-1", ResourceState.COMPLETE), 
-					TimePeriod.getCustom(600), true, TimePeriod.getCustom(7));
+					TimePeriod.getCustom(600));
 		} catch (WaitTimeoutExpiredException ex) {
 			fail("There should be a successful build of an application, but there is not.");
 		}
 		
 		try {
-			new WaitUntil(new AmountOfResourcesExists(Resource.POD, 2), TimePeriod.getCustom(60),
-					true, TimePeriod.getCustom(7));
+			new WaitUntil(new AmountOfResourcesExists(Resource.POD, 2), TimePeriod.getCustom(60));
 		} catch (WaitTimeoutExpiredException ex) {
 			fail("There should be precisely 2 pods. One of the build and one of an running application.");
 		}		

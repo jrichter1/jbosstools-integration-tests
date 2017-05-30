@@ -13,18 +13,18 @@ package org.jboss.tools.openshift.ui.bot.test.application.v3.adapter;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import org.jboss.reddeer.common.exception.WaitTimeoutExpiredException;
-import org.jboss.reddeer.common.wait.TimePeriod;
-import org.jboss.reddeer.common.wait.WaitUntil;
-import org.jboss.reddeer.common.wait.WaitWhile;
-import org.jboss.reddeer.core.condition.JobIsRunning;
-import org.jboss.reddeer.eclipse.condition.ConsoleHasNoChange;
-import org.jboss.reddeer.eclipse.core.resources.ProjectItem;
-import org.jboss.reddeer.eclipse.jdt.ui.ProjectExplorer;
-import org.jboss.reddeer.eclipse.ui.console.ConsoleView;
-import org.jboss.reddeer.requirements.openperspective.OpenPerspectiveRequirement.OpenPerspective;
-import org.jboss.reddeer.swt.impl.menu.ContextMenu;
-import org.jboss.reddeer.workbench.impl.editor.TextEditor;
+import org.eclipse.reddeer.common.exception.WaitTimeoutExpiredException;
+import org.eclipse.reddeer.common.wait.TimePeriod;
+import org.eclipse.reddeer.common.wait.WaitUntil;
+import org.eclipse.reddeer.common.wait.WaitWhile;
+import org.eclipse.reddeer.eclipse.condition.ConsoleHasNoChange;
+import org.eclipse.reddeer.eclipse.core.resources.ProjectItem;
+import org.eclipse.reddeer.eclipse.ui.console.ConsoleView;
+import org.eclipse.reddeer.eclipse.ui.navigator.resources.ProjectExplorer;
+import org.eclipse.reddeer.requirements.openperspective.OpenPerspectiveRequirement.OpenPerspective;
+import org.eclipse.reddeer.swt.impl.menu.ContextMenu;
+import org.eclipse.reddeer.workbench.core.condition.JobIsRunning;
+import org.eclipse.reddeer.workbench.impl.editor.TextEditor;
 import org.jboss.tools.common.reddeer.perspectives.JBossPerspective;
 import org.jboss.tools.openshift.reddeer.condition.ApplicationPodIsRunning;
 import org.jboss.tools.openshift.reddeer.condition.BrowserContainsText;
@@ -86,7 +86,7 @@ public class PublishChangesTest extends AbstractCreateApplicationTest {
 		textEditor.setText(PUBLISHED_CODE);
 		textEditor.close(true);
 		
-		new WaitWhile(new JobIsRunning(), TimePeriod.NORMAL);
+		new WaitWhile(new JobIsRunning());
 		new WaitUntil(new ConsoleHasNoChange(), TimePeriod.LONG);
 	
 		assertTrue("Local changes performed to project have not been autopublished, or at least rsync "

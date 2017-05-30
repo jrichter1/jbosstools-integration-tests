@@ -13,34 +13,33 @@ package org.jboss.tools.openshift.ui.bot.test.application.create;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.fail;
 
-import org.jboss.reddeer.common.exception.WaitTimeoutExpiredException;
-import org.jboss.reddeer.common.wait.AbstractWait;
-import org.jboss.reddeer.common.wait.TimePeriod;
-import org.jboss.reddeer.common.wait.WaitUntil;
-import org.jboss.reddeer.common.wait.WaitWhile;
-import org.jboss.reddeer.core.condition.JobIsRunning;
-import org.jboss.reddeer.core.condition.ShellWithTextIsAvailable;
-import org.jboss.reddeer.core.util.Display;
-import org.jboss.reddeer.core.util.ResultRunnable;
-import org.jboss.reddeer.eclipse.jdt.ui.ProjectExplorer;
-import org.jboss.reddeer.eclipse.wst.server.ui.view.ServersView;
-import org.jboss.reddeer.jface.exception.JFaceLayerException;
-import org.jboss.reddeer.jface.viewer.handler.TreeViewerHandler;
-import org.jboss.reddeer.swt.api.Shell;
-import org.jboss.reddeer.swt.api.TreeItem;
-import org.jboss.reddeer.swt.condition.ShellIsAvailable;
-import org.jboss.reddeer.swt.condition.TreeHasChildren;
-import org.jboss.reddeer.swt.impl.button.OkButton;
-import org.jboss.reddeer.swt.impl.button.PushButton;
-import org.jboss.reddeer.swt.impl.button.YesButton;
-import org.jboss.reddeer.swt.impl.menu.ContextMenu;
-import org.jboss.reddeer.swt.impl.shell.DefaultShell;
-import org.jboss.reddeer.swt.impl.styledtext.DefaultStyledText;
-import org.jboss.reddeer.swt.impl.tree.DefaultTree;
-import org.jboss.reddeer.swt.impl.tree.DefaultTreeItem;
-import org.jboss.reddeer.workbench.condition.EditorWithTitleIsActive;
-import org.jboss.reddeer.workbench.impl.editor.TextEditor;
-import org.jboss.reddeer.workbench.impl.view.WorkbenchView;
+import org.eclipse.reddeer.common.exception.WaitTimeoutExpiredException;
+import org.eclipse.reddeer.common.util.Display;
+import org.eclipse.reddeer.common.util.ResultRunnable;
+import org.eclipse.reddeer.common.wait.AbstractWait;
+import org.eclipse.reddeer.common.wait.TimePeriod;
+import org.eclipse.reddeer.common.wait.WaitUntil;
+import org.eclipse.reddeer.common.wait.WaitWhile;
+import org.eclipse.reddeer.eclipse.ui.navigator.resources.ProjectExplorer;
+import org.eclipse.reddeer.eclipse.wst.server.ui.cnf.ServersView2;
+import org.eclipse.reddeer.jface.exception.JFaceLayerException;
+import org.eclipse.reddeer.jface.handler.TreeViewerHandler;
+import org.eclipse.reddeer.swt.api.Shell;
+import org.eclipse.reddeer.swt.api.TreeItem;
+import org.eclipse.reddeer.swt.condition.ShellIsAvailable;
+import org.eclipse.reddeer.swt.condition.TreeHasChildren;
+import org.eclipse.reddeer.swt.impl.button.OkButton;
+import org.eclipse.reddeer.swt.impl.button.PushButton;
+import org.eclipse.reddeer.swt.impl.button.YesButton;
+import org.eclipse.reddeer.swt.impl.menu.ContextMenu;
+import org.eclipse.reddeer.swt.impl.shell.DefaultShell;
+import org.eclipse.reddeer.swt.impl.styledtext.DefaultStyledText;
+import org.eclipse.reddeer.swt.impl.tree.DefaultTree;
+import org.eclipse.reddeer.swt.impl.tree.DefaultTreeItem;
+import org.eclipse.reddeer.workbench.condition.EditorWithTitleIsActive;
+import org.eclipse.reddeer.workbench.core.condition.JobIsRunning;
+import org.eclipse.reddeer.workbench.impl.editor.TextEditor;
+import org.eclipse.reddeer.workbench.impl.view.WorkbenchView;
 import org.jboss.tools.openshift.reddeer.condition.v2.ApplicationIsDeployedSuccessfully;
 import org.jboss.tools.openshift.reddeer.utils.DatastoreOS2;
 import org.jboss.tools.openshift.reddeer.utils.OpenShiftLabel;
@@ -128,7 +127,7 @@ public class ID407DeployEclipseProjectToOpenShift {
 		new ContextMenu("Team", "Commit...").select();
 		
 		try {
-			new WaitUntil(new ShellWithTextIsAvailable("Identify Yourself"), TimePeriod.NORMAL);
+			new WaitUntil(new ShellIsAvailable("Identify Yourself"));
 			new DefaultShell("Identify Yourself").setFocus();
 			new PushButton("OK").click();
 		} catch (WaitTimeoutExpiredException ex) {}
@@ -148,29 +147,29 @@ public class ID407DeployEclipseProjectToOpenShift {
 	}
 	
 	private void postCreateSteps() {
-		new WaitUntil(new ShellWithTextIsAvailable(OpenShiftLabel.Shell.EMBEDDED_CARTRIDGE), 
+		new WaitUntil(new ShellIsAvailable(OpenShiftLabel.Shell.EMBEDDED_CARTRIDGE), 
 				TimePeriod.VERY_LONG);
 			
 		new DefaultShell(OpenShiftLabel.Shell.EMBEDDED_CARTRIDGE);
 		new OkButton().click();
 		
-		new WaitUntil(new ShellWithTextIsAvailable(OpenShiftLabel.Shell.IMPORT_APPLICATION_WIZARD),
+		new WaitUntil(new ShellIsAvailable(OpenShiftLabel.Shell.IMPORT_APPLICATION_WIZARD),
 				TimePeriod.VERY_LONG);
 		
 		new DefaultShell(OpenShiftLabel.Shell.IMPORT_APPLICATION_WIZARD);
 		new OkButton().click();
 		
-		new WaitUntil(new ShellWithTextIsAvailable(OpenShiftLabel.Shell.ACCEPT_HOST_KEY), TimePeriod.VERY_LONG);
+		new WaitUntil(new ShellIsAvailable(OpenShiftLabel.Shell.ACCEPT_HOST_KEY), TimePeriod.VERY_LONG);
 		
 		new DefaultShell(OpenShiftLabel.Shell.ACCEPT_HOST_KEY);
 		new YesButton().click();
 
-		new WaitWhile(new ShellWithTextIsAvailable(OpenShiftLabel.Shell.NEW_APP_WIZARD),
+		new WaitWhile(new ShellIsAvailable(OpenShiftLabel.Shell.NEW_APP_WIZARD),
 				TimePeriod.VERY_LONG);
 		new WaitWhile(new JobIsRunning(), TimePeriod.VERY_LONG);
 		
 		// PUBLISH
-		ServersView servers = new ServersView();
+		ServersView2 servers = new ServersView2();
 		servers.open();
 
 		TreeViewerHandler.getInstance().getTreeItem(new DefaultTree(),
@@ -180,7 +179,7 @@ public class ID407DeployEclipseProjectToOpenShift {
 		new DefaultShell("Publish " + applicationName + "?");
 		new YesButton().click();
 		
-		new WaitUntil(new ShellWithTextIsAvailable("Attempt push force ?"), TimePeriod.LONG);
+		new WaitUntil(new ShellIsAvailable("Attempt push force ?"), TimePeriod.LONG);
 		Shell forceShell = new DefaultShell("Attempt push force ?");
 		new YesButton().click();
 		
@@ -188,7 +187,7 @@ public class ID407DeployEclipseProjectToOpenShift {
 		new WaitWhile(new JobIsRunning(), TimePeriod.VERY_LONG);
 
 		// Browser need time
-		AbstractWait.sleep(TimePeriod.NORMAL);
+		AbstractWait.sleep(TimePeriod.DEFAULT);
 	}
 	
 	private void verifyRemoteName() {

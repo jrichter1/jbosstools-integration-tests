@@ -13,28 +13,28 @@ package org.jboss.tools.openshift.ui.bot.test.application.create;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import org.jboss.reddeer.common.exception.WaitTimeoutExpiredException;
-import org.jboss.reddeer.common.wait.TimePeriod;
-import org.jboss.reddeer.common.wait.WaitUntil;
-import org.jboss.reddeer.common.wait.WaitWhile;
-import org.jboss.reddeer.core.condition.JobIsRunning;
-import org.jboss.reddeer.core.condition.ShellWithTextIsAvailable;
-import org.jboss.reddeer.eclipse.jdt.ui.ProjectExplorer;
-import org.jboss.reddeer.swt.condition.WidgetIsEnabled;
-import org.jboss.reddeer.swt.impl.button.BackButton;
-import org.jboss.reddeer.swt.impl.button.CheckBox;
-import org.jboss.reddeer.swt.impl.button.FinishButton;
-import org.jboss.reddeer.swt.impl.button.NextButton;
-import org.jboss.reddeer.swt.impl.button.OkButton;
-import org.jboss.reddeer.swt.impl.button.YesButton;
-import org.jboss.reddeer.swt.impl.combo.DefaultCombo;
-import org.jboss.reddeer.swt.impl.combo.LabeledCombo;
-import org.jboss.reddeer.swt.impl.menu.ContextMenu;
-import org.jboss.reddeer.swt.impl.menu.ShellMenu;
-import org.jboss.reddeer.swt.impl.shell.DefaultShell;
-import org.jboss.reddeer.swt.impl.text.LabeledText;
-import org.jboss.reddeer.swt.impl.tree.DefaultTreeItem;
-import org.jboss.reddeer.workbench.impl.shell.WorkbenchShell;
+import org.eclipse.reddeer.common.exception.WaitTimeoutExpiredException;
+import org.eclipse.reddeer.common.wait.TimePeriod;
+import org.eclipse.reddeer.common.wait.WaitUntil;
+import org.eclipse.reddeer.common.wait.WaitWhile;
+import org.eclipse.reddeer.eclipse.ui.navigator.resources.ProjectExplorer;
+import org.eclipse.reddeer.swt.condition.ControlIsEnabled;
+import org.eclipse.reddeer.swt.condition.ShellIsAvailable;
+import org.eclipse.reddeer.swt.impl.button.BackButton;
+import org.eclipse.reddeer.swt.impl.button.CheckBox;
+import org.eclipse.reddeer.swt.impl.button.FinishButton;
+import org.eclipse.reddeer.swt.impl.button.NextButton;
+import org.eclipse.reddeer.swt.impl.button.OkButton;
+import org.eclipse.reddeer.swt.impl.button.YesButton;
+import org.eclipse.reddeer.swt.impl.combo.DefaultCombo;
+import org.eclipse.reddeer.swt.impl.combo.LabeledCombo;
+import org.eclipse.reddeer.swt.impl.menu.ContextMenu;
+import org.eclipse.reddeer.swt.impl.menu.ShellMenu;
+import org.eclipse.reddeer.swt.impl.shell.DefaultShell;
+import org.eclipse.reddeer.swt.impl.text.LabeledText;
+import org.eclipse.reddeer.swt.impl.tree.DefaultTreeItem;
+import org.eclipse.reddeer.workbench.core.condition.JobIsRunning;
+import org.eclipse.reddeer.workbench.impl.shell.WorkbenchShell;
 import org.jboss.tools.openshift.reddeer.condition.v2.ApplicationIsDeployedSuccessfully;
 import org.jboss.tools.openshift.reddeer.utils.DatastoreOS2;
 import org.jboss.tools.openshift.reddeer.utils.OpenShiftLabel;
@@ -71,7 +71,7 @@ public class ID414CreateApplicationFromExistingProjectTest {
 
 		new NextButton().click();
 
-		new WaitUntil(new ShellWithTextIsAvailable("New Project Example"),
+		new WaitUntil(new ShellIsAvailable("New Project Example"),
 				TimePeriod.LONG);
 
 		new DefaultShell("New Project Example");
@@ -82,12 +82,12 @@ public class ID414CreateApplicationFromExistingProjectTest {
 
 		new FinishButton().click();
 
-		new WaitWhile(new ShellWithTextIsAvailable("New Project Example"),
+		new WaitWhile(new ShellIsAvailable("New Project Example"),
 				TimePeriod.LONG);
 
 		new WaitWhile(new JobIsRunning(), TimePeriod.LONG);
 
-		new WaitUntil(new ShellWithTextIsAvailable("New Project Example"),
+		new WaitUntil(new ShellIsAvailable("New Project Example"),
 				TimePeriod.LONG);
 
 		new DefaultShell("New Project Example");
@@ -104,7 +104,7 @@ public class ID414CreateApplicationFromExistingProjectTest {
 
 		new ContextMenu(OpenShiftLabel.ContextMenu.DEPLOY_PROJECT).select();
 		
-		new WaitUntil(new ShellWithTextIsAvailable(
+		new WaitUntil(new ShellIsAvailable(
 				OpenShiftLabel.Shell.NEW_APP_WIZARD), TimePeriod.LONG);
 
 		new DefaultShell(OpenShiftLabel.Shell.NEW_APP_WIZARD);
@@ -120,7 +120,7 @@ public class ID414CreateApplicationFromExistingProjectTest {
 
 		new WaitWhile(new JobIsRunning(), TimePeriod.LONG);
 		// to be sure, it is processed
-		new WaitUntil(new WidgetIsEnabled(new BackButton()),
+		new WaitUntil(new ControlIsEnabled(new BackButton()),
 				TimePeriod.LONG);
 
 		new DefaultShell(OpenShiftLabel.Shell.NEW_APP_WIZARD).setFocus();
@@ -147,19 +147,19 @@ public class ID414CreateApplicationFromExistingProjectTest {
 
 		wizard.finish();
 
-		new WaitUntil(new ShellWithTextIsAvailable(
+		new WaitUntil(new ShellIsAvailable(
 				OpenShiftLabel.Shell.IMPORT_APPLICATION_WIZARD), TimePeriod.VERY_LONG);
 
 		new DefaultShell(OpenShiftLabel.Shell.IMPORT_APPLICATION_WIZARD);
 		new OkButton().click();
 
-		new WaitUntil(new ShellWithTextIsAvailable(
+		new WaitUntil(new ShellIsAvailable(
 				OpenShiftLabel.Shell.ACCEPT_HOST_KEY), TimePeriod.VERY_LONG);
 
 		new DefaultShell(OpenShiftLabel.Shell.ACCEPT_HOST_KEY);
 		new YesButton().click();
 
-		new WaitWhile(new ShellWithTextIsAvailable(
+		new WaitWhile(new ShellIsAvailable(
 				OpenShiftLabel.Shell.NEW_APP_WIZARD), TimePeriod.VERY_LONG);
 		new WaitWhile(new JobIsRunning(), TimePeriod.VERY_LONG);
 

@@ -13,10 +13,10 @@ package org.jboss.tools.openshift.ui.bot.test.connection;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import org.jboss.reddeer.swt.impl.button.CancelButton;
-import org.jboss.reddeer.swt.impl.button.CheckBox;
-import org.jboss.reddeer.swt.impl.combo.LabeledCombo;
-import org.jboss.reddeer.swt.impl.shell.DefaultShell;
+import org.eclipse.reddeer.swt.impl.button.CancelButton;
+import org.eclipse.reddeer.swt.impl.button.CheckBox;
+import org.eclipse.reddeer.swt.impl.combo.LabeledCombo;
+import org.eclipse.reddeer.swt.impl.shell.DefaultShell;
 import org.jboss.tools.openshift.reddeer.utils.OpenShiftLabel;
 import org.jboss.tools.openshift.reddeer.view.OpenShiftExplorerView;
 import org.jboss.tools.openshift.reddeer.view.OpenShiftExplorerView.ServerType;

@@ -10,8 +10,8 @@
  ******************************************************************************/
 package org.jboss.tools.openshift.ui.bot.test.application.create;
 
-import org.jboss.reddeer.common.wait.TimePeriod;
-import org.jboss.reddeer.common.wait.WaitUntil;
+import org.eclipse.reddeer.common.wait.TimePeriod;
+import org.eclipse.reddeer.common.wait.WaitUntil;
 import org.jboss.tools.openshift.reddeer.condition.v2.OpenShiftApplicationExists;
 import org.jboss.tools.openshift.reddeer.utils.DatastoreOS2;
 import org.jboss.tools.openshift.reddeer.utils.OpenShiftLabel;

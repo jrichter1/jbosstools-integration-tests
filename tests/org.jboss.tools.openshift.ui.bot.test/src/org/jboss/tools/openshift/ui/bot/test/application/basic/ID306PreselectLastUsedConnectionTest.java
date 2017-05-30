@@ -12,20 +12,20 @@ package org.jboss.tools.openshift.ui.bot.test.application.basic;
 
 import static org.junit.Assert.assertTrue;
 
-import org.jboss.reddeer.common.wait.TimePeriod;
-import org.jboss.reddeer.common.wait.WaitUntil;
-import org.jboss.reddeer.core.condition.ShellWithTextIsAvailable;
-import org.jboss.reddeer.swt.condition.WidgetIsEnabled;
-import org.jboss.reddeer.swt.impl.browser.InternalBrowser;
-import org.jboss.reddeer.swt.impl.button.BackButton;
-import org.jboss.reddeer.swt.impl.button.CancelButton;
-import org.jboss.reddeer.swt.impl.button.NextButton;
-import org.jboss.reddeer.swt.impl.combo.LabeledCombo;
-import org.jboss.reddeer.swt.impl.menu.ShellMenu;
-import org.jboss.reddeer.swt.impl.shell.DefaultShell;
-import org.jboss.reddeer.swt.impl.text.LabeledText;
-import org.jboss.reddeer.swt.impl.toolbar.DefaultToolItem;
-import org.jboss.reddeer.workbench.impl.shell.WorkbenchShell;
+import org.eclipse.reddeer.common.wait.TimePeriod;
+import org.eclipse.reddeer.common.wait.WaitUntil;
+import org.eclipse.reddeer.swt.condition.ControlIsEnabled;
+import org.eclipse.reddeer.swt.condition.ShellIsAvailable;
+import org.eclipse.reddeer.swt.impl.browser.InternalBrowser;
+import org.eclipse.reddeer.swt.impl.button.BackButton;
+import org.eclipse.reddeer.swt.impl.button.CancelButton;
+import org.eclipse.reddeer.swt.impl.button.NextButton;
+import org.eclipse.reddeer.swt.impl.combo.LabeledCombo;
+import org.eclipse.reddeer.swt.impl.menu.ShellMenu;
+import org.eclipse.reddeer.swt.impl.shell.DefaultShell;
+import org.eclipse.reddeer.swt.impl.text.LabeledText;
+import org.eclipse.reddeer.swt.impl.toolbar.DefaultToolItem;
+import org.eclipse.reddeer.workbench.impl.shell.WorkbenchShell;
 import org.jboss.tools.openshift.reddeer.utils.DatastoreOS2;
 import org.jboss.tools.openshift.reddeer.utils.OpenShiftLabel;
 import org.jboss.tools.openshift.reddeer.wizard.page.v2.FirstWizardPage;
@@ -87,18 +87,18 @@ public class ID306PreselectLastUsedConnectionTest {
 		new WorkbenchShell().setFocus();
 		new ShellMenu(OpenShiftLabel.Others.NEW_APP_MENU).select();
 		
-		new WaitUntil(new ShellWithTextIsAvailable(OpenShiftLabel.Shell.NEW_APP_WIZARD),
+		new WaitUntil(new ShellIsAvailable(OpenShiftLabel.Shell.NEW_APP_WIZARD),
 				TimePeriod.LONG);
 		new DefaultShell(OpenShiftLabel.Shell.NEW_APP_WIZARD);
 		
 		new LabeledCombo(OpenShiftLabel.TextLabels.CONNECTION).setSelection(
 				username + " - " + server);
 		
-		new WaitUntil(new WidgetIsEnabled(new NextButton()), TimePeriod.LONG);
+		new WaitUntil(new ControlIsEnabled(new NextButton()), TimePeriod.LONG);
 		
 		new NextButton().click();
 		
-		new WaitUntil(new WidgetIsEnabled(new CancelButton()), TimePeriod.LONG);
+		new WaitUntil(new ControlIsEnabled(new CancelButton()), TimePeriod.LONG);
 		
 		new CancelButton().click();
 	}
@@ -112,15 +112,15 @@ public class ID306PreselectLastUsedConnectionTest {
 		
 		new NextButton().click();
 		
-		new WaitUntil(new WidgetIsEnabled(new BackButton()), TimePeriod.LONG);
+		new WaitUntil(new ControlIsEnabled(new BackButton()), TimePeriod.LONG);
 		
 		new LabeledText("Name:").setText("appName");
 		
-		new WaitUntil(new WidgetIsEnabled(new NextButton()), TimePeriod.LONG);
+		new WaitUntil(new ControlIsEnabled(new NextButton()), TimePeriod.LONG);
 		
 		new NextButton().click();
 
-		new WaitUntil(new WidgetIsEnabled(new CancelButton()), TimePeriod.LONG);
+		new WaitUntil(new ControlIsEnabled(new CancelButton()), TimePeriod.LONG);
 		
 		new CancelButton().click();
 	}
@@ -128,7 +128,7 @@ public class ID306PreselectLastUsedConnectionTest {
 	private void verifyPreselectedConnectionViaMenu(String username) {
 		new ShellMenu(OpenShiftLabel.Others.NEW_APP_MENU).select();
 		
-		new WaitUntil(new ShellWithTextIsAvailable(OpenShiftLabel.Shell.NEW_APP_WIZARD),
+		new WaitUntil(new ShellIsAvailable(OpenShiftLabel.Shell.NEW_APP_WIZARD),
 				TimePeriod.LONG);
 		new DefaultShell(OpenShiftLabel.Shell.NEW_APP_WIZARD);
 	
@@ -144,7 +144,7 @@ public class ID306PreselectLastUsedConnectionTest {
 		
 		new InternalBrowser().execute(OpenShiftLabel.Others.OPENSHIFT_CENTRAL_SCRIPT);
 		
-		new WaitUntil(new ShellWithTextIsAvailable(OpenShiftLabel.Shell.NEW_APP_WIZARD),
+		new WaitUntil(new ShellIsAvailable(OpenShiftLabel.Shell.NEW_APP_WIZARD),
 				TimePeriod.LONG);
 		new DefaultShell(OpenShiftLabel.Shell.NEW_APP_WIZARD);	
 		

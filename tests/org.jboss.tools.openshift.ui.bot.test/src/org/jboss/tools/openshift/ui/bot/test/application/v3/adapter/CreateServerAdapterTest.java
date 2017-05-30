@@ -12,26 +12,25 @@ package org.jboss.tools.openshift.ui.bot.test.application.v3.adapter;
 
 import static org.junit.Assert.assertTrue;
 
-import org.hamcrest.core.Is;
+import org.eclipse.reddeer.common.exception.WaitTimeoutExpiredException;
+import org.eclipse.reddeer.common.wait.TimePeriod;
+import org.eclipse.reddeer.common.wait.WaitUntil;
+import org.eclipse.reddeer.common.wait.WaitWhile;
+import org.eclipse.reddeer.eclipse.wst.server.ui.cnf.ServersView2;
+import org.eclipse.reddeer.eclipse.wst.server.ui.wizard.NewServerWizard;
+import org.eclipse.reddeer.eclipse.wst.server.ui.wizard.NewServerWizardPage;
+import org.eclipse.reddeer.swt.condition.ControlIsEnabled;
+import org.eclipse.reddeer.swt.condition.ShellIsAvailable;
+import org.eclipse.reddeer.swt.impl.button.BackButton;
+import org.eclipse.reddeer.swt.impl.button.FinishButton;
+import org.eclipse.reddeer.swt.impl.button.NextButton;
+import org.eclipse.reddeer.swt.impl.menu.ContextMenu;
+import org.eclipse.reddeer.swt.impl.shell.DefaultShell;
+import org.eclipse.reddeer.swt.impl.text.LabeledText;
+import org.eclipse.reddeer.swt.impl.tree.DefaultTreeItem;
+import org.eclipse.reddeer.workbench.core.condition.JobIsKilled;
+import org.eclipse.reddeer.workbench.core.condition.JobIsRunning;
 import org.hamcrest.core.StringContains;
-import org.jboss.reddeer.common.exception.WaitTimeoutExpiredException;
-import org.jboss.reddeer.common.wait.TimePeriod;
-import org.jboss.reddeer.common.wait.WaitUntil;
-import org.jboss.reddeer.common.wait.WaitWhile;
-import org.jboss.reddeer.core.condition.JobIsKilled;
-import org.jboss.reddeer.core.condition.JobIsRunning;
-import org.jboss.reddeer.core.condition.ShellWithTextIsAvailable;
-import org.jboss.reddeer.eclipse.wst.server.ui.view.ServersView;
-import org.jboss.reddeer.eclipse.wst.server.ui.wizard.NewServerWizardDialog;
-import org.jboss.reddeer.eclipse.wst.server.ui.wizard.NewServerWizardPage;
-import org.jboss.reddeer.swt.condition.WidgetIsEnabled;
-import org.jboss.reddeer.swt.impl.button.BackButton;
-import org.jboss.reddeer.swt.impl.button.FinishButton;
-import org.jboss.reddeer.swt.impl.button.NextButton;
-import org.jboss.reddeer.swt.impl.menu.ContextMenu;
-import org.jboss.reddeer.swt.impl.shell.DefaultShell;
-import org.jboss.reddeer.swt.impl.text.LabeledText;
-import org.jboss.reddeer.swt.impl.tree.DefaultTreeItem;
 import org.jboss.tools.openshift.reddeer.condition.AmountOfResourcesExists;
 import org.jboss.tools.openshift.reddeer.condition.OpenShiftResourceExists;
 import org.jboss.tools.openshift.reddeer.condition.ServerAdapterExists;
@@ -66,7 +65,7 @@ public class CreateServerAdapterTest extends AbstractCreateApplicationTest {
 	
 	@Test
 	public void testCreateOpenShift3ServerAdapterViaShellMenu() {
-		NewServerWizardDialog dialog = new NewServerWizardDialog();
+		NewServerWizard dialog = new NewServerWizard();
 		NewServerWizardPage page = new NewServerWizardPage();
 		
 		dialog.open();
@@ -79,8 +78,8 @@ public class CreateServerAdapterTest extends AbstractCreateApplicationTest {
 	}
 	
 	@Test
-	public void testCreateOpenShift3ServerAdapterViaServersView() {
-		ServersView serversView = new ServersView();
+	public void testCreateOpenShift3ServerAdapterViaServersView2() {
+		ServersView2 serversView = new ServersView2();
 		serversView.open();
 		new ContextMenu(OpenShiftLabel.ContextMenu.NEW_SERVER).select();
 		
@@ -108,7 +107,7 @@ public class CreateServerAdapterTest extends AbstractCreateApplicationTest {
 		
 		new FinishButton().click();
 		
-		new WaitWhile(new ShellWithTextIsAvailable(""));
+		new WaitWhile(new ShellIsAvailable(""));
 		new WaitWhile(new JobIsRunning(), TimePeriod.LONG, false);
 		
 		assertTrue("OpenShift 3 server adapter was not created.", 
@@ -126,7 +125,7 @@ public class CreateServerAdapterTest extends AbstractCreateApplicationTest {
 	public void finishNewServerAdapterWizardAndVerifyExistence() {
 		new FinishButton().click();
 		
-		new WaitWhile(new ShellWithTextIsAvailable(OpenShiftLabel.Shell.ADAPTER));
+		new WaitWhile(new ShellIsAvailable(OpenShiftLabel.Shell.ADAPTER));
 		
 		boolean jobExists = false;
 		try {
@@ -146,12 +145,12 @@ public class CreateServerAdapterTest extends AbstractCreateApplicationTest {
 	}
 	
 	private void next() {
-		new WaitUntil(new WidgetIsEnabled(new NextButton()));
+		new WaitUntil(new ControlIsEnabled(new NextButton()));
 		
 		new NextButton().click();
 		TestUtils.acceptSSLCertificate();
 
-		new WaitUntil(new WidgetIsEnabled(new BackButton()));
+		new WaitUntil(new ControlIsEnabled(new BackButton()));
 	}
 	
 	@After

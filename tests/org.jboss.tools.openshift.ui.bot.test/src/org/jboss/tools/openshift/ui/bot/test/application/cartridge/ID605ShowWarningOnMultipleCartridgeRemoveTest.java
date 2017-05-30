@@ -13,21 +13,21 @@ package org.jboss.tools.openshift.ui.bot.test.application.cartridge;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.fail;
 
-import org.jboss.reddeer.common.exception.WaitTimeoutExpiredException;
-import org.jboss.reddeer.common.wait.TimePeriod;
-import org.jboss.reddeer.common.wait.WaitUntil;
-import org.jboss.reddeer.common.wait.WaitWhile;
-import org.jboss.reddeer.core.condition.JobIsRunning;
-import org.jboss.reddeer.core.condition.ShellWithTextIsAvailable;
-import org.jboss.reddeer.swt.condition.WidgetIsEnabled;
-import org.jboss.reddeer.swt.impl.button.CancelButton;
-import org.jboss.reddeer.swt.impl.button.FinishButton;
-import org.jboss.reddeer.swt.impl.button.OkButton;
-import org.jboss.reddeer.swt.impl.button.PushButton;
-import org.jboss.reddeer.swt.impl.button.YesButton;
-import org.jboss.reddeer.swt.impl.menu.ContextMenu;
-import org.jboss.reddeer.swt.impl.shell.DefaultShell;
-import org.jboss.reddeer.swt.impl.table.DefaultTable;
+import org.eclipse.reddeer.common.exception.WaitTimeoutExpiredException;
+import org.eclipse.reddeer.common.wait.TimePeriod;
+import org.eclipse.reddeer.common.wait.WaitUntil;
+import org.eclipse.reddeer.common.wait.WaitWhile;
+import org.eclipse.reddeer.swt.condition.ControlIsEnabled;
+import org.eclipse.reddeer.swt.condition.ShellIsAvailable;
+import org.eclipse.reddeer.swt.impl.button.CancelButton;
+import org.eclipse.reddeer.swt.impl.button.FinishButton;
+import org.eclipse.reddeer.swt.impl.button.OkButton;
+import org.eclipse.reddeer.swt.impl.button.PushButton;
+import org.eclipse.reddeer.swt.impl.button.YesButton;
+import org.eclipse.reddeer.swt.impl.menu.ContextMenu;
+import org.eclipse.reddeer.swt.impl.shell.DefaultShell;
+import org.eclipse.reddeer.swt.impl.table.DefaultTable;
+import org.eclipse.reddeer.workbench.core.condition.JobIsRunning;
 import org.jboss.tools.openshift.reddeer.utils.DatastoreOS2;
 import org.jboss.tools.openshift.reddeer.utils.OpenShiftLabel;
 import org.jboss.tools.openshift.reddeer.view.OpenShiftExplorerView;
@@ -46,7 +46,7 @@ public class ID605ShowWarningOnMultipleCartridgeRemoveTest extends IDXXXCreateTe
 			getDomain(DatastoreOS2.DOMAIN).getApplication(applicationName).select();
 		new ContextMenu(OpenShiftLabel.ContextMenu.EMBED_CARTRIDGE).select();
 		
-		new WaitUntil(new ShellWithTextIsAvailable(OpenShiftLabel.Shell.EDIT_CARTRIDGES));
+		new WaitUntil(new ShellIsAvailable(OpenShiftLabel.Shell.EDIT_CARTRIDGES));
 		
 		new DefaultShell(OpenShiftLabel.Shell.EDIT_CARTRIDGES);
 		
@@ -58,7 +58,7 @@ public class ID605ShowWarningOnMultipleCartridgeRemoveTest extends IDXXXCreateTe
 		}
 		
 		try {
-			new WaitUntil(new ShellWithTextIsAvailable("Remove cartridge cron-1.4"));
+			new WaitUntil(new ShellIsAvailable("Remove cartridge cron-1.4"));
 			
 			new DefaultShell("Remove cartridge cron-1.4");
 			new YesButton().click();
@@ -74,7 +74,7 @@ public class ID605ShowWarningOnMultipleCartridgeRemoveTest extends IDXXXCreateTe
 		
 		new CancelButton().click();
 		
-		new WaitWhile(new ShellWithTextIsAvailable(OpenShiftLabel.Shell.EDIT_CARTRIDGES));
+		new WaitWhile(new ShellIsAvailable(OpenShiftLabel.Shell.EDIT_CARTRIDGES));
 		new WaitWhile(new JobIsRunning(), TimePeriod.LONG);
 	}
 	
@@ -88,14 +88,14 @@ public class ID605ShowWarningOnMultipleCartridgeRemoveTest extends IDXXXCreateTe
 			getDomain(DatastoreOS2.DOMAIN).getApplication(applicationName).select();
 		new ContextMenu(OpenShiftLabel.ContextMenu.EMBED_CARTRIDGE).select();
 		
-		new WaitUntil(new ShellWithTextIsAvailable(OpenShiftLabel.Shell.EDIT_CARTRIDGES));
+		new WaitUntil(new ShellIsAvailable(OpenShiftLabel.Shell.EDIT_CARTRIDGES));
 		
 		new DefaultShell(OpenShiftLabel.Shell.EDIT_CARTRIDGES);
 		
 		new PushButton("Deselect All").click();
 		
 		try {
-			new WaitUntil(new ShellWithTextIsAvailable("Deselect All Cartridges"));
+			new WaitUntil(new ShellIsAvailable("Deselect All Cartridges"));
 			
 			new DefaultShell("Deselect All Cartridges");
 			new YesButton().click();
@@ -112,7 +112,7 @@ public class ID605ShowWarningOnMultipleCartridgeRemoveTest extends IDXXXCreateTe
 		
 		new CancelButton().click();
 		
-		new WaitWhile(new ShellWithTextIsAvailable(OpenShiftLabel.Shell.EDIT_CARTRIDGES));
+		new WaitWhile(new ShellIsAvailable(OpenShiftLabel.Shell.EDIT_CARTRIDGES));
 		new WaitWhile(new JobIsRunning(), TimePeriod.LONG);
 	}
 	
@@ -122,7 +122,7 @@ public class ID605ShowWarningOnMultipleCartridgeRemoveTest extends IDXXXCreateTe
 			getDomain(DatastoreOS2.DOMAIN).getApplication(applicationName).select();
 		new ContextMenu(OpenShiftLabel.ContextMenu.EMBED_CARTRIDGE).select();
 		
-		new WaitUntil(new ShellWithTextIsAvailable(OpenShiftLabel.Shell.EDIT_CARTRIDGES));
+		new WaitUntil(new ShellIsAvailable(OpenShiftLabel.Shell.EDIT_CARTRIDGES));
 		
 		new DefaultShell(OpenShiftLabel.Shell.EDIT_CARTRIDGES);
 		
@@ -133,12 +133,12 @@ public class ID605ShowWarningOnMultipleCartridgeRemoveTest extends IDXXXCreateTe
 			// pass, there is an issue with table events, but it works
 		}
 		
-		new WaitUntil(new WidgetIsEnabled(new FinishButton()), TimePeriod.LONG);
+		new WaitUntil(new ControlIsEnabled(new FinishButton()), TimePeriod.LONG);
 		
 		new FinishButton().click();
 		
 		try {
-			new WaitUntil(new ShellWithTextIsAvailable(OpenShiftLabel.Shell.EMBEDDED_CARTRIDGE),
+			new WaitUntil(new ShellIsAvailable(OpenShiftLabel.Shell.EMBEDDED_CARTRIDGE),
 					TimePeriod.LONG);
 		
 			new DefaultShell(OpenShiftLabel.Shell.EMBEDDED_CARTRIDGE);
@@ -147,6 +147,6 @@ public class ID605ShowWarningOnMultipleCartridgeRemoveTest extends IDXXXCreateTe
 			// PASS - there is no embed cartridge shell showing info about cartridge
 		}
 		
-		new WaitWhile(new ShellWithTextIsAvailable(OpenShiftLabel.Shell.EDIT_CARTRIDGES));
+		new WaitWhile(new ShellIsAvailable(OpenShiftLabel.Shell.EDIT_CARTRIDGES));
 	}
 }

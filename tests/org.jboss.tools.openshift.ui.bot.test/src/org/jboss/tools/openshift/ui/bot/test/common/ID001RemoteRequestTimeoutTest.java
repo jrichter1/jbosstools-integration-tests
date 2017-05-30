@@ -12,9 +12,9 @@ package org.jboss.tools.openshift.ui.bot.test.common;
 
 import static org.junit.Assert.assertFalse;
 
-import org.jboss.reddeer.swt.impl.button.PushButton;
-import org.jboss.reddeer.swt.impl.text.LabeledText;
-import org.jboss.reddeer.workbench.ui.dialogs.WorkbenchPreferenceDialog;
+import org.eclipse.reddeer.swt.impl.button.PushButton;
+import org.eclipse.reddeer.swt.impl.text.LabeledText;
+import org.eclipse.reddeer.workbench.ui.dialogs.WorkbenchPreferenceDialog;
 import org.jboss.tools.openshift.reddeer.perspective.JBossPerspective;
 import org.jboss.tools.openshift.reddeer.preference.page.OpenShift2PreferencePage;
 import org.jboss.tools.openshift.reddeer.utils.OpenShiftLabel;
