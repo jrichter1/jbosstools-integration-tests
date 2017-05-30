@@ -135,7 +135,7 @@ public class CreateApplicationFromTemplateTest {
 	@Test
 	public void createApplicationFromLocalWorkspaceTemplate() {
 		new NewOpenShift3ApplicationWizard().openWizardFromExplorer(DatastoreOS3.PROJECT1_DISPLAYED_NAME);
-		new DefaultTabItem(OpenShiftLabel.TextLabels.LOCAL_TEMPLATE).activate();
+		new DefaultTabItem(OpenShiftLabel.TextLabels.CUSTOM_TEMPLATE).activate();
 		new PushButton(OpenShiftLabel.Button.BROWSE_WORKSPACE).click();
 
 		new DefaultShell(OpenShiftLabel.Shell.SELECT_OPENSHIFT_TEMPLATE);
@@ -158,7 +158,7 @@ public class CreateApplicationFromTemplateTest {
 	@Test
 	public void createApplicationFromLocalFileSystemTemplate() {
 		new NewOpenShift3ApplicationWizard().openWizardFromExplorer(DatastoreOS3.PROJECT1_DISPLAYED_NAME);
-		new DefaultTabItem(OpenShiftLabel.TextLabels.LOCAL_TEMPLATE).activate();
+		new DefaultTabItem(OpenShiftLabel.TextLabels.CUSTOM_TEMPLATE).activate();
 		new LabeledText(OpenShiftLabel.TextLabels.SELECT_LOCAL_TEMPLATE).setText(
 				TESTS_PROJECT_LOCATION + File.separator + "eap64-basic-s2i.json");
 
@@ -171,7 +171,7 @@ public class CreateApplicationFromTemplateTest {
 	@Test
 	public void createApplicationFromTemplateProvidedByURL() {
 		new NewOpenShift3ApplicationWizard().openWizardFromExplorer(DatastoreOS3.PROJECT1_DISPLAYED_NAME);
-		new DefaultTabItem(OpenShiftLabel.TextLabels.LOCAL_TEMPLATE).activate();
+		new DefaultTabItem(OpenShiftLabel.TextLabels.CUSTOM_TEMPLATE).activate();
 		new LabeledText(OpenShiftLabel.TextLabels.SELECT_LOCAL_TEMPLATE).setText(URL);
 
 		assertTrue("Defined resource button should be enabled",

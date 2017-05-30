@@ -75,7 +75,7 @@ public class NewApplicationWizardHandlingTest {
 	
 	@Test
 	public void testTemplatesRelatedWidgetAccess() {
-		new DefaultTabItem(OpenShiftLabel.TextLabels.LOCAL_TEMPLATE).activate();
+		new DefaultTabItem(OpenShiftLabel.TextLabels.CUSTOM_TEMPLATE).activate();
 		
 		try {
 			new DefaultTree();
@@ -126,7 +126,7 @@ public class NewApplicationWizardHandlingTest {
 		
 		assertDefinedResourcesButtonIsNotPresent();
 		
-		new DefaultTabItem(OpenShiftLabel.TextLabels.LOCAL_TEMPLATE).activate();
+		new DefaultTabItem(OpenShiftLabel.TextLabels.CUSTOM_TEMPLATE).activate();
 		
 		assertDefinedResourcesButtonIsNotPresent();
 		
@@ -136,13 +136,13 @@ public class NewApplicationWizardHandlingTest {
 		assertTrue("Defines Resources button should be enabled if a server template is selected.", 
 				new PushButton(OpenShiftLabel.Button.DEFINED_RESOURCES).isEnabled());
 		
-		new DefaultTabItem(OpenShiftLabel.TextLabels.LOCAL_TEMPLATE).activate();
+		new DefaultTabItem(OpenShiftLabel.TextLabels.CUSTOM_TEMPLATE).activate();
 		
 		assertDefinedResourcesButtonIsNotPresent();
 		
 		new DefaultTabItem(OpenShiftLabel.TextLabels.SERVER_TEMPLATE).activate();
 		new DefaultTree().unselectAllItems();
-		new DefaultTabItem(OpenShiftLabel.TextLabels.LOCAL_TEMPLATE).activate();
+		new DefaultTabItem(OpenShiftLabel.TextLabels.CUSTOM_TEMPLATE).activate();
 		Display.syncExec(new Runnable() {
 			@Override
 			public void run() {
@@ -190,7 +190,7 @@ public class NewApplicationWizardHandlingTest {
 	
 	@Test
 	public void testShowDefinedResourcesForLocalTemplate() {
-		new DefaultTabItem(OpenShiftLabel.TextLabels.LOCAL_TEMPLATE).activate();
+		new DefaultTabItem(OpenShiftLabel.TextLabels.CUSTOM_TEMPLATE).activate();
 		Display.syncExec(new Runnable() {
 			@Override
 			public void run() {
