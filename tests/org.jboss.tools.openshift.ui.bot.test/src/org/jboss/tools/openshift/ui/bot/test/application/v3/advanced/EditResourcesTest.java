@@ -16,7 +16,6 @@ import static org.junit.Assert.fail;
 import org.eclipse.reddeer.common.exception.RedDeerException;
 import org.eclipse.reddeer.common.wait.TimePeriod;
 import org.eclipse.reddeer.common.wait.WaitWhile;
-import org.eclipse.reddeer.core.exception.CoreLayerException;
 import org.eclipse.reddeer.swt.impl.button.OkButton;
 import org.eclipse.reddeer.swt.impl.menu.ContextMenu;
 import org.eclipse.reddeer.swt.impl.shell.DefaultShell;
@@ -24,6 +23,7 @@ import org.eclipse.reddeer.workbench.core.condition.JobIsRunning;
 import org.eclipse.reddeer.workbench.impl.editor.TextEditor;
 import org.hamcrest.core.StringContains;
 import org.jboss.tools.openshift.reddeer.enums.Resource;
+import org.jboss.tools.openshift.reddeer.requirement.OpenShiftConnectionRequirement.RequiredBasicConnection;
 import org.jboss.tools.openshift.reddeer.utils.DatastoreOS3;
 import org.jboss.tools.openshift.reddeer.utils.OpenShiftLabel;
 import org.jboss.tools.openshift.reddeer.view.OpenShiftExplorerView;
@@ -33,6 +33,7 @@ import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Test;
 
+@RequiredBasicConnection
 public class EditResourcesTest extends AbstractCreateApplicationTest {
 
 	private String customRepo = "https://github.com/mlabuda/jboss-eap-quickstarts";
@@ -84,7 +85,7 @@ public class EditResourcesTest extends AbstractCreateApplicationTest {
 				"\"namespace\" : \"" + DatastoreOS3.PROJECT1 + "\"wtf"));		
 		try {
 			editor.save();
-		} catch (CoreLayerException ex) {
+		} catch (RedDeerException ex) {
 			// ok
 		}
 		

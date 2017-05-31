@@ -171,7 +171,7 @@ public class NewApplicationWizardHandlingTest {
 	public void testFilteringServerTemplates() {
 		DefaultText searchBar = new DefaultText(1);
 		
-		searchBar.setText("eap64-basic-s2i");
+		searchBar.setText("eap70-basic-s2i");
 		assertTrue("There should be precisely one tree item in a tree.",
 				new DefaultTree().getItems().size() == 1);
 		assertTrue("There should be item representing basic EAP template in a tree but it is not there.",
